@@ -1,0 +1,118 @@
+{
+    "Race/Ethnicity of Population (%)": {
+        "White Percent": ["B01001A_001E", "B01001_001E", "/"],
+        "Black Percent": ["B01001B_001E", "B01001_001E", "/"],
+        "American Indian Percent": ["B01001C_001E", "B01001_001E", "/"],
+        "Asian Percent": ["B01001D_001E", "B01001_001E", "/"],
+        "Native Hawaiian Percent": ["B01001E_001E", "B01001_001E", "/"],
+        "Mixed Race Percent": ["B01001G_001E", "B01001_001E", "/"]
+    },
+    "Hispanic/Latino Population (%)": {
+        "White Hispanic/Latino": ["B01001A_001E", "B01001H_001E", "-", "s", "B01001_001E", "/"],
+        "Non-White Hispanic/Latino": ["B01001I_001E", "l", "-", "B01001_001E", "/"]
+    },
+    "Race/Ethnicity of Population Under Age 5 (%)": {
+        "White Percent": ["B01001A_003E", "B01001A_018E", "+", "B01001_003E", "B01001_027E", "+", "/"],
+        "Black Percent": ["B01001B_003E", "B01001B_018E", "+", "B01001_003E", "B01001_027E", "+", "/"],
+        "American Indian Percent": ["B01001C_003E", "B01001C_018E", "+", "B01001_003E", "B01001_027E", "+", "/"],
+        "Asian Percent": ["B01001D_003E", "B01001D_018E", "+", "B01001_003E", "B01001_027E", "+", "/"],
+        "Native Hawaiian Percent": ["B01001E_003E", "B01001E_018E", "+", "B01001_003E", "B01001_027E", "+", "/"],
+        "Mixed Race Percent": ["B01001G_003E", "B01001G_018E", "+", "B01001_003E", "B01001_027E", "+", "/"]
+    },
+    "Hispanic/Latino Population Under Age 5 (%)": {
+        "White Hispanic/Latino": ["B01001A_003E", "B01001A_018E", "+", "B01001H_003E", "B01001H_018E", "+", "-", "s", "B01001_003E", "B01001_027E", "+", "/"],
+        "Non-White Hispanic/Latino": ["B01001I_003E", "B01001I_018E", "+", "l", "-", "B01001_003E", "B01001_027E", "+", "/"]
+    },
+    "Race/Ethnicity of Children Under Age 18 (%)": {
+        "White Percent": ["B01001A_003E", "B01001A_004E", "B01001A_005E", "B01001A_006E", "B01001A_018E", "B01001A_019E",
+            "B01001A_020E", "B01001A_021E", "+", "+", "+", "+", "+", "+", "+", "B01001_003E", "B01001_004E", "B01001_005E",
+            "B01001_006E", "B01001_027E", "B01001_028E", "B01001_029E", "B01001_030E", "+", "+", "+", "+", "+", "+", "+", "s", "/"],
+        "Black Percent": ["B01001B_003E", "B01001B_004E", "B01001B_005E", "B01001B_006E", "B01001B_018E", "B01001B_019E",
+            "B01001B_020E", "B01001B_021E", "+", "+", "+", "+", "+", "+", "+", "l", "s", "/"],
+        "American Indian Percent": ["B01001C_003E", "B01001C_004E", "B01001C_005E", "B01001C_006E", "B01001C_018E", "B01001C_019E",
+            "B01001C_020E", "B01001C_021E", "+", "+", "+", "+", "+", "+", "+", "l", "s", "/"],
+        "Asian Percent": ["B01001D_003E", "B01001D_004E", "B01001D_005E", "B01001D_006E", "B01001D_018E", "B01001D_019E",
+            "B01001D_020E", "B01001D_021E", "+", "+", "+", "+", "+", "+", "+", "l", "s", "/"],
+        "Native Hawaiian Percent": ["B01001E_003E", "B01001E_004E", "B01001E_005E", "B01001E_006E", "B01001E_018E", "B01001E_019E",
+            "B01001E_020E", "B01001E_021E", "+", "+", "+", "+", "+", "+", "+", "l", "s", "/"],
+        "Mixed Race Percent": ["B01001G_003E", "B01001G_004E", "B01001G_005E", "B01001G_006E", "B01001G_018E", "B01001G_019E",
+            "B01001G_020E", "B01001G_021E", "+", "+", "+", "+", "+", "+", "+", "l", "/"]
+    },
+    "Hispanic/Latino Children Under Age 18 (%)": {
+        "White Hispanic/Latino": ["B01001A_003E", "B01001A_004E", "B01001A_005E", "B01001A_006E", "B01001A_018E", "B01001A_019E",
+            "B01001A_020E", "B01001A_021E", "+", "+", "+", "+", "+", "+", "+", "B01001H_003E", "B01001H_004E", "B01001H_005E",
+            "B01001H_006E", "B01001H_018E", "B01001H_019E", "B01001H_020E", "B01001H_021E", "+", "+", "+", "+", "+", "+",
+            "+", "-", "s", "B01001_003E", "B01001_004E", "B01001_005E", "B01001_006E", "B01001_027E", "B01001_028E", "B01001_029E",
+            "B01001_030E", "+", "+", "+", "+", "+", "+", "+", "/"],
+        "Non-White Hispanic/Latino": ["B01001I_003E", "B01001I_004E", "B01001I_005E", "B01001I_006E", "B01001I_018E", "B01001I_019E",
+            "B01001I_020E", "B01001I_021E", "+", "+", "+", "+", "+", "+", "+", "l", "-", "B01001_003E", "B01001_004E", "B01001_005E",
+            "B01001_006E", "B01001_027E", "B01001_028E", "B01001_029E", "B01001_030E", "+", "+", "+", "+", "+", "+", "+", "/"]
+    },
+    "Poverty by Race/Ethnicity (%)": {
+        "White Percent": ["B17020A_002E", "B17020A_001E", "/"],
+        "Black Percent": ["B17020B_002E", "B17020B_001E", "/"],
+        "American Indian Percent": ["B17020C_002E", "B17020C_001E", "/"],
+        "Asian Percent": ["B17020D_002E", "B17020D_001E", "/"],
+        "Native Hawaiian Percent": ["B17020E_002E", "B17020E_001E", "/"],
+        "Mixed Race Percent": ["B17020G_002E", "B17020G_001E", "/"]
+    },
+    "Poverty by Hispanic/Latino Population (%)": {
+        "White Hispanic/Latino": ["B17020A_002E", "B17020H_002E", "-", "s", "B17020I_001E", "/"],
+        "Non-White Hispanic/Latino": ["B17020I_002E", "l", "-", "B17020I_001E", "/"]
+    },
+    "Population Under 6 in Poverty (%)": {
+        "Percent": ["B17020_003E", "B09001_003E", "B09001_004E", "B09001_005E", "+", "+", "/"]
+    },
+    "Population Under 18 in Poverty (%)": {
+        "Percent": ["B17020_003E", "B17020_004E", "B17020_005E", "+", "+", "B09001_001E", "/"]
+    },
+    "Families in Poverty by Type (%)": {
+        "Married-Couple": ["B17010_003E", "B17010_002E", "/"],
+        "Single-Female Householder": ["B17010_016E", "B17010_002E", "/"],
+        "Single-Male Householder": ["B17010_010E", "B17010_002E", "/"]
+    },
+    "Births in the Past 12 Months to Unmarried Women": {
+        "Total Births": ["B13002_007E"]
+    },
+    "Births in the Past 12 Months to Women in Poverty": {
+        "Total Births": ["B13010_004E", "B13010_008E", "+"]
+    },
+    "Births in the Past 12 Months to Women with Less than a Highschool Diploma": {
+        "Total Births": ["B13014_004E", "B13014_010E", "+"]
+    },
+    "Number of Pregnant Women Eligible for Early Head Start": {
+        "Total Births": ["B13016_002E"]
+    },
+    "Own Children Under 6 by Family Type": {
+        "Married-Couple Families": ["B09002_003E", "B09002_004E", "B09002_005E", "+", "+"],
+        "Single-Mother Families": ["B09002_016E", "B09002_017E", "B09002_018E", "+", "+"],
+        "Single-Father Families": ["B09002_010E", "B09002_011E", "B09002_012E", "+", "+"]
+    },
+    "Own Children Under 18 by Family Type": {
+        "Married-Couple Families": ["B09002_002E"],
+        "Single-Mother Families": ["B09002_015E"],
+        "Single-Father Families": ["B09002_009E"]
+    },
+    "Child Population": {
+        "Total Under 6": ["B09001_003E", "B09001_004E", "B09001_005E", "+", "+"],
+        "Total Under 18": ["B09001_001E"]
+    },
+    "Disabled Children": {
+        "Total Under 6": ["B09001_003E", "B09001_004E", "B09001_005E", "+", "+", "! 10", "/"],
+        "Total Under 18": ["B09001_001E", "! 10", "/"]
+    },
+    "Families with All Parents Working": {
+        "Married-Couple Families": ["B23007_007E"],
+        "Single-Mother Families": ["B23007_028E"],
+        "Single-Father Families": ["B23007_023E"],
+        "Total Families": ["B23007_007E", "B23007_023E", "B23007_028E", "+", "+"]
+    },
+    "Public Health Insurance": {
+        "Total Under 6": ["B27003_004E", "B27003_032E", "+"],
+        "Total Under 18": ["B27003_004E", "B27003_007E", "B27003_032E", "B27003_035E", "+", "+", "+"],
+        "Total": ["B27003_004E", "B27003_007E", "B27003_010E", "B27003_013E", "B27003_016E", "B27003_019E", "B27003_022E",
+            "B27003_025E", "B27003_028E", "B27003_032E", "B27003_035E", "B27003_038E", "B27003_041E", "B27003_044E", "B27003_047E",
+            "B27003_050E", "B27003_053E", "B27003_056E", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+",
+            "+", "+", "+", "+"]
+    }
+}
