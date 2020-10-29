@@ -38,7 +38,7 @@ class GeoPage(Page):
         # Load all the geographic data (all states, counties, and places)
         self.loadGeos()
 
-        # Init and add the selection box to the page
+        # Init and add the geographies box to the page
         self.geoFrame = Frame(self, borderwidth=2, relief=GROOVE)
         self.levelVar = StringVar(self.geoFrame)
         self.levelVar.set(self.geoLevels[0])
@@ -59,7 +59,7 @@ class GeoPage(Page):
 
         buttonFrame = Frame(self)
         add = Button(buttonFrame, text="Add", command=self.addButton)
-        remove = Button(buttonFrame, text="Remove", command=self.removeButtom)
+        remove = Button(buttonFrame, text="Remove", command=self.removeButton)
         buttonFrame.pack(side='left', fill='x', expand=False)
         add.pack(side="top", fill="x", expand=False)
         remove.pack(side="bottom", fill="x", expand=False)
@@ -68,7 +68,7 @@ class GeoPage(Page):
         selectionFrame = Frame(self, borderwidth=2, relief=GROOVE)
         label4 = Label(selectionFrame, text="Report Area", anchor='center')
         self.listbox3 = Listbox(selectionFrame, borderwidth=1, relief=GROOVE)
-        selectionFrame.pack(side='right', fill='both', expand=True)
+        selectionFrame.pack(side='left', fill='both', expand=True)
         label4.pack(side="top", fill="x", expand=False)
         self.listbox3.pack(side='bottom', fill='both', expand=True)
 
@@ -148,18 +148,37 @@ class GeoPage(Page):
                 geo = self.listbox1.get(selection[0])
             else:
                 geo = self.listbox2.get(selection[0])
-            if geo not in self.selectedGeos.keys():
-                self.listbox3.insert(END, geo)
-                if self.levelID == 0:
-                    self.selectedGeos[geo] = self.geos[geo]['ID']
-                elif self.levelID == 1:
-                    self.selectedGeos[geo] = self.geos[self.label1.cget('text')]['Counties'][geo]
-                elif self.levelID == 2:
-                    self.selectedGeos[geo] = self.geos[self.label1.cget('text')]['Places'][geo]
+            self.listbox3.insert(END, geo)
+            if self.levelID == 0:
+                if geo not in self.selectedGeos:
+                    self.selectedGeos[geo] = {}
+                self.selectedGeos[geo]['ID'] = self.geos[geo]['ID']
+                self.selectedGeos[geo]['selected'] = True
+            elif self.levelID == 1:
+                if self.label1.cget('text') not in self.selectedGeos:
+                    self.selectedGeos[self.label1.cget('text')] = {}
+                    self.selectedGeos[self.label1.cget('text')]['ID'] = self.geos[self.label1.cget('text')]['ID']
+                    self.selectedGeos[self.label1.cget('text')]['selected'] = False
+                if 'Counties' not in self.selectedGeos[self.label1.cget('text')]:
+                    self.selectedGeos[self.label1.cget('text')]['Counties'] = {}
+                self.selectedGeos[self.label1.cget('text')]['Counties'][geo] = self.geos[self.label1.cget('text')]['Counties'][geo]
+            elif self.levelID == 2:
+                if self.label1.cget('text') not in self.selectedGeos:
+                    self.selectedGeos[self.label1.cget('text')] = {}
+                    self.selectedGeos[self.label1.cget('text')]['ID'] = self.geos[self.label1.cget('text')]['ID']
+                    self.selectedGeos[self.label1.cget('text')]['selected'] = False
+                if 'Places' not in self.selectedGeos[self.label1.cget('text')]:
+                    self.selectedGeos[self.label1.cget('text')]['Places'] = {}
+                self.selectedGeos[self.label1.cget('text')]['Places'][geo] = self.geos[self.label1.cget('text')]['Places'][geo]
 
+    def removeButton(self):
+        print(self.selectedGeos)
 
-    def removeButtom(self):
-        print(self.geoIDs)
+    def getGeoCount(self):
+        return self.listbox3.size()
+
+    def getGeos(self):
+        return self.selectedGeos
 
 
 class TablePage(Page):
@@ -170,9 +189,7 @@ class TablePage(Page):
         self.loadTableDesc()
 
         # Init all widgets
-        self.pageFrame = Frame(self)
-        self.header = Label(self.pageFrame, text="Data Tables", anchor='w')
-        self.dtsFrame = Frame(self.pageFrame, borderwidth=2, relief=GROOVE)
+        self.dtsFrame = Frame(self)
         self.canvas = Canvas(self.dtsFrame)
         self.scrollbar = Scrollbar(self.dtsFrame, orient="vertical", command=self.canvas.yview)
         self.scrollable_frame = Frame(self.canvas)
@@ -199,8 +216,6 @@ class TablePage(Page):
             self.checkBoxes.append(checkBox)
 
         # Pack all widgets
-        self.pageFrame.pack(side='left', fill='both', expand=True)
-        self.header.pack(side='top', fill='x', expand=False)
         self.dtsFrame.pack(side='bottom', fill='both', expand=True)
         self.canvas.pack(side="left", fill="both", expand=True)
         self.scrollbar.pack(side="right", fill="y")
@@ -222,16 +237,48 @@ class TablePage(Page):
         for i in range(1, len(self.checkVars)):
             self.checkVars[i].set(state)
 
+    def getTableCount(self):
+        count = 0
+        for i in range(1, len(self.checkVars)):
+            if self.checkVars[i].get() == 1:
+                count += 1
+        return count
+
+
 class ConfPage(Page):
     def __init__(self, *args, **kwargs):
         Page.__init__(self, *args, **kwargs)
-        label = Label(self, text="This is page 3")
-        label.pack(side="top", fill="both", expand=True)
+
+        # Init all widgets
+        self.confFrame = Frame(self)
+        self.geoCountLabel = Label(self.confFrame, text='0 locations in Report Area', anchor='center')
+        self.tableCountLabel = Label(self.confFrame, text='0 Data Tables included in Report', anchor='center')
+        self.fileNameFrame = Frame(self.confFrame)
+        self.fileNameLabel = Label(self.fileNameFrame, text='Enter a file name:', anchor='e')
+        self.fileNameEntry = Entry(self.fileNameFrame, justify='right')
+        self.fileNameEntry.insert(0, 'Generated_Databook')
+        self.fileNameExtensionLabel = Label(self.fileNameFrame, text='.xlsx', anchor='w')
+
+        # Pack all widgets
+        self.confFrame.pack(side='left', fill='both', expand=True)
+        self.geoCountLabel.pack(side='top', fill='x', expand=False)
+        self.tableCountLabel.pack(side='top', fill='x', expand=False)
+        self.fileNameFrame.pack(side='top', fill='x', expand=False)
+        self.fileNameLabel.pack(side='left', fill='x', expand=True)
+        self.fileNameEntry.pack(side='left', fill='x', expand=False)
+        self.fileNameExtensionLabel.pack(side='left', fill='x', expand=True)
+
+    def updateSelection(self, gCount, tCount):
+        self.geoCountLabel.config(text=str(gCount)+' locations in Report Area')
+        self.tableCountLabel.config(text=str(tCount)+' Data Tables included in Report')
 
 
 class MainView(Frame):
-    # TODO: Change this back to 0 before deploying application
-    pageID = 1
+    pageID = 0
+    steps = ["Step 1 of 3: Create your Report Area",
+             "Step 2 of 3: Add Data Tables to your Databook",
+             "Step 3 of 3: Confirm your selection"]
+    cmodel = model.CensusModel()
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
@@ -248,7 +295,7 @@ class MainView(Frame):
 
         # Progress Frame - Contains images showing progression of user
         progressFrame = Frame(self)
-        self.label3 = Label(progressFrame, text="Step "+str(self.pageID+1)+" of 3")
+        self.label3 = Label(progressFrame, text=self.steps[0])
 
         progressFrame.pack(side="top", fill="x", expand=False)
         self.label3.pack(side="top", anchor='center')
@@ -268,6 +315,7 @@ class MainView(Frame):
         buttonFrame = Frame(self)
         self.next = Button(buttonFrame, text="Next", command=self.nextPage)
         self.prev = Button(buttonFrame, text="Back", command=self.lastPage)
+        self.gen = Button(buttonFrame, text="Generate", command=self.generate)
 
         buttonFrame.pack(side="bottom", fill="x", expand=False)
         self.next.pack(side="right")
@@ -286,19 +334,26 @@ class MainView(Frame):
             self.show()
 
     def show(self):
+        self.next.pack_forget()
+        self.prev.pack_forget()
+        self.gen.pack_forget()
+
         if self.pageID == 0:
+            self.next.pack(side="right")
             self.p1.show()
-            self.prev.pack_forget()
-            self.next.pack(side="right")
         elif self.pageID == 1:
-            self.p2.show()
             self.prev.pack(side="left")
             self.next.pack(side="right")
+            self.p2.show()
         elif self.pageID == 2:
-            self.p3.show()
+            self.p3.updateSelection(self.p1.getGeoCount(), self.p2.getTableCount())
             self.prev.pack(side="left")
-            self.next.pack_forget()
-        self.label3.config(text="Step " + str(self.pageID + 1) + " of 3")
+            self.gen.pack(side="right")
+            self.p3.show()
+        self.label3.config(text=self.steps[self.pageID])
+
+    def generate(self):
+        self.cmodel.genData(self.p1.getGeos(), None, 'Databook.xlsx')
 
 
 def setupUI(root):
