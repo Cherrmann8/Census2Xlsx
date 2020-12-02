@@ -1,15 +1,12 @@
+from tkinter import *
+from tkinter.ttk import *
 import model
 import logging
 import json
-import kivy
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import ScreenManager, Screen
 
 """
 Author: Charles Herrmann
-Date: 12/2/2020
+Date: 10/27/20
 Description: GUI for Census2xlsx application
 """
 
@@ -17,7 +14,6 @@ logging.basicConfig(filename='c2x.log', filemode='w', level=logging.INFO)
 logger = logging.getLogger('view')
 
 
-"""
 class Page(Frame):
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
@@ -122,7 +118,7 @@ class GeoPage(Page):
         else:
             print("ERROR: GeoPage has invalid levelID")
 
-    # Fills either the counties or places list boxes
+    """Fills either the counties or places list boxes"""
     def fillListBox2(self):
         # Empty listbox2 of any elements
         self.listbox2.delete(0, END)
@@ -135,13 +131,13 @@ class GeoPage(Page):
             for county in self.geos[self.label1.cget('text')]['Places']:
                 self.listbox2.insert(END, county)
 
-    # Reset the State Label and show listbox1
+    """Reset the State Label and show listbox1"""
     def resetState(self):
         self.label1.config(text='Select a State')
         self.label1.pack(side="top", fill="x", expand=False)
         self.listbox1.pack(side='top', fill='both', expand=True)
 
-    # Adds the selected state, county, or place to the
+    """Adds the selected state, county, or place to the"""
     def addButton(self):
         if self.levelID == 0:
             selection = self.listbox1.curselection()
@@ -358,7 +354,8 @@ class MainView(Frame):
 
     def generate(self):
         self.cmodel.genData(self.p1.getGeos(), None, 'Databook.xlsx')
-        
+
+
 def setupUI(root):
     # setup window
     logger.info("Initializing view.py...")
@@ -367,29 +364,55 @@ def setupUI(root):
     mainFrame.pack(side="top", fill="both", expand=True)
     root.wm_geometry("500x300")
     logger.info("view.py initialized successfully")
-"""
-
-class TestApp(App):
-    def build(self):
-        sm = ScreenManager()
-
-        # Add few screens
-        for i in range(4):
-            screen = Screen(name='Title %d' % i)
-            sm.add_widget(screen)
-        layout = BoxLayout(orientation='vertical')
-        btn1 = Button(text='Hello')
-        btn2 = Button(text='World')
-        layout.add_widget(btn1)
-        layout.add_widget(btn2)
-        return sm
 
 
 def main():
     logger.info("Started from view.py")
-    TestApp().run()
+    root = Tk()
+    setupUI(root)
+    root.mainloop()
 
 
 if __name__ == "__main__":
     main()
 
+# TODO: Code for dynamically size progress bar maybe?
+# from tkinter import *
+#
+# # a subclass of Canvas for dealing with resizing of windows
+# class ResizingCanvas(Canvas):
+#     def __init__(self,parent,**kwargs):
+#         Canvas.__init__(self,parent,**kwargs)
+#         self.bind("<Configure>", self.on_resize)
+#         self.height = self.winfo_reqheight()
+#         self.width = self.winfo_reqwidth()
+#
+#     def on_resize(self,event):
+#         # determine the ratio of old width/height to new width/height
+#         wscale = float(event.width)/self.width
+#         hscale = float(event.height)/self.height
+#         self.width = event.width
+#         self.height = event.height
+#         # resize the canvas
+#         self.config(width=self.width, height=self.height)
+#         # rescale all the objects tagged with the "all" tag
+#         self.scale("all",0,0,wscale,hscale)
+#
+# def main():
+#     root = Tk()
+#     myframe = Frame(root)
+#     myframe.pack(fill=BOTH, expand=YES)
+#     mycanvas = ResizingCanvas(myframe,width=850, height=400, bg="red", highlightthickness=0)
+#     mycanvas.pack(fill=BOTH, expand=YES)
+#
+#     # add some widgets to the canvas
+#     mycanvas.create_line(0, 0, 200, 100)
+#     mycanvas.create_line(0, 100, 200, 0, fill="red", dash=(4, 4))
+#     mycanvas.create_rectangle(50, 25, 150, 75, fill="blue")
+#
+#     # tag all of the drawn widgets
+#     mycanvas.addtag_all("all")
+#     root.mainloop()
+#
+# if __name__ == "__main__":
+#     main()
