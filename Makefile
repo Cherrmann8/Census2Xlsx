@@ -21,16 +21,16 @@ setup:
 	${PYTHON} ${SRC}/tools.py -d ${DATA}
 
 model:
-	${PYTHON} ${SRC}/model.py -l ${LOG} -o ${OUT}
+	${PYTHON} ${SRC}/model.py -d ${DATA} -o ${OUT}
 
 proto:
 	${PYTHON} ${SRC}/tkinterView.py 
 
 run:
-	${PYTHON} ${SRC}/view.py
+	${PYTHON} ${SRC}/view.py -d ${DATA} -o ${OUT}
 
 debug:
-	${PYTHON} debug
+	${PYTHON} ${SRC}/view.py -d ${DATA} -o ${OUT} -l ${LOG}
 
 test:
 	${PYTHON} -m pytest
