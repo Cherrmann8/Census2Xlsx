@@ -1,8 +1,10 @@
+import sys
+import getopt
 import censusdata
 import json
 import xlsxwriter
-from tools import printTableCheck
 import logging
+from tools import printTableCheck
 
 """
 Author: Charles Herrmann
@@ -22,9 +24,6 @@ Census library Reference Code:
     censusdata.download(censusType, censusYear, censusdata.censusgeo([('state', '*'), ('county', '*')]), tableIDList)
 """
 
-# Comment out the following line if this isn't the entry file of if you don't want logging
-logging.basicConfig(filename='c2x.log', filemode='w', level=logging.INFO)
-
 
 class CensusModel:
     censusType = 'acs5'
@@ -38,17 +37,17 @@ class CensusModel:
         self.logger.info('initializing...')
 
         # load censusTables.json
-        with open('censusTables.json', 'r') as loadfile:
+        with open('src/data/censusTables.json', 'r') as loadfile:
             self.censusTables = json.load(loadfile)
         self.logger.info('loaded censusTables.json')
 
         # load dataTableDescriptions.json
-        with open('dataTableDescriptions.json', 'r') as loadfile:
+        with open('src/data/dataTableDescriptions.json', 'r') as loadfile:
             self.dataTableDesc = json.load(loadfile)
         self.logger.info('loaded dataTableDescriptions.json')
 
         # load geographies.json
-        with open('geographies.json', 'r') as loadfile:
+        with open('src/data/geographies.json', 'r') as loadfile:
             self.geographies = json.load(loadfile)
         self.logger.info('loaded geographies.json')
 
@@ -214,12 +213,12 @@ def main():
     # download census data from selected geography and cached tableIDs
     cmodel.downloadData(data, tmp_geo, cmodel.censusTables)
 
-    """ vvv ALL ADDITIONAL GEOS IN THIS SECTION vvv """
+    """ vvv ALL TEMP GEOS IN THIS SECTION vvv """
     tmp_geo = censusdata.geographies(censusdata.censusgeo([('state', '36'), ('county', '081')]), cmodel.censusType, cmodel.censusYear)
     cmodel.downloadData(data, tmp_geo, cmodel.censusTables)
     tmp_geo = censusdata.geographies(censusdata.censusgeo([('state', '36')]), cmodel.censusType, cmodel.censusYear)
     cmodel.downloadData(data, tmp_geo, cmodel.censusTables)
-    """ ^^^ ALL ADDITIONAL GEOS IN THIS SECTION ^^^ """
+    """ ^^^ ALL TEMP GEOS IN THIS SECTION ^^^ """
 
     # calculated desired dataTables
     dataTables = {'tmp': ''}  # tmp is used for calculating dataTables. Will be removed at end of calculations
@@ -233,7 +232,29 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # Comment out the following line if this isn't the entry file or if you don't want logging
+    # logging.basicConfig(filename='c2x.log', filemode='w', level=logging.INFO)
+
+    #main(sys.argv[1:])
+    print(sys.argv[1:])
+
+    logDir = ''
+    outputDir = ''
+    try:
+        opts, args = getopt.getopt(sys.argv[1:],"hl:o:",["ldir=","odir="])
+    except getopt.GetoptError:
+        print ('model.py -l <logDir> -o <outputDir>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print ('model.py -l <logDir> -o <outputDir>')
+            sys.exit()
+        elif opt in ("-l"):
+            logDir = arg
+        elif opt in ("-o"):
+            outputDir = arg
+    print ('Log Directory is', logDir)
+    print ('Output Directory is', outputDir)
 
     """ The code below is for quickly searching geographies available in the census (comment out main if using) """
     # geos = censusdata.geographies(censusdata.censusgeo([('state', '36'), ('county', '*')]), 'acs5', 2018)

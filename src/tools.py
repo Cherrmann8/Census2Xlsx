@@ -1,10 +1,12 @@
+import sys
+import getopt
 import censusdata
 import json
 
 """
 Author: Charles Herrmann
 Date: 9/28/20
-Description: A script for cacheing data to Json files to speed up application.
+Description: A script for cacheing data to Json files to speed up the application.
     The first Json file is censusTables.json which stores Table IDs from the census website.
     The second Json file is geographies.json which stores all the available locations. 
 
@@ -14,7 +16,7 @@ Variable Descriptions:
  -  Geos dictionary = {State_Name: {ID: State_ID, Counties: {County_Name: County_ID}}}
     The Geographies available for the user
 
-Example Reference Code:
+Reference Code:
  -  Example print json to console
     print(json.dumps(tables, indent=4))
  -  Code used to load the censusTables.json file
@@ -30,8 +32,6 @@ Example Reference Code:
 # Global Variables
 censusType = 'acs5'
 censusYear = 2018
-genCT = False  # Generate the censusTables.json file
-genG = True  # Generates the geographies.json file
 
 
 def printTableLabels(concept, var_keys, var_values):
@@ -317,7 +317,7 @@ def fillTables(tables):
     fillChildrenTables(tables)
 
 
-def genCensusTables():
+def genCensusTables(dataDir):
     tables = {}
 
     print('Acquiring Data Tables...')
@@ -326,11 +326,11 @@ def genCensusTables():
 
     printTableCheck(tables)
 
-    with open('censusTables.json', 'w') as save_file:
+    with open(dataDir+'censusTables.json', 'w') as save_file:
         json.dump(tables, save_file, indent=4)
 
 
-def genGeographies():
+def genGeographies(dataDir):
     geos = {}
 
     print('Acquiring Geographies...')
@@ -360,7 +360,7 @@ def genGeographies():
     with open('geographies.json', 'w') as save_file:
         json.dump(geos, save_file, indent=4)
 
-    # TODO remove this
+    # TODO remove this eventually (used for searching census database geographies)
     # tmp_loc = censusdata.geographies(censusdata.censusgeo([('state', '35'), ('place', '*')]), censusType, censusYear)
     # print(censusdata.censusgeo([('state', '35'), ('place', '*')]).sumlevel())
     # l_keys = list(tmp_loc.keys())
@@ -369,13 +369,23 @@ def genGeographies():
     #     print(l_key, tmp_loc[l_key])
 
 
-def main():
-    if genCT:
-        genCensusTables()
+def main(argv):
+    dataDir = ''
+    try:
+        opts, args = getopt.getopt(argv, 'hd:', ['ddir='])
+    except getopt.GetoptError:
+        print ('tools.py -d <dataDir>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print ('tools.py -d <dataDir>')
+            sys.exit()
+        elif opt in ("-d"):
+            dataDir = arg + '/'
 
-    if genG:
-        genGeographies()
+    genCensusTables(dataDir)
+    genGeographies(dataDir)
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])

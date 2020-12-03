@@ -1,6 +1,8 @@
 PYTHON = python3
 SRC = src
-LOGS = src/logs
+DATA = src/data
+LOG = logs
+OUT = output
 
 .PHONY = help setup proto run debug test clean
 .DEFAULT_GOAL = help
@@ -16,7 +18,13 @@ help:
 	@echo "------------------------------------"
 
 setup:
-	${PYTHON} tools.py
+	${PYTHON} ${SRC}/tools.py -d ${DATA}
+
+model:
+	${PYTHON} ${SRC}/model.py -l ${LOG} -o ${OUT}
+
+proto:
+	${PYTHON} ${SRC}/tkinterView.py 
 
 run:
 	${PYTHON} ${SRC}/view.py
@@ -28,4 +36,4 @@ test:
 	${PYTHON} -m pytest
 	
 clean:
-	rm ${LOGS}/*.log
+	rm -rf ${LOG}/* ${OUT}/* ${SRC}/__pycache__

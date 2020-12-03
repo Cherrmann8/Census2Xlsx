@@ -74,7 +74,7 @@ class GeoPage(Page):
 
     def loadGeos(self):
         logger.info("Loading geographies.json")
-        with open('geographies.json', 'r') as loadfile:
+        with open('src/data/geographies.json', 'r') as loadfile:
             self.geos = json.load(loadfile)
         logger.info("geographies.json loaded")
 
@@ -226,7 +226,7 @@ class TablePage(Page):
 
     def loadTableDesc(self):
         logger.info("Loading dataTableDescriptions.json")
-        with open('dataTableDescriptions.json', 'r') as loadfile:
+        with open('src/data/dataTableDescriptions.json', 'r') as loadfile:
             self.desc = json.load(loadfile)
         logger.info("dataTableDescriptions.json loaded")
 
