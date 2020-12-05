@@ -20,7 +20,7 @@ $ make install
 
 # Overview
 
-Cen2Xlsx is a cross-platform data collection tool for generating community needs assessment reports using the United States Census Bureau database. Developed with Python 3.7 and Kivy 1.11. The project has a Trello board for tracking features and development tasks. This board can be viewed at: https://trello.com/b/UD66VbiG/cen2xlsx.
+Cen2Xlsx is a cross-platform data collection tool for the United States Census Bureau database. Developed with Python 3.7 and Kivy 1.11. The project has a Trello board for tracking features and development tasks. This board can be viewed at: https://trello.com/b/UD66VbiG/cen2xlsx.
 
 # Usage
 
@@ -66,7 +66,7 @@ $ python3 src/model.py --output OUTPUTDIR
 
 ## Design Benefits
 
-This application was designed around a fast and simple user experience. Data is cached and included in the built application to significantly speed up the applications responsiveness and is consistent across survey types and years. The GUI was prototyped in Tkinter first to get a feel for how to enrich the user journey once the basic features were implemented.
+This application was designed around a simple and fast user experience. Some table IDs and geographies are cached to significantly speed up the applications responsiveness and are consistent across survey types and years. The GUI was prototyped in Tkinter first to get a feel for how to enrich the user journey once the basic features were implemented.
 
 ## Limitations
 
