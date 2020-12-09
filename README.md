@@ -20,7 +20,7 @@ $ make install
 
 # Overview
 
-Census2Xlsx is a cross-platform data collection tool for the United States Census Bureau database. Developed with Python 3.7 and Kivy 1.11. The project has a Trello board for tracking features and development tasks. This board can be viewed at: https://trello.com/b/UD66VbiG/census2xlsx.
+Census2Xlsx is a cross-platform data collection tool for the United States Census Bureau database. Developed with Python 3.7 and Kivy 1.11. The project has a Trello board for tracking features and development tasks. This board can be viewed at: https://trello.com/b/UD66VbiG/cen2xlsx.
 
 # Usage
 
