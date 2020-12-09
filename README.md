@@ -1,4 +1,4 @@
-# Cen2Xlsx
+# Census2Xlsx
 
 Author: Charles W. Herrmann
 
@@ -9,7 +9,7 @@ Date: 12/2/2020
 Clone the repository:
 
 ```bash
-$ git clone https://github.com/Cherrmann8/Cen2Xlsx.git
+$ git clone https://github.com/Cherrmann8/Census2Xlsx.git
 ```
 
 Install the dependencies (requires [pip3](https://pypi.org/project/pip/)):
@@ -20,7 +20,7 @@ $ make install
 
 # Overview
 
-Cen2Xlsx is a cross-platform data collection tool for the United States Census Bureau database. Developed with Python 3.7 and Kivy 1.11. The project has a Trello board for tracking features and development tasks. This board can be viewed at: https://trello.com/b/UD66VbiG/cen2xlsx.
+Census2Xlsx is a cross-platform data collection tool for the United States Census Bureau database. Developed with Python 3.7 and Kivy 1.11. The project has a Trello board for tracking features and development tasks. This board can be viewed at: https://trello.com/b/UD66VbiG/census2xlsx.
 
 # Usage
 
