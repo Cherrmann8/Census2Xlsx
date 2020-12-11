@@ -12,8 +12,8 @@ Date: 12/2/2020
 Description: GUI for Census2xlsx application
 """
 
-#logging.basicConfig(filename='c2x.log', filemode='w', level=logging.INFO)
-#logger = logging.getLogger('view')
+# logging.basicConfig(filename='c2x.log', filemode='w', level=logging.INFO)
+# logger = logging.getLogger('view')
 
 """
 class TestApp(App):
@@ -32,6 +32,7 @@ def main():
     logger.info("Started from view.py")
     TestApp().run()
 """
+
 
 class MainWindow(Screen):
     pass
@@ -52,9 +53,10 @@ class MyMainApp(App):
     def build(self):
         return kv
 
+
 def main():
     MyMainApp().run()
 
+
 if __name__ == "__main__":
     main()
-

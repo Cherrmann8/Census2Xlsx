@@ -71,6 +71,11 @@
         "Single-Female Householder": ["B17010_016E", "B17010_002E", "/"],
         "Single-Male Householder": ["B17010_010E", "B17010_002E", "/"]
     },
+    "Families in Poverty by Percent of Poverty Level": {
+        "Families below 50% poverty level": ["S1701_C01_038E"],
+        "Families below 100% poverty level": ["S1701_C01_039E"],
+        "Families below 150% poverty level": ["S1701_C01_040E"]
+    },
     "Births in the Past 12 Months to Unmarried Women": {
         "Total Births": ["B13002_007E"]
     },
@@ -114,5 +119,27 @@
             "B27003_025E", "B27003_028E", "B27003_032E", "B27003_035E", "B27003_038E", "B27003_041E", "B27003_044E", "B27003_047E",
             "B27003_050E", "B27003_053E", "B27003_056E", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+", "+",
             "+", "+", "+", "+"]
+    },
+    "Unemployment": {
+        "Labor Force": ["DP03_0003E"],
+        "Total Employed": ["DP03_0004E"],
+        "Total Unemployed": ["DP03_0005E"],
+        "Unemployment Rate": ["DP03_0005PE"]
+    },
+    "Educational Attainment (%)": {
+        "No High School Diploma": ["S1501_C01_007E", "S1501_C01_008E", "+", "S1501_C01_006E", "/"],
+        "High School Only": ["S1501_C01_009E", "S1501_C01_006E", "/"],
+        "Some College": ["S1501_C01_010E", "S1501_C01_006E", "/"],
+        "Associates Degree": ["S1501_C01_011E", "S1501_C01_006E", "/"],
+        "Bachelors Degree": ["S1501_C01_012E", "S1501_C01_006E", "/"],
+        "Graduate or Professional Degree": ["S1501_C01_013E", "S1501_C01_006E", "/"]
+    },
+    "Uninsured Population (%)": {
+        "Uninsured Population Under 6 Percent": ["S2701_C05_002E"],
+        "Uninsured Population Under 18 Percent": ["S2701_C05_011E"],
+        "Uninsured Population Percent": ["S2701_C05_001E"]
+    },
+    "Limited English-Speaking Households (%)": {
+        "Percent": ["S1602_C04_001E"]
     }
 }

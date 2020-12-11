@@ -10,8 +10,8 @@ Date: 10/27/20
 Description: GUI for Census2xlsx application
 """
 
-logging.basicConfig(filename='c2x.log', filemode='w', level=logging.INFO)
-logger = logging.getLogger('view')
+logging.basicConfig(filename="c2x.log", filemode="w", level=logging.INFO)
+logger = logging.getLogger("view")
 
 
 class Page(Frame):
@@ -30,7 +30,7 @@ class GeoPage(Page):
         "Select a Geographic Level",
         "State Level",
         "County Level",
-        "Place Level"
+        "Place Level",
     ]
 
     def __init__(self, *args, **kwargs):
@@ -51,7 +51,7 @@ class GeoPage(Page):
         self.listbox2 = Listbox(self.geoFrame, borderwidth=2, relief=GROOVE)
         # self.listbox1.bind('<Button-1>', self.stateMenuEvent)
         # self.listbox1.bind('<Double-1>', self.stateMenuEvent)
-        self.geoFrame.pack(side='left', fill='both', expand=True)
+        self.geoFrame.pack(side="left", fill="both", expand=True)
         self.levelMenu.pack(side="top", fill="x", expand=False)
 
         for state in self.geos.keys():
@@ -60,28 +60,28 @@ class GeoPage(Page):
         buttonFrame = Frame(self)
         add = Button(buttonFrame, text="Add", command=self.addButton)
         remove = Button(buttonFrame, text="Remove", command=self.removeButton)
-        buttonFrame.pack(side='left', fill='x', expand=False)
+        buttonFrame.pack(side="left", fill="x", expand=False)
         add.pack(side="top", fill="x", expand=False)
         remove.pack(side="bottom", fill="x", expand=False)
 
         # Init and add the selection box to the page
         selectionFrame = Frame(self, borderwidth=2, relief=GROOVE)
-        label4 = Label(selectionFrame, text="Report Area", anchor='center')
+        label4 = Label(selectionFrame, text="Report Area", anchor="center")
         self.listbox3 = Listbox(selectionFrame, borderwidth=1, relief=GROOVE)
-        selectionFrame.pack(side='left', fill='both', expand=True)
+        selectionFrame.pack(side="left", fill="both", expand=True)
         label4.pack(side="top", fill="x", expand=False)
-        self.listbox3.pack(side='bottom', fill='both', expand=True)
+        self.listbox3.pack(side="bottom", fill="both", expand=True)
 
     def loadGeos(self):
         logger.info("Loading geographies.json")
-        with open('src/data/geographies.json', 'r') as loadfile:
+        with open("src/data/geographies.json", "r") as loadfile:
             self.geos = json.load(loadfile)
         logger.info("geographies.json loaded")
 
     def stateSelected(self, *args):
         self.label1.config(text=self.listbox1.get(self.listbox1.curselection()[0]))
         self.listbox1.pack_forget()
-        self.listbox2.pack(side='top', fill='both', expand=True)
+        self.listbox2.pack(side="top", fill="both", expand=True)
         self.fillListBox2()
 
     def levelMenuEvent(self, *args):
@@ -106,38 +106,41 @@ class GeoPage(Page):
                 self.listbox2.pack_forget()
                 if self.levelID == 0:
                     self.resetState()
-                    self.listbox1.unbind('<Double-1>')
+                    self.listbox1.unbind("<Double-1>")
                 elif self.levelID == 1:
                     self.resetState()
-                    self.listbox1.bind('<Double-1>', self.stateSelected)
+                    self.listbox1.bind("<Double-1>", self.stateSelected)
                     self.label2.pack(side="top", fill="x", expand=False)
                 elif self.levelID == 2:
                     self.resetState()
-                    self.listbox1.bind('<Double-1>', self.stateSelected)
+                    self.listbox1.bind("<Double-1>", self.stateSelected)
                     self.label3.pack(side="top", fill="x", expand=False)
         else:
             print("ERROR: GeoPage has invalid levelID")
 
     """Fills either the counties or places list boxes"""
+
     def fillListBox2(self):
         # Empty listbox2 of any elements
         self.listbox2.delete(0, END)
         # Fill in the counties for the chosen state
         if self.levelID == 1:
-            for county in self.geos[self.label1.cget('text')]['Counties']:
+            for county in self.geos[self.label1.cget("text")]["Counties"]:
                 self.listbox2.insert(END, county)
         # Fill in the places for the chosen state
         elif self.levelID == 2:
-            for county in self.geos[self.label1.cget('text')]['Places']:
+            for county in self.geos[self.label1.cget("text")]["Places"]:
                 self.listbox2.insert(END, county)
 
     """Reset the State Label and show listbox1"""
+
     def resetState(self):
-        self.label1.config(text='Select a State')
+        self.label1.config(text="Select a State")
         self.label1.pack(side="top", fill="x", expand=False)
-        self.listbox1.pack(side='top', fill='both', expand=True)
+        self.listbox1.pack(side="top", fill="both", expand=True)
 
     """Adds the selected state, county, or place to the"""
+
     def addButton(self):
         if self.levelID == 0:
             selection = self.listbox1.curselection()
@@ -152,24 +155,32 @@ class GeoPage(Page):
             if self.levelID == 0:
                 if geo not in self.selectedGeos:
                     self.selectedGeos[geo] = {}
-                self.selectedGeos[geo]['ID'] = self.geos[geo]['ID']
-                self.selectedGeos[geo]['selected'] = True
+                self.selectedGeos[geo]["ID"] = self.geos[geo]["ID"]
+                self.selectedGeos[geo]["selected"] = True
             elif self.levelID == 1:
-                if self.label1.cget('text') not in self.selectedGeos:
-                    self.selectedGeos[self.label1.cget('text')] = {}
-                    self.selectedGeos[self.label1.cget('text')]['ID'] = self.geos[self.label1.cget('text')]['ID']
-                    self.selectedGeos[self.label1.cget('text')]['selected'] = False
-                if 'Counties' not in self.selectedGeos[self.label1.cget('text')]:
-                    self.selectedGeos[self.label1.cget('text')]['Counties'] = {}
-                self.selectedGeos[self.label1.cget('text')]['Counties'][geo] = self.geos[self.label1.cget('text')]['Counties'][geo]
+                if self.label1.cget("text") not in self.selectedGeos:
+                    self.selectedGeos[self.label1.cget("text")] = {}
+                    self.selectedGeos[self.label1.cget("text")]["ID"] = self.geos[
+                        self.label1.cget("text")
+                    ]["ID"]
+                    self.selectedGeos[self.label1.cget("text")]["selected"] = False
+                if "Counties" not in self.selectedGeos[self.label1.cget("text")]:
+                    self.selectedGeos[self.label1.cget("text")]["Counties"] = {}
+                self.selectedGeos[self.label1.cget("text")]["Counties"][
+                    geo
+                ] = self.geos[self.label1.cget("text")]["Counties"][geo]
             elif self.levelID == 2:
-                if self.label1.cget('text') not in self.selectedGeos:
-                    self.selectedGeos[self.label1.cget('text')] = {}
-                    self.selectedGeos[self.label1.cget('text')]['ID'] = self.geos[self.label1.cget('text')]['ID']
-                    self.selectedGeos[self.label1.cget('text')]['selected'] = False
-                if 'Places' not in self.selectedGeos[self.label1.cget('text')]:
-                    self.selectedGeos[self.label1.cget('text')]['Places'] = {}
-                self.selectedGeos[self.label1.cget('text')]['Places'][geo] = self.geos[self.label1.cget('text')]['Places'][geo]
+                if self.label1.cget("text") not in self.selectedGeos:
+                    self.selectedGeos[self.label1.cget("text")] = {}
+                    self.selectedGeos[self.label1.cget("text")]["ID"] = self.geos[
+                        self.label1.cget("text")
+                    ]["ID"]
+                    self.selectedGeos[self.label1.cget("text")]["selected"] = False
+                if "Places" not in self.selectedGeos[self.label1.cget("text")]:
+                    self.selectedGeos[self.label1.cget("text")]["Places"] = {}
+                self.selectedGeos[self.label1.cget("text")]["Places"][geo] = self.geos[
+                    self.label1.cget("text")
+                ]["Places"][geo]
 
     def removeButton(self):
         print(self.selectedGeos)
@@ -191,13 +202,13 @@ class TablePage(Page):
         # Init all widgets
         self.dtsFrame = Frame(self)
         self.canvas = Canvas(self.dtsFrame)
-        self.scrollbar = Scrollbar(self.dtsFrame, orient="vertical", command=self.canvas.yview)
+        self.scrollbar = Scrollbar(
+            self.dtsFrame, orient="vertical", command=self.canvas.yview
+        )
         self.scrollable_frame = Frame(self.canvas)
         self.scrollable_frame.bind(
             "<Configure>",
-            lambda e: self.canvas.configure(
-                scrollregion=self.canvas.bbox("all")
-            )
+            lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")),
         )
 
         self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
@@ -208,25 +219,34 @@ class TablePage(Page):
         self.checkVars = []
         self.checkBoxes = []
         self.checkVars.append(IntVar())
-        checkBox = Checkbutton(self.scrollable_frame, text='Select all tables', variable=self.checkVars[len(self.checkVars)-1], command=self.selectAll)
+        checkBox = Checkbutton(
+            self.scrollable_frame,
+            text="Select all tables",
+            variable=self.checkVars[len(self.checkVars) - 1],
+            command=self.selectAll,
+        )
         self.checkBoxes.append(checkBox)
         for key in self.desc.keys():
             self.checkVars.append(IntVar())
-            checkBox = Checkbutton(self.scrollable_frame, text=key, variable=self.checkVars[len(self.checkVars)-1])
+            checkBox = Checkbutton(
+                self.scrollable_frame,
+                text=key,
+                variable=self.checkVars[len(self.checkVars) - 1],
+            )
             self.checkBoxes.append(checkBox)
 
         # Pack all widgets
-        self.dtsFrame.pack(side='bottom', fill='both', expand=True)
+        self.dtsFrame.pack(side="bottom", fill="both", expand=True)
         self.canvas.pack(side="left", fill="both", expand=True)
         self.scrollbar.pack(side="right", fill="y")
 
         # Pack all dtCheckboxes
         for checkBox in self.checkBoxes:
-            checkBox.pack(side='top', fill='both', expand=True)
+            checkBox.pack(side="top", fill="both", expand=True)
 
     def loadTableDesc(self):
         logger.info("Loading dataTableDescriptions.json")
-        with open('src/data/dataTableDescriptions.json', 'r') as loadfile:
+        with open("src/data/dataTableDescriptions.json", "r") as loadfile:
             self.desc = json.load(loadfile)
         logger.info("dataTableDescriptions.json loaded")
 
@@ -251,34 +271,46 @@ class ConfPage(Page):
 
         # Init all widgets
         self.confFrame = Frame(self)
-        self.geoCountLabel = Label(self.confFrame, text='0 locations in Report Area', anchor='center')
-        self.tableCountLabel = Label(self.confFrame, text='0 Data Tables included in Report', anchor='center')
+        self.geoCountLabel = Label(
+            self.confFrame, text="0 locations in Report Area", anchor="center"
+        )
+        self.tableCountLabel = Label(
+            self.confFrame, text="0 Data Tables included in Report", anchor="center"
+        )
         self.fileNameFrame = Frame(self.confFrame)
-        self.fileNameLabel = Label(self.fileNameFrame, text='Enter a file name:', anchor='e')
-        self.fileNameEntry = Entry(self.fileNameFrame, justify='right')
-        self.fileNameEntry.insert(0, 'Generated_Databook')
-        self.fileNameExtensionLabel = Label(self.fileNameFrame, text='.xlsx', anchor='w')
+        self.fileNameLabel = Label(
+            self.fileNameFrame, text="Enter a file name:", anchor="e"
+        )
+        self.fileNameEntry = Entry(self.fileNameFrame, justify="right")
+        self.fileNameEntry.insert(0, "Generated_Databook")
+        self.fileNameExtensionLabel = Label(
+            self.fileNameFrame, text=".xlsx", anchor="w"
+        )
 
         # Pack all widgets
-        self.confFrame.pack(side='left', fill='both', expand=True)
-        self.geoCountLabel.pack(side='top', fill='x', expand=False)
-        self.tableCountLabel.pack(side='top', fill='x', expand=False)
-        self.fileNameFrame.pack(side='top', fill='x', expand=False)
-        self.fileNameLabel.pack(side='left', fill='x', expand=True)
-        self.fileNameEntry.pack(side='left', fill='x', expand=False)
-        self.fileNameExtensionLabel.pack(side='left', fill='x', expand=True)
+        self.confFrame.pack(side="left", fill="both", expand=True)
+        self.geoCountLabel.pack(side="top", fill="x", expand=False)
+        self.tableCountLabel.pack(side="top", fill="x", expand=False)
+        self.fileNameFrame.pack(side="top", fill="x", expand=False)
+        self.fileNameLabel.pack(side="left", fill="x", expand=True)
+        self.fileNameEntry.pack(side="left", fill="x", expand=False)
+        self.fileNameExtensionLabel.pack(side="left", fill="x", expand=True)
 
     def updateSelection(self, gCount, tCount):
-        self.geoCountLabel.config(text=str(gCount)+' locations in Report Area')
-        self.tableCountLabel.config(text=str(tCount)+' Data Tables included in Report')
+        self.geoCountLabel.config(text=str(gCount) + " locations in Report Area")
+        self.tableCountLabel.config(
+            text=str(tCount) + " Data Tables included in Report"
+        )
 
 
 class MainView(Frame):
     pageID = 0
-    steps = ["Step 1 of 3: Create your Report Area",
-             "Step 2 of 3: Add Data Tables to your Databook",
-             "Step 3 of 3: Confirm your selection"]
-    cmodel = model.CensusModel()
+    steps = [
+        "Step 1 of 3: Create your Report Area",
+        "Step 2 of 3: Add Data Tables to your Databook",
+        "Step 3 of 3: Confirm your selection",
+    ]
+    cmodel = model.CensusModel(False)
 
     def __init__(self, *args, **kwargs):
         Frame.__init__(self, *args, **kwargs)
@@ -298,7 +330,7 @@ class MainView(Frame):
         self.label3 = Label(progressFrame, text=self.steps[0])
 
         progressFrame.pack(side="top", fill="x", expand=False)
-        self.label3.pack(side="top", anchor='center')
+        self.label3.pack(side="top", anchor="center")
 
         # Pages Frame - Contains each page of the generation setup (Geographies, Tables, Confirmation)
         pagesFrame = Frame(self)
@@ -353,7 +385,7 @@ class MainView(Frame):
         self.label3.config(text=self.steps[self.pageID])
 
     def generate(self):
-        self.cmodel.genData(self.p1.getGeos(), None, 'Databook.xlsx')
+        self.cmodel.gen_data(self.p1.getGeos(), None, "Databook.xlsx")
 
 
 def setupUI(root):
