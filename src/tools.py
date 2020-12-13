@@ -1,8 +1,3 @@
-import sys
-import getopt
-import censusdata
-import json
-
 """
 Author: Charles Herrmann
 Date: 9/28/20
@@ -35,6 +30,11 @@ Reference Code:
     #     print(key, '-', geos[key])
 
 """
+
+import sys
+import getopt
+import censusdata
+import json
 
 # Global Variables
 censusType = "acs5"

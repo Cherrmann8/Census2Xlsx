@@ -4,7 +4,7 @@ DATA = src/data
 LOG = logs
 OUT = output
 
-.PHONY = help setup clean proto model model_debug view view_debug test
+.PHONY = help setup clean model model_debug view view_debug test
 .DEFAULT_GOAL = help
 
 help:
@@ -23,9 +23,6 @@ setup:
 clean:
 	rm -rf ${LOG}/* ${OUT}/* ${SRC}/__pycache__
 
-proto:
-	${PYTHON} ${SRC}/tkinterView.py
-
 model:
 	${PYTHON} ${SRC}/model.py -d ${DATA} -o ${OUT}
 
@@ -33,7 +30,7 @@ model_debug:
 	${PYTHON} ${SRC}/model.py -d ${DATA} -o ${OUT} -l ${LOG}
 
 view:
-	${PYTHON} ${SRC}/view.py -d ${DATA} -o ${OUT}
+	${PYTHON} -d ${SRC}/view.py -d ${DATA} -o ${OUT}
 
 view_debug:
 	${PYTHON} ${SRC}/view.py -d ${DATA} -o ${OUT} -l ${LOG}

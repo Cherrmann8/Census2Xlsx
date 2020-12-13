@@ -25,7 +25,6 @@ censusdata library reference code:
     )
 """
 
-
 import sys
 import getopt
 import logging
