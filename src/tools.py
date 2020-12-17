@@ -418,7 +418,7 @@ def genGeographies(dataDir):
         print(count, len(s_keys))
     print("Done")
 
-    with open("geographies.json", "w") as save_file:
+    with open("../assets/data/geographies.json", "w") as save_file:
         json.dump(geos, save_file, indent=4)
 
     # TODO remove this eventually (used for searching census database geographies)

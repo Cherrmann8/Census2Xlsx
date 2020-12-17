@@ -42,35 +42,32 @@ class CensusModel:
     census_tables = None
     data_tables = None
     geographies = None
-    logger = logging.getLogger("model")
+    logger = None
     debug = False
+    out_dir = ""
 
-    def __init__(self, debug):
-        if debug:
-            logging.basicConfig(filename="c2x.log", filemode="w", level=logging.DEBUG)
-            print("debug logging turned on...")
-        else:
-            logging.basicConfig(filename="c2x.log", filemode="w", level=logging.INFO)
-            print("debug logging turned off...")
+    def __init__(self, data_dir, log_dir="", out_dir=""):
+        if log_dir != "":
+            self.logger = logging.getLogger("model")
+        self.out_dir = out_dir
 
-        self.logger.info("Initializing model...")
+        if self.logger:
+            self.logger.info("Initializing model...")
 
         # load censusTables.json
-        with open("src/data/censusTables.json", "r") as loadfile:
+        with open(data_dir+"/censusTables.json", "r") as loadfile:
             self.census_tables = json.load(loadfile)
-        self.logger.info("Loaded censusTables.json")
+        if self.logger:
+            self.logger.info("Loaded censusTables.json")
 
         # load dataTableDescriptions.json
-        with open("src/data/dataTableDescriptions.json", "r") as loadfile:
+        with open(data_dir+"/dataTableDescriptions.json", "r") as loadfile:
             self.data_tables = json.load(loadfile)
-        self.logger.info("Loaded dataTableDescriptions.json")
+        if self.logger:
+            self.logger.info("Loaded dataTableDescriptions.json")
 
-        # load geographies.json
-        with open("src/data/geographies.json", "r") as loadfile:
-            self.geographies = json.load(loadfile)
-        self.logger.info("Loaded geographies.json")
-
-        self.logger.info("Initialized model successfully")
+        if self.logger:
+            self.logger.info("Initialized model successfully")
 
     def gen_data(self, geos, indicators, output_name):
         """
@@ -78,9 +75,9 @@ class CensusModel:
         :param geos: report area as census geocodes
         :param indicators: selected indicators to be included in the xlsx file
         :param output_name: the name for the output xlsx file
-        :return:
         """
-        self.logger.info("Generating...")
+        if self.logger:
+            self.logger.info("Generating...")
 
         # census_tables holds all the raw data collected from the census
         census_tables = {}
@@ -89,7 +86,33 @@ class CensusModel:
 
         # loop through report area locations and obtain all required data from census
         for key in geos.keys():
-            self.logger.debug("Requesting data_tables for %s" % key)
+            if self.logger:
+                self.logger.debug("Requesting data_tables for %s" % key)
+
+            if "Places" in geos[key]:
+                for placeKey in geos[key]["Places"]:
+                    # select geography
+                    geo = censusdata.geographies(
+                        censusdata.censusgeo([("state", geos[key]["ID"]), ("place", geos[key]["Places"][placeKey])]),
+                        self.census_type,
+                        self.census_year,
+                    )
+
+                    # download census data from selected geography and cached tableIDs
+                    self.download_data(census_tables, geo, self.census_tables)
+
+            if "Counties" in geos[key]:
+                for countyKey in geos[key]["Counties"]:
+                    # select geography
+                    geo = censusdata.geographies(
+                        censusdata.censusgeo([("state", geos[key]["ID"]), ("county", geos[key]["Counties"][countyKey])]),
+                        self.census_type,
+                        self.census_year,
+                    )
+
+                    # download census data from selected geography and cached tableIDs
+                    self.download_data(census_tables, geo, self.census_tables)
+
             # TODO: check if key is state or zip code
             if geos[key]["selected"]:
                 # TODO: load the data in geo and alphabetical order
@@ -110,18 +133,21 @@ class CensusModel:
         del data_tables["tmp"]
 
         # save data_tables to xlsx file
-        workbook = xlsxwriter.Workbook(output_name)
+        workbook = xlsxwriter.Workbook(self.out_dir+"/"+output_name)
         self.save_data(workbook, data_tables)
         workbook.close()
 
-        self.logger.info("Generated successfully")
+        if self.logger:
+            self.logger.info("Generated successfully")
 
     def download_data(self, data, geo, census_tables):
-        self.logger.info("Downloading...")
+        if self.logger:
+            self.logger.info("Downloading...")
         # make list of geo's
         geos = list(geo.keys())
 
-        self.logger.debug("Downloading the following TablesIDs: ")
+        if self.logger:
+            self.logger.debug("Downloading the following TablesIDs: ")
         # for each geo, for each tableType: put all tableID's into one list and download
         detailedTableIDs = []
         concepts = list(census_tables["Detailed Tables"].keys())
@@ -129,7 +155,7 @@ class CensusModel:
             detailedTableIDs.extend(
                 list(census_tables["Detailed Tables"][concept].keys())
             )
-            if self.debug:
+            if self.logger and self.debug:
                 self.logger.debug("concept: %s" % concept)
                 for tableID in census_tables["Detailed Tables"][concept].keys():
                     self.logger.debug(
@@ -143,7 +169,7 @@ class CensusModel:
         concepts = list(census_tables["Subject Tables"].keys())
         for concept in concepts:
             subjectTableIDs.extend(list(census_tables["Subject Tables"][concept].keys()))
-            if self.debug:
+            if self.logger and self.debug:
                 self.logger.debug("concept: " + concept)
                 for tableID in census_tables["Subject Tables"][concept].keys():
                     self.logger.debug(
@@ -157,7 +183,7 @@ class CensusModel:
         concepts = list(census_tables["Data Profiles"].keys())
         for concept in concepts:
             dataProfileIDs.extend(list(census_tables["Data Profiles"][concept].keys()))
-            if self.debug:
+            if self.logger and self.debug:
                 self.logger.debug("concept: " + concept)
                 for tableID in census_tables["Data Profiles"][concept].keys():
                     self.logger.debug(
@@ -203,7 +229,8 @@ class CensusModel:
             for dl_key in dl_keys:
                 data[g][dl_key] = downloaded_data[dl_key][geo[g]]
 
-        self.logger.info("Downloaded successfully")
+        if self.logger:
+            self.logger.info("Downloaded successfully")
 
     def calculate_formula(self, formula, geo, census_table, data_tables):
         """
@@ -218,14 +245,16 @@ class CensusModel:
             if len(item) == 1:
                 if item == "s":
                     if data_tables["tmp"] != "":
-                        self.logger.warning("Tried to overwrite the tmp variable")
+                        if self.logger:
+                            self.logger.warning("Tried to overwrite the tmp variable")
                         sys.exit(2)
                     data_tables["tmp"] = calculator[len(calculator) - 1]
                     # print('=s=', dataTables['tmp'])
                 if item == "l":
                     # print('=l=', dataTables['tmp'])
                     if data_tables["tmp"] == "":
-                        self.logger.warning("Tried to load tmp variable but non exists")
+                        if self.logger:
+                            self.logger.warning("Tried to load tmp variable but non exists")
                         sys.exit(2)
                     calculator.append(data_tables["tmp"])
                     data_tables["tmp"] = ""
@@ -241,8 +270,9 @@ class CensusModel:
                     b = calculator.pop()
                     a = calculator.pop()
                     if b == 0:
-                        self.logger.warning("Divide non-zero by zero")
-                        self.logger.warning("%s / %s" % (str(a), str(b)))
+                        if self.logger:
+                            self.logger.warning("Divide non-zero by zero")
+                            self.logger.warning("%s / %s" % (str(a), str(b)))
                         if a == 0:
                             calculator.append(0)
                     else:
@@ -252,9 +282,10 @@ class CensusModel:
                     calculator.append(int(item.split(" ")[1]))
                 else:
                     calculator.append(census_table[geo][item])
-            self.logger.debug(calculator)
-            if data_tables["tmp"] != "":
-                self.logger.debug("tmp: %s" % str(data_tables["tmp"]))
+            if self.logger:
+                self.logger.debug(calculator)
+                if data_tables["tmp"] != "":
+                    self.logger.debug("tmp: %s" % str(data_tables["tmp"]))
         return calculator.pop()
 
     def calculate_data(self, census_tables, data_tables):
@@ -263,7 +294,8 @@ class CensusModel:
         :param census_tables: the downloaded raw data from the census
         :param data_tables: the calculated indicators for the xlsx
         """
-        self.logger.info("Calculating...")
+        if self.logger:
+            self.logger.info("Calculating...")
         ct_keys = list(census_tables.keys())
         dt_keys = list(self.data_tables.keys())
         for dt_key in dt_keys:
@@ -273,14 +305,15 @@ class CensusModel:
                 for data_key in ct_keys:
                     data_tables[dt_key][data_key] = {}
                     for dt_label in dt_labels:
-                        self.logger.debug(
-                            "Model calculating "
-                            + dt_key
-                            + "-"
-                            + data_key
-                            + "-"
-                            + dt_label
-                        )
+                        if self.logger:
+                            self.logger.debug(
+                                "Model calculating "
+                                + dt_key
+                                + "-"
+                                + data_key
+                                + "-"
+                                + dt_label
+                            )
                         data_tables[dt_key][data_key][
                             dt_label
                         ] = self.calculate_formula(
@@ -290,7 +323,8 @@ class CensusModel:
                             data_tables,
                         )
 
-        self.logger.info("Calculated successfully")
+        if self.logger:
+            self.logger.info("Calculated successfully")
 
     def save_data(self, workbook, data_tables):
         """
@@ -298,7 +332,8 @@ class CensusModel:
         :param workbook: the xlsx file to save the data_tables to
         :param data_tables: the calculated indicators of interest
         """
-        self.logger.info("Saving...")
+        if self.logger:
+            self.logger.info("Saving...")
         worksheet = workbook.add_worksheet()
         header_format = workbook.add_format(
             {
@@ -368,16 +403,19 @@ class CensusModel:
                 row += 1
                 col = 0
             row += 1
-        self.logger.info("Saved successfully")
+        if self.logger:
+            self.logger.info("Saved successfully")
 
 
-def main(debug):
+def main(data_dir, log_dir="", out_dir=""):
     """
     This main function was developed to test the CensusModel class. This function contains almost
     the exact code found in CensusModel.genData(). The only modification is hard-coded geos and
     data_tables for debugging purposes. The debug parameter sets the CensusModel to debug mode.
     """
-    census_model = CensusModel(debug)
+    if log_dir != "":
+        logging.basicConfig(filename=log_dir + "/c2x.log", filemode="w", level=logging.DEBUG)
+    census_model = CensusModel(data_dir, log_dir, out_dir)
     data = {}
 
     # Acquire geography
@@ -416,12 +454,10 @@ def main(debug):
 
 
 if __name__ == "__main__":
-    # Comment out the following line if this isn't the entry file or if you don't want logging
-    # logging.basicConfig(filename='c2x.log', filemode='w', level=logging.INFO)
-
     DAT_DIR = ""
     LOG_DIR = ""
     OUT_DIR = ""
+
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hd:l:o:", ["ddir=", "ldir=", "odir="])
     except getopt.GetoptError:
@@ -438,4 +474,4 @@ if __name__ == "__main__":
         elif opt in "-o":
             OUT_DIR = arg
 
-    # main(sys.argv[1:])
+    main(DAT_DIR, LOG_DIR, OUT_DIR)

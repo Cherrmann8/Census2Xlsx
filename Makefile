@@ -1,10 +1,10 @@
 PYTHON = python3
 SRC = src
-DATA = src/data
+DATA = assets/data
 LOG = logs
 OUT = output
 
-.PHONY = help setup clean model model_debug view view_debug test
+.PHONY = help setup clean model_debug model view_debug view test build_debug
 .DEFAULT_GOAL = help
 
 help:
@@ -21,20 +21,22 @@ setup:
 	${PYTHON} ${SRC}/tools.py -d ${DATA}
 
 clean:
-	rm -rf ${LOG}/* ${OUT}/* ${SRC}/__pycache__
-
-model:
-	${PYTHON} ${SRC}/model.py -d ${DATA} -o ${OUT}
+	rm -f ${LOG}/* ${OUT}/*
 
 model_debug:
 	${PYTHON} ${SRC}/model.py -d ${DATA} -o ${OUT} -l ${LOG}
 
-view:
-	${PYTHON} -d ${SRC}/view.py -d ${DATA} -o ${OUT}
+model:
+	${PYTHON} ${SRC}/model.py -d ${DATA} -o ${OUT}
 
 view_debug:
 	${PYTHON} ${SRC}/view.py -d ${DATA} -o ${OUT} -l ${LOG}
 
+view:
+	${PYTHON} ${SRC}/view.py -d ${DATA} -o ${OUT}
+
 test:
 	${PYTHON} -m pytest
 
+build:
+	pyinstaller --noconsole --onefile ${SRC}/view.py
