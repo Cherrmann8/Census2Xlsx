@@ -1,6 +1,6 @@
 # Census2Xlsx
 
-Author: Charles W. Herrmann
+Author: Charles Herrmann
 
 # Quickstart
 
