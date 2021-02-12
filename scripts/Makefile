@@ -1,6 +1,6 @@
 PYTHON = python3
-SRC = src
-DATA = assets/data
+SRC = ./
+DATA = ../app/src/assets/data
 LOG = logs
 OUT = output
 
