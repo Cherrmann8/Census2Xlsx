@@ -1,10 +1,11 @@
 # Census2Xlsx
 
+Census2Xlsx is a cross-platform data collection and analysis tool for the United States Census Bureau database.
 Author: Charles Herrmann
 
 # Overview
 
-Census2Xlsx is a cross-platform data collection tool for the United States Census Bureau database. Developed with Python 3.7, Electron 11.2.1, and React 17.0.1.
+Developed with Python 3.7, Electron 11.2.1, and React 17.0.1.
 
 Followed this guide to set up development environment: https://flaviocopes.com/react-electron/
 

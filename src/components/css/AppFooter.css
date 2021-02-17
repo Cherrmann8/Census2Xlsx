@@ -1,0 +1,5 @@
+.pageButtons {
+  display: flex;
+  flex-flow: row-reverse nowrap;
+  justify-content: space-between;
+}
