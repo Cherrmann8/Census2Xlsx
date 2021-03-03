@@ -1,21 +1,20 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Accordion from 'react-bootstrap/Accordion'
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
-import ListGroup from 'react-bootstrap/ListGroup'
+import React from "react";
+import PropTypes from "prop-types";
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import ListGroup from "react-bootstrap/ListGroup";
 
 class SelectorTable extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {
-    }
+    super(props);
+    this.state = {};
 
     // put each state name into the listgroup
-    this.stateList = []
-    this.secondariesList = []
-    const { locations } = this.props
-    let itemID = 0
+    this.stateList = [];
+    this.secondariesList = [];
+    const { locations } = this.props;
+    let itemID = 0;
     locations.forEach((location) => {
       this.stateList.push(
         <ListGroup.Item
@@ -25,56 +24,48 @@ class SelectorTable extends React.Component {
           onClick={(e) => this.onStateListClick(e)}
         >
           {location.StateName}
-        </ListGroup.Item>,
-      )
-      itemID += 1
-    })
+        </ListGroup.Item>
+      );
+      itemID += 1;
+    });
 
-    this.onSecondariesListClick = this.onSecondariesListClick.bind(this)
-    this.onStateListClick = this.onStateListClick.bind(this)
-    this.buildSelectorTable = this.buildSelectorTable.bind(this)
+    this.onSecondariesListClick = this.onSecondariesListClick.bind(this);
+    this.onStateListClick = this.onStateListClick.bind(this);
+    this.buildSelectorTable = this.buildSelectorTable.bind(this);
   }
 
   onSecondariesListClick(event) {
-    const {
-      level,
-      setCountyIdx,
-      setPlaceIdx,
-    } = this.props
+    const { level, setCountyIdx, setPlaceIdx } = this.props;
 
-    const tmpSecondaryIdx = event.target.attributes[0].value
+    const tmpSecondaryIdx = event.target.attributes[0].value;
     // console.log(tmpSecondaryIdx)
 
-    if (level === 'County') {
-      setCountyIdx(tmpSecondaryIdx)
-    } else if (level === 'Place') {
-      setPlaceIdx(tmpSecondaryIdx)
+    if (level === "County") {
+      setCountyIdx(tmpSecondaryIdx);
+    } else if (level === "Place") {
+      setPlaceIdx(tmpSecondaryIdx);
     }
   }
 
   onStateListClick(event) {
-    const tmpStateIdx = event.target.attributes[0].value
-    const {
-      level,
-      onOpenSecondary,
-      setStateIdx,
-    } = this.props
+    const tmpStateIdx = event.target.attributes[0].value;
+    const { level, onOpenSecondary, setStateIdx } = this.props;
 
     // set the stateIdx
-    setStateIdx(tmpStateIdx)
+    setStateIdx(tmpStateIdx);
 
-    if (level !== 'State') {
-      const { locations } = this.props
+    if (level !== "State") {
+      const { locations } = this.props;
 
       // change the stateList title
-      onOpenSecondary(locations[tmpStateIdx].StateName)
+      onOpenSecondary(locations[tmpStateIdx].StateName);
 
       // create secondaryList
-      this.secondariesList = []
-      let tmpSecondaries = null
-      let itemID = 0
-      if (level === 'County') {
-        tmpSecondaries = locations[tmpStateIdx].Counties
+      this.secondariesList = [];
+      let tmpSecondaries = null;
+      let itemID = 0;
+      if (level === "County") {
+        tmpSecondaries = locations[tmpStateIdx].Counties;
         tmpSecondaries.forEach((secondary) => {
           this.secondariesList.push(
             <ListGroup.Item
@@ -84,12 +75,12 @@ class SelectorTable extends React.Component {
               onClick={(e) => this.onSecondariesListClick(e)}
             >
               {secondary.CountyName}
-            </ListGroup.Item>,
-          )
-          itemID += 1
-        })
-      } else if (level === 'Place') {
-        tmpSecondaries = locations[tmpStateIdx].Places
+            </ListGroup.Item>
+          );
+          itemID += 1;
+        });
+      } else if (level === "Place") {
+        tmpSecondaries = locations[tmpStateIdx].Places;
         tmpSecondaries.forEach((secondary) => {
           this.secondariesList.push(
             <ListGroup.Item
@@ -99,26 +90,21 @@ class SelectorTable extends React.Component {
               onClick={(e) => this.onSecondariesListClick(e)}
             >
               {secondary.PlaceName}
-            </ListGroup.Item>,
-          )
-          itemID += 1
-        })
+            </ListGroup.Item>
+          );
+          itemID += 1;
+        });
       }
-      // console.log(tmpSecondaries)
     }
   }
 
   buildSelectorTable() {
-    console.log('Building selectorTable')
+    console.log("Building selectorTable");
 
-    const {
-      level,
-      activeCard,
-      stateListTitle,
-    } = this.props
+    const { level, activeCard, stateListTitle } = this.props;
 
-    let secondaryCard = null
-    if (level !== 'State') {
+    let secondaryCard = null;
+    if (level !== "State") {
       secondaryCard = (
         <Card>
           <Card.Header>
@@ -128,13 +114,11 @@ class SelectorTable extends React.Component {
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body id="SelectorList">
-              <ListGroup variant="flush">
-                {this.secondariesList}
-              </ListGroup>
+              <ListGroup variant="flush">{this.secondariesList}</ListGroup>
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-      )
+      );
     }
 
     return (
@@ -147,26 +131,20 @@ class SelectorTable extends React.Component {
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body id="SelectorList">
-              <ListGroup variant="flush">
-                {this.stateList}
-              </ListGroup>
+              <ListGroup variant="flush">{this.stateList}</ListGroup>
             </Card.Body>
           </Accordion.Collapse>
         </Card>
         {secondaryCard}
       </Accordion>
-    )
+    );
   }
 
   render() {
     // build the selectorTable
-    const selectorTable = this.buildSelectorTable()
+    const selectorTable = this.buildSelectorTable();
 
-    return (
-      <div id="SelectorTable">
-        {selectorTable}
-      </div>
-    )
+    return <div id="SelectorTable">{selectorTable}</div>;
   }
 }
 
@@ -187,27 +165,27 @@ SelectorTable.propTypes = {
         PropTypes.shape({
           CountyName: PropTypes.string,
           CountyID: PropTypes.string,
-        }),
+        })
       ),
       Places: PropTypes.arrayOf(
         PropTypes.shape({
           PlaceName: PropTypes.string,
           PlaceID: PropTypes.string,
-        }),
+        })
       ),
-    }),
+    })
   ),
-}
+};
 SelectorTable.defaultProps = {
-  level: 'State',
+  level: "State",
   // activeList: '0',
-  activeCard: '0',
-  stateListTitle: 'Select a state',
+  activeCard: "0",
+  stateListTitle: "Select a state",
   onOpenSecondary: null,
   setStateIdx: null,
   setCountyIdx: null,
   setPlaceIdx: null,
   locations: null,
-}
+};
 
-export default SelectorTable
+export default SelectorTable;

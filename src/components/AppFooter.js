@@ -1,42 +1,58 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Button from 'react-bootstrap/Button'
-import './css/AppFooter.css'
+import React from "react";
+import PropTypes from "prop-types";
+import Button from "react-bootstrap/Button";
+import "./css/AppFooter.css";
 
 class AppFooter extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
 
-    this.nextPageClick = this.nextPageClick.bind(this)
-    this.lastPageClick = this.lastPageClick.bind(this)
+    this.nextPageClick = this.nextPageClick.bind(this);
+    this.lastPageClick = this.lastPageClick.bind(this);
   }
 
   nextPageClick() {
-    const { onPageChange } = this.props
-    onPageChange(1)
+    const { onPageChange } = this.props;
+    onPageChange(1);
   }
 
   lastPageClick() {
-    const { onPageChange } = this.props
-    onPageChange(-1)
+    const { onPageChange } = this.props;
+    onPageChange(-1);
   }
 
   render() {
-    const { page } = this.props
+    const { page } = this.props;
 
-    let b1 = null
-    let b2 = null
+    let b1 = null;
+    let b2 = null;
     if (page === 1 || page === 2) {
-      b1 = <Button variant="primary" onClick={this.lastPageClick}>Last Page</Button>
+      b1 = (
+        <Button variant="primary" onClick={this.lastPageClick}>
+          Last Page
+        </Button>
+      );
     }
 
     if (page === 0 || page === 1) {
-      b2 = <Button variant="primary" onClick={this.nextPageClick}>Next Page</Button>
+      b2 = (
+        <Button variant="primary" onClick={this.nextPageClick}>
+          Next Page
+        </Button>
+      );
     } else if (page === 2) {
-      b2 = <Button variant="primary" onClick={this.nextPageClick}>Download</Button>
+      b2 = (
+        <Button variant="primary" onClick={this.nextPageClick}>
+          Download
+        </Button>
+      );
     } else if (page === 4) {
-      b2 = <Button variant="primary" onClick={this.nextPageClick}>Start Over</Button>
+      b2 = (
+        <Button variant="primary" onClick={this.nextPageClick}>
+          Start Over
+        </Button>
+      );
     }
 
     return (
@@ -44,17 +60,17 @@ class AppFooter extends React.Component {
         {b2}
         {b1}
       </div>
-    )
+    );
   }
 }
 
 AppFooter.propTypes = {
   page: PropTypes.number,
   onPageChange: PropTypes.func,
-}
+};
 AppFooter.defaultProps = {
   page: 0,
   onPageChange: null,
-}
+};
 
-export default AppFooter
+export default AppFooter;

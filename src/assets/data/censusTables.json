@@ -1,264 +1,264 @@
 {
-    "Detailed Tables": {
-        "SEX BY AGE": {
-            "B01001_001E": "Estimate Total",
-            "B01001_003E": "Estimate Total Male Under 5 years",
-            "B01001_004E": "Estimate Total Male 5 to 9 years",
-            "B01001_005E": "Estimate Total Male 10 to 14 years",
-            "B01001_006E": "Estimate Total Male 15 to 17 years",
-            "B01001_027E": "Estimate Total Female Under 5 years",
-            "B01001_028E": "Estimate Total Female 5 to 9 years",
-            "B01001_029E": "Estimate Total Female 10 to 14 years",
-            "B01001_030E": "Estimate Total Female 15 to 17 years"
-        },
-        "SEX BY AGE (WHITE ALONE)": {
-            "B01001A_001E": "Estimate Total",
-            "B01001A_003E": "Estimate Total Male Under 5 years",
-            "B01001A_004E": "Estimate Total Male 5 to 9 years",
-            "B01001A_005E": "Estimate Total Male 10 to 14 years",
-            "B01001A_006E": "Estimate Total Male 15 to 17 years",
-            "B01001A_018E": "Estimate Total Female Under 5 years",
-            "B01001A_019E": "Estimate Total Female 5 to 9 years",
-            "B01001A_020E": "Estimate Total Female 10 to 14 years",
-            "B01001A_021E": "Estimate Total Female 15 to 17 years"
-        },
-        "SEX BY AGE (BLACK OR AFRICAN AMERICAN ALONE)": {
-            "B01001B_001E": "Estimate Total",
-            "B01001B_003E": "Estimate Total Male Under 5 years",
-            "B01001B_004E": "Estimate Total Male 5 to 9 years",
-            "B01001B_005E": "Estimate Total Male 10 to 14 years",
-            "B01001B_006E": "Estimate Total Male 15 to 17 years",
-            "B01001B_018E": "Estimate Total Female Under 5 years",
-            "B01001B_019E": "Estimate Total Female 5 to 9 years",
-            "B01001B_020E": "Estimate Total Female 10 to 14 years",
-            "B01001B_021E": "Estimate Total Female 15 to 17 years"
-        },
-        "SEX BY AGE (AMERICAN INDIAN AND ALASKA NATIVE ALONE)": {
-            "B01001C_001E": "Estimate Total",
-            "B01001C_003E": "Estimate Total Male Under 5 years",
-            "B01001C_004E": "Estimate Total Male 5 to 9 years",
-            "B01001C_005E": "Estimate Total Male 10 to 14 years",
-            "B01001C_006E": "Estimate Total Male 15 to 17 years",
-            "B01001C_018E": "Estimate Total Female Under 5 years",
-            "B01001C_019E": "Estimate Total Female 5 to 9 years",
-            "B01001C_020E": "Estimate Total Female 10 to 14 years",
-            "B01001C_021E": "Estimate Total Female 15 to 17 years"
-        },
-        "SEX BY AGE (ASIAN ALONE)": {
-            "B01001D_001E": "Estimate Total",
-            "B01001D_003E": "Estimate Total Male Under 5 years",
-            "B01001D_004E": "Estimate Total Male 5 to 9 years",
-            "B01001D_005E": "Estimate Total Male 10 to 14 years",
-            "B01001D_006E": "Estimate Total Male 15 to 17 years",
-            "B01001D_018E": "Estimate Total Female Under 5 years",
-            "B01001D_019E": "Estimate Total Female 5 to 9 years",
-            "B01001D_020E": "Estimate Total Female 10 to 14 years",
-            "B01001D_021E": "Estimate Total Female 15 to 17 years"
-        },
-        "SEX BY AGE (NATIVE HAWAIIAN AND OTHER PACIFIC ISLANDER ALONE)": {
-            "B01001E_001E": "Estimate Total",
-            "B01001E_003E": "Estimate Total Male Under 5 years",
-            "B01001E_004E": "Estimate Total Male 5 to 9 years",
-            "B01001E_005E": "Estimate Total Male 10 to 14 years",
-            "B01001E_006E": "Estimate Total Male 15 to 17 years",
-            "B01001E_018E": "Estimate Total Female Under 5 years",
-            "B01001E_019E": "Estimate Total Female 5 to 9 years",
-            "B01001E_020E": "Estimate Total Female 10 to 14 years",
-            "B01001E_021E": "Estimate Total Female 15 to 17 years"
-        },
-        "SEX BY AGE (TWO OR MORE RACES)": {
-            "B01001G_001E": "Estimate Total",
-            "B01001G_003E": "Estimate Total Male Under 5 years",
-            "B01001G_004E": "Estimate Total Male 5 to 9 years",
-            "B01001G_005E": "Estimate Total Male 10 to 14 years",
-            "B01001G_006E": "Estimate Total Male 15 to 17 years",
-            "B01001G_018E": "Estimate Total Female Under 5 years",
-            "B01001G_019E": "Estimate Total Female 5 to 9 years",
-            "B01001G_020E": "Estimate Total Female 10 to 14 years",
-            "B01001G_021E": "Estimate Total Female 15 to 17 years"
-        },
-        "SEX BY AGE (WHITE ALONE, NOT HISPANIC OR LATINO)": {
-            "B01001H_001E": "Estimate Total",
-            "B01001H_003E": "Estimate Total Male Under 5 years",
-            "B01001H_004E": "Estimate Total Male 5 to 9 years",
-            "B01001H_005E": "Estimate Total Male 10 to 14 years",
-            "B01001H_006E": "Estimate Total Male 15 to 17 years",
-            "B01001H_018E": "Estimate Total Female Under 5 years",
-            "B01001H_019E": "Estimate Total Female 5 to 9 years",
-            "B01001H_020E": "Estimate Total Female 10 to 14 years",
-            "B01001H_021E": "Estimate Total Female 15 to 17 years"
-        },
-        "SEX BY AGE (HISPANIC OR LATINO)": {
-            "B01001I_001E": "Estimate Total",
-            "B01001I_003E": "Estimate Total Male Under 5 years",
-            "B01001I_004E": "Estimate Total Male 5 to 9 years",
-            "B01001I_005E": "Estimate Total Male 10 to 14 years",
-            "B01001I_006E": "Estimate Total Male 15 to 17 years",
-            "B01001I_018E": "Estimate Total Female Under 5 years",
-            "B01001I_019E": "Estimate Total Female 5 to 9 years",
-            "B01001I_020E": "Estimate Total Female 10 to 14 years",
-            "B01001I_021E": "Estimate Total Female 15 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE": {
-            "B17020_001E": "Estimate Total",
-            "B17020_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (WHITE ALONE)": {
-            "B17020A_001E": "Estimate Total",
-            "B17020A_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020A_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020A_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020A_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (BLACK OR AFRICAN AMERICAN ALONE)": {
-            "B17020B_001E": "Estimate Total",
-            "B17020B_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020B_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020B_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020B_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (AMERICAN INDIAN AND ALASKA NATIVE ALONE)": {
-            "B17020C_001E": "Estimate Total",
-            "B17020C_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020C_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020C_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020C_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (ASIAN ALONE)": {
-            "B17020D_001E": "Estimate Total",
-            "B17020D_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020D_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020D_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020D_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (NATIVE HAWAIIAN AND OTHER PACIFIC ISLANDER ALONE)": {
-            "B17020E_001E": "Estimate Total",
-            "B17020E_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020E_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020E_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020E_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (TWO OR MORE RACES)": {
-            "B17020G_001E": "Estimate Total",
-            "B17020G_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020G_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020G_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020G_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (WHITE ALONE, NOT HISPANIC OR LATINO)": {
-            "B17020H_001E": "Estimate Total",
-            "B17020H_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020H_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020H_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020H_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (HISPANIC OR LATINO)": {
-            "B17020I_001E": "Estimate Total",
-            "B17020I_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17020I_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
-            "B17020I_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
-            "B17020I_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
-        },
-        "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY FAMILY TYPE BY PRESENCE OF RELATED CHILDREN UNDER 18 YEARS BY AGE OF RELATED CHILDREN": {
-            "B17010_002E": "Estimate Total Income in the past 12 months below poverty level",
-            "B17010_003E": "Estimate Total Income in the past 12 months below poverty level Married-couple family",
-            "B17010_010E": "Estimate Total Income in the past 12 months below poverty level Other family Male householder, no wife present",
-            "B17010_016E": "Estimate Total Income in the past 12 months below poverty level Other family Female householder, no husband present"
-        },
-        "WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND AGE": {
-            "B13002_007E": "Estimate Total Women who had a birth in the past 12 months Unmarried (never married, widowed, and divorced)"
-        },
-        "WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND POVERTY STATUS IN THE PAST 12 MONTHS": {
-            "B13010_004E": "Estimate Total Women who had a birth in the past 12 months Now married (including separated and spouse absent) Below 100 percent of poverty level in the past 12 months",
-            "B13010_008E": "Estimate Total Women who had a birth in the past 12 months Unmarried (never married, widowed and divorced) Below 100 percent of poverty level in the past 12 months"
-        },
-        "WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT": {
-            "B13014_004E": "Estimate Total Women who had a birth in the past 12 months Now married (including separated and spouse absent) Less than high school graduate",
-            "B13014_010E": "Estimate Total Women who had a birth in the past 12 months Unmarried (never married, widowed and divorced) Less than high school graduate"
-        },
-        "WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY AGE": {
-            "B13016_002E": "Estimate Total Women who had a birth in the past 12 months"
-        },
-        "PUBLIC HEALTH INSURANCE STATUS BY SEX BY AGE": {
-            "B27003_004E": "Estimate Total Male Under 6 years With public coverage",
-            "B27003_007E": "Estimate Total Male 6 to 18 years With public coverage",
-            "B27003_010E": "Estimate Total Male 19 to 25 years With public coverage",
-            "B27003_013E": "Estimate Total Male 26 to 34 years With public coverage",
-            "B27003_016E": "Estimate Total Male 35 to 44 years With public coverage",
-            "B27003_019E": "Estimate Total Male 45 to 54 years With public coverage",
-            "B27003_022E": "Estimate Total Male 55 to 64 years With public coverage",
-            "B27003_025E": "Estimate Total Male 65 to 74 years With public coverage",
-            "B27003_028E": "Estimate Total Male 75 years and over With public coverage",
-            "B27003_032E": "Estimate Total Female Under 6 years With public coverage",
-            "B27003_035E": "Estimate Total Female 6 to 18 years With public coverage",
-            "B27003_038E": "Estimate Total Female 19 to 25 years With public coverage",
-            "B27003_041E": "Estimate Total Female 26 to 34 years With public coverage",
-            "B27003_044E": "Estimate Total Female 35 to 44 years With public coverage",
-            "B27003_047E": "Estimate Total Female 45 to 54 years With public coverage",
-            "B27003_050E": "Estimate Total Female 55 to 64 years With public coverage",
-            "B27003_053E": "Estimate Total Female 65 to 74 years With public coverage",
-            "B27003_056E": "Estimate Total Female 75 years and over With public coverage"
-        },
-        "OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE AND AGE": {
-            "B09002_002E": "Estimate Total In married-couple families",
-            "B09002_003E": "Estimate Total In married-couple families Under 3 years",
-            "B09002_004E": "Estimate Total In married-couple families 3 and 4 years",
-            "B09002_005E": "Estimate Total In married-couple families 5 years",
-            "B09002_009E": "Estimate Total In other families Male householder, no wife present",
-            "B09002_010E": "Estimate Total In other families Male householder, no wife present Under 3 years",
-            "B09002_011E": "Estimate Total In other families Male householder, no wife present 3 and 4 years",
-            "B09002_012E": "Estimate Total In other families Male householder, no wife present 5 years",
-            "B09002_015E": "Estimate Total In other families Female householder, no husband present",
-            "B09002_016E": "Estimate Total In other families Female householder, no husband present Under 3 years",
-            "B09002_017E": "Estimate Total In other families Female householder, no husband present 3 and 4 years",
-            "B09002_018E": "Estimate Total In other families Female householder, no husband present 5 years"
-        },
-        "POPULATION UNDER 18 YEARS BY AGE": {
-            "B09001_001E": "Estimate Total",
-            "B09001_003E": "Estimate Total In households Under 3 years",
-            "B09001_004E": "Estimate Total In households 3 and 4 years",
-            "B09001_005E": "Estimate Total In households 5 years"
-        },
-        "PRESENCE OF OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE BY EMPLOYMENT STATUS": {
-            "B23007_007E": "Estimate Total With own children under 18 years Married-couple family Husband in labor force Employed or in Armed Forces Wife in labor force Employed or in Armed Forces",
-            "B23007_023E": "Estimate Total With own children under 18 years Other family Male householder, no wife present In labor force Employed or in Armed Forces",
-            "B23007_028E": "Estimate Total With own children under 18 years Other family Female householder, no husband present In labor force Employed or in Armed Forces"
-        }
+  "Detailed Tables": {
+    "SEX BY AGE": {
+      "B01001_001E": "Estimate Total",
+      "B01001_003E": "Estimate Total Male Under 5 years",
+      "B01001_004E": "Estimate Total Male 5 to 9 years",
+      "B01001_005E": "Estimate Total Male 10 to 14 years",
+      "B01001_006E": "Estimate Total Male 15 to 17 years",
+      "B01001_027E": "Estimate Total Female Under 5 years",
+      "B01001_028E": "Estimate Total Female 5 to 9 years",
+      "B01001_029E": "Estimate Total Female 10 to 14 years",
+      "B01001_030E": "Estimate Total Female 15 to 17 years"
     },
-    "Subject Tables": {
-        "POVERTY STATUS IN THE PAST 12 MONTHS": {
-            "S1701_C01_038E": "Estimate Total Population for whom poverty status is determined ALL INDIVIDUALS WITH INCOME BELOW THE FOLLOWING POVERTY RATIOS 50 percent of poverty level",
-            "S1701_C01_039E": "Estimate Total Population for whom poverty status is determined ALL INDIVIDUALS WITH INCOME BELOW THE FOLLOWING POVERTY RATIOS 125 percent of poverty level",
-            "S1701_C01_040E": "Estimate Total Population for whom poverty status is determined ALL INDIVIDUALS WITH INCOME BELOW THE FOLLOWING POVERTY RATIOS 150 percent of poverty level"
-        },
-        "EDUCATIONAL ATTAINMENT": {
-            "S1501_C01_006E": "Estimate Total Population 25 years and over",
-            "S1501_C01_007E": "Estimate Total Population 25 years and over Less than 9th grade",
-            "S1501_C01_008E": "Estimate Total Population 25 years and over 9th to 12th grade, no diploma",
-            "S1501_C01_009E": "Estimate Total Population 25 years and over High school graduate (includes equivalency)",
-            "S1501_C01_010E": "Estimate Total Population 25 years and over Some college, no degree",
-            "S1501_C01_011E": "Estimate Total Population 25 years and over Associate's degree",
-            "S1501_C01_012E": "Estimate Total Population 25 years and over Bachelor's degree",
-            "S1501_C01_013E": "Estimate Total Population 25 years and over Graduate or professional degree"
-        },
-        "SELECTED CHARACTERISTICS OF HEALTH INSURANCE COVERAGE IN THE UNITED STATES": {
-            "S2701_C05_001E": "Estimate Percent Uninsured Civilian noninstitutionalized population",
-            "S2701_C05_002E": "Estimate Percent Uninsured Civilian noninstitutionalized population AGE Under 6 years",
-            "S2701_C05_011E": "Estimate Percent Uninsured Civilian noninstitutionalized population AGE Under 19 years"
-        },
-        "LIMITED ENGLISH SPEAKING HOUSEHOLDS": {
-            "S1602_C04_001E": "Estimate Percent limited English-speaking households All households"
-        }
+    "SEX BY AGE (WHITE ALONE)": {
+      "B01001A_001E": "Estimate Total",
+      "B01001A_003E": "Estimate Total Male Under 5 years",
+      "B01001A_004E": "Estimate Total Male 5 to 9 years",
+      "B01001A_005E": "Estimate Total Male 10 to 14 years",
+      "B01001A_006E": "Estimate Total Male 15 to 17 years",
+      "B01001A_018E": "Estimate Total Female Under 5 years",
+      "B01001A_019E": "Estimate Total Female 5 to 9 years",
+      "B01001A_020E": "Estimate Total Female 10 to 14 years",
+      "B01001A_021E": "Estimate Total Female 15 to 17 years"
     },
-    "Data Profiles": {
-        "SELECTED ECONOMIC CHARACTERISTICS": {
-            "DP03_0003E": "Estimate EMPLOYMENT STATUS Population 16 years and over In labor force Civilian labor force",
-            "DP03_0004E": "Estimate EMPLOYMENT STATUS Population 16 years and over In labor force Civilian labor force Employed",
-            "DP03_0005E": "Estimate EMPLOYMENT STATUS Population 16 years and over In labor force Civilian labor force Unemployed",
-            "DP03_0005PE": "Percent Estimate EMPLOYMENT STATUS Population 16 years and over In labor force Civilian labor force Unemployed"
-        }
+    "SEX BY AGE (BLACK OR AFRICAN AMERICAN ALONE)": {
+      "B01001B_001E": "Estimate Total",
+      "B01001B_003E": "Estimate Total Male Under 5 years",
+      "B01001B_004E": "Estimate Total Male 5 to 9 years",
+      "B01001B_005E": "Estimate Total Male 10 to 14 years",
+      "B01001B_006E": "Estimate Total Male 15 to 17 years",
+      "B01001B_018E": "Estimate Total Female Under 5 years",
+      "B01001B_019E": "Estimate Total Female 5 to 9 years",
+      "B01001B_020E": "Estimate Total Female 10 to 14 years",
+      "B01001B_021E": "Estimate Total Female 15 to 17 years"
+    },
+    "SEX BY AGE (AMERICAN INDIAN AND ALASKA NATIVE ALONE)": {
+      "B01001C_001E": "Estimate Total",
+      "B01001C_003E": "Estimate Total Male Under 5 years",
+      "B01001C_004E": "Estimate Total Male 5 to 9 years",
+      "B01001C_005E": "Estimate Total Male 10 to 14 years",
+      "B01001C_006E": "Estimate Total Male 15 to 17 years",
+      "B01001C_018E": "Estimate Total Female Under 5 years",
+      "B01001C_019E": "Estimate Total Female 5 to 9 years",
+      "B01001C_020E": "Estimate Total Female 10 to 14 years",
+      "B01001C_021E": "Estimate Total Female 15 to 17 years"
+    },
+    "SEX BY AGE (ASIAN ALONE)": {
+      "B01001D_001E": "Estimate Total",
+      "B01001D_003E": "Estimate Total Male Under 5 years",
+      "B01001D_004E": "Estimate Total Male 5 to 9 years",
+      "B01001D_005E": "Estimate Total Male 10 to 14 years",
+      "B01001D_006E": "Estimate Total Male 15 to 17 years",
+      "B01001D_018E": "Estimate Total Female Under 5 years",
+      "B01001D_019E": "Estimate Total Female 5 to 9 years",
+      "B01001D_020E": "Estimate Total Female 10 to 14 years",
+      "B01001D_021E": "Estimate Total Female 15 to 17 years"
+    },
+    "SEX BY AGE (NATIVE HAWAIIAN AND OTHER PACIFIC ISLANDER ALONE)": {
+      "B01001E_001E": "Estimate Total",
+      "B01001E_003E": "Estimate Total Male Under 5 years",
+      "B01001E_004E": "Estimate Total Male 5 to 9 years",
+      "B01001E_005E": "Estimate Total Male 10 to 14 years",
+      "B01001E_006E": "Estimate Total Male 15 to 17 years",
+      "B01001E_018E": "Estimate Total Female Under 5 years",
+      "B01001E_019E": "Estimate Total Female 5 to 9 years",
+      "B01001E_020E": "Estimate Total Female 10 to 14 years",
+      "B01001E_021E": "Estimate Total Female 15 to 17 years"
+    },
+    "SEX BY AGE (TWO OR MORE RACES)": {
+      "B01001G_001E": "Estimate Total",
+      "B01001G_003E": "Estimate Total Male Under 5 years",
+      "B01001G_004E": "Estimate Total Male 5 to 9 years",
+      "B01001G_005E": "Estimate Total Male 10 to 14 years",
+      "B01001G_006E": "Estimate Total Male 15 to 17 years",
+      "B01001G_018E": "Estimate Total Female Under 5 years",
+      "B01001G_019E": "Estimate Total Female 5 to 9 years",
+      "B01001G_020E": "Estimate Total Female 10 to 14 years",
+      "B01001G_021E": "Estimate Total Female 15 to 17 years"
+    },
+    "SEX BY AGE (WHITE ALONE, NOT HISPANIC OR LATINO)": {
+      "B01001H_001E": "Estimate Total",
+      "B01001H_003E": "Estimate Total Male Under 5 years",
+      "B01001H_004E": "Estimate Total Male 5 to 9 years",
+      "B01001H_005E": "Estimate Total Male 10 to 14 years",
+      "B01001H_006E": "Estimate Total Male 15 to 17 years",
+      "B01001H_018E": "Estimate Total Female Under 5 years",
+      "B01001H_019E": "Estimate Total Female 5 to 9 years",
+      "B01001H_020E": "Estimate Total Female 10 to 14 years",
+      "B01001H_021E": "Estimate Total Female 15 to 17 years"
+    },
+    "SEX BY AGE (HISPANIC OR LATINO)": {
+      "B01001I_001E": "Estimate Total",
+      "B01001I_003E": "Estimate Total Male Under 5 years",
+      "B01001I_004E": "Estimate Total Male 5 to 9 years",
+      "B01001I_005E": "Estimate Total Male 10 to 14 years",
+      "B01001I_006E": "Estimate Total Male 15 to 17 years",
+      "B01001I_018E": "Estimate Total Female Under 5 years",
+      "B01001I_019E": "Estimate Total Female 5 to 9 years",
+      "B01001I_020E": "Estimate Total Female 10 to 14 years",
+      "B01001I_021E": "Estimate Total Female 15 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE": {
+      "B17020_001E": "Estimate Total",
+      "B17020_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (WHITE ALONE)": {
+      "B17020A_001E": "Estimate Total",
+      "B17020A_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020A_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020A_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020A_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (BLACK OR AFRICAN AMERICAN ALONE)": {
+      "B17020B_001E": "Estimate Total",
+      "B17020B_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020B_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020B_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020B_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (AMERICAN INDIAN AND ALASKA NATIVE ALONE)": {
+      "B17020C_001E": "Estimate Total",
+      "B17020C_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020C_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020C_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020C_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (ASIAN ALONE)": {
+      "B17020D_001E": "Estimate Total",
+      "B17020D_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020D_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020D_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020D_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (NATIVE HAWAIIAN AND OTHER PACIFIC ISLANDER ALONE)": {
+      "B17020E_001E": "Estimate Total",
+      "B17020E_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020E_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020E_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020E_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (TWO OR MORE RACES)": {
+      "B17020G_001E": "Estimate Total",
+      "B17020G_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020G_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020G_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020G_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (WHITE ALONE, NOT HISPANIC OR LATINO)": {
+      "B17020H_001E": "Estimate Total",
+      "B17020H_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020H_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020H_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020H_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE (HISPANIC OR LATINO)": {
+      "B17020I_001E": "Estimate Total",
+      "B17020I_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17020I_003E": "Estimate Total Income in the past 12 months below poverty level Under 6 years",
+      "B17020I_004E": "Estimate Total Income in the past 12 months below poverty level 6 to 11 years",
+      "B17020I_005E": "Estimate Total Income in the past 12 months below poverty level 12 to 17 years"
+    },
+    "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY FAMILY TYPE BY PRESENCE OF RELATED CHILDREN UNDER 18 YEARS BY AGE OF RELATED CHILDREN": {
+      "B17010_002E": "Estimate Total Income in the past 12 months below poverty level",
+      "B17010_003E": "Estimate Total Income in the past 12 months below poverty level Married-couple family",
+      "B17010_010E": "Estimate Total Income in the past 12 months below poverty level Other family Male householder, no wife present",
+      "B17010_016E": "Estimate Total Income in the past 12 months below poverty level Other family Female householder, no husband present"
+    },
+    "WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND AGE": {
+      "B13002_007E": "Estimate Total Women who had a birth in the past 12 months Unmarried (never married, widowed, and divorced)"
+    },
+    "WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND POVERTY STATUS IN THE PAST 12 MONTHS": {
+      "B13010_004E": "Estimate Total Women who had a birth in the past 12 months Now married (including separated and spouse absent) Below 100 percent of poverty level in the past 12 months",
+      "B13010_008E": "Estimate Total Women who had a birth in the past 12 months Unmarried (never married, widowed and divorced) Below 100 percent of poverty level in the past 12 months"
+    },
+    "WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT": {
+      "B13014_004E": "Estimate Total Women who had a birth in the past 12 months Now married (including separated and spouse absent) Less than high school graduate",
+      "B13014_010E": "Estimate Total Women who had a birth in the past 12 months Unmarried (never married, widowed and divorced) Less than high school graduate"
+    },
+    "WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY AGE": {
+      "B13016_002E": "Estimate Total Women who had a birth in the past 12 months"
+    },
+    "PUBLIC HEALTH INSURANCE STATUS BY SEX BY AGE": {
+      "B27003_004E": "Estimate Total Male Under 6 years With public coverage",
+      "B27003_007E": "Estimate Total Male 6 to 18 years With public coverage",
+      "B27003_010E": "Estimate Total Male 19 to 25 years With public coverage",
+      "B27003_013E": "Estimate Total Male 26 to 34 years With public coverage",
+      "B27003_016E": "Estimate Total Male 35 to 44 years With public coverage",
+      "B27003_019E": "Estimate Total Male 45 to 54 years With public coverage",
+      "B27003_022E": "Estimate Total Male 55 to 64 years With public coverage",
+      "B27003_025E": "Estimate Total Male 65 to 74 years With public coverage",
+      "B27003_028E": "Estimate Total Male 75 years and over With public coverage",
+      "B27003_032E": "Estimate Total Female Under 6 years With public coverage",
+      "B27003_035E": "Estimate Total Female 6 to 18 years With public coverage",
+      "B27003_038E": "Estimate Total Female 19 to 25 years With public coverage",
+      "B27003_041E": "Estimate Total Female 26 to 34 years With public coverage",
+      "B27003_044E": "Estimate Total Female 35 to 44 years With public coverage",
+      "B27003_047E": "Estimate Total Female 45 to 54 years With public coverage",
+      "B27003_050E": "Estimate Total Female 55 to 64 years With public coverage",
+      "B27003_053E": "Estimate Total Female 65 to 74 years With public coverage",
+      "B27003_056E": "Estimate Total Female 75 years and over With public coverage"
+    },
+    "OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE AND AGE": {
+      "B09002_002E": "Estimate Total In married-couple families",
+      "B09002_003E": "Estimate Total In married-couple families Under 3 years",
+      "B09002_004E": "Estimate Total In married-couple families 3 and 4 years",
+      "B09002_005E": "Estimate Total In married-couple families 5 years",
+      "B09002_009E": "Estimate Total In other families Male householder, no wife present",
+      "B09002_010E": "Estimate Total In other families Male householder, no wife present Under 3 years",
+      "B09002_011E": "Estimate Total In other families Male householder, no wife present 3 and 4 years",
+      "B09002_012E": "Estimate Total In other families Male householder, no wife present 5 years",
+      "B09002_015E": "Estimate Total In other families Female householder, no husband present",
+      "B09002_016E": "Estimate Total In other families Female householder, no husband present Under 3 years",
+      "B09002_017E": "Estimate Total In other families Female householder, no husband present 3 and 4 years",
+      "B09002_018E": "Estimate Total In other families Female householder, no husband present 5 years"
+    },
+    "POPULATION UNDER 18 YEARS BY AGE": {
+      "B09001_001E": "Estimate Total",
+      "B09001_003E": "Estimate Total In households Under 3 years",
+      "B09001_004E": "Estimate Total In households 3 and 4 years",
+      "B09001_005E": "Estimate Total In households 5 years"
+    },
+    "PRESENCE OF OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE BY EMPLOYMENT STATUS": {
+      "B23007_007E": "Estimate Total With own children under 18 years Married-couple family Husband in labor force Employed or in Armed Forces Wife in labor force Employed or in Armed Forces",
+      "B23007_023E": "Estimate Total With own children under 18 years Other family Male householder, no wife present In labor force Employed or in Armed Forces",
+      "B23007_028E": "Estimate Total With own children under 18 years Other family Female householder, no husband present In labor force Employed or in Armed Forces"
     }
+  },
+  "Subject Tables": {
+    "POVERTY STATUS IN THE PAST 12 MONTHS": {
+      "S1701_C01_038E": "Estimate Total Population for whom poverty status is determined ALL INDIVIDUALS WITH INCOME BELOW THE FOLLOWING POVERTY RATIOS 50 percent of poverty level",
+      "S1701_C01_039E": "Estimate Total Population for whom poverty status is determined ALL INDIVIDUALS WITH INCOME BELOW THE FOLLOWING POVERTY RATIOS 125 percent of poverty level",
+      "S1701_C01_040E": "Estimate Total Population for whom poverty status is determined ALL INDIVIDUALS WITH INCOME BELOW THE FOLLOWING POVERTY RATIOS 150 percent of poverty level"
+    },
+    "EDUCATIONAL ATTAINMENT": {
+      "S1501_C01_006E": "Estimate Total Population 25 years and over",
+      "S1501_C01_007E": "Estimate Total Population 25 years and over Less than 9th grade",
+      "S1501_C01_008E": "Estimate Total Population 25 years and over 9th to 12th grade, no diploma",
+      "S1501_C01_009E": "Estimate Total Population 25 years and over High school graduate (includes equivalency)",
+      "S1501_C01_010E": "Estimate Total Population 25 years and over Some college, no degree",
+      "S1501_C01_011E": "Estimate Total Population 25 years and over Associate's degree",
+      "S1501_C01_012E": "Estimate Total Population 25 years and over Bachelor's degree",
+      "S1501_C01_013E": "Estimate Total Population 25 years and over Graduate or professional degree"
+    },
+    "SELECTED CHARACTERISTICS OF HEALTH INSURANCE COVERAGE IN THE UNITED STATES": {
+      "S2701_C05_001E": "Estimate Percent Uninsured Civilian noninstitutionalized population",
+      "S2701_C05_002E": "Estimate Percent Uninsured Civilian noninstitutionalized population AGE Under 6 years",
+      "S2701_C05_011E": "Estimate Percent Uninsured Civilian noninstitutionalized population AGE Under 19 years"
+    },
+    "LIMITED ENGLISH SPEAKING HOUSEHOLDS": {
+      "S1602_C04_001E": "Estimate Percent limited English-speaking households All households"
+    }
+  },
+  "Data Profiles": {
+    "SELECTED ECONOMIC CHARACTERISTICS": {
+      "DP03_0003E": "Estimate EMPLOYMENT STATUS Population 16 years and over In labor force Civilian labor force",
+      "DP03_0004E": "Estimate EMPLOYMENT STATUS Population 16 years and over In labor force Civilian labor force Employed",
+      "DP03_0005E": "Estimate EMPLOYMENT STATUS Population 16 years and over In labor force Civilian labor force Unemployed",
+      "DP03_0005PE": "Percent Estimate EMPLOYMENT STATUS Population 16 years and over In labor force Civilian labor force Unemployed"
+    }
+  }
 }

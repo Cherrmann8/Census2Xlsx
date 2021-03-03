@@ -1,84 +1,104 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import LocationPage from './pages/LocationPage/LocationPage'
-import IndicatorPage from './pages/IndicatorPage/IndicatorPage'
-import ConfirmationPage from './pages/ConfirmationPage/ConfirmationPage'
-import LoadingPage from './pages/LoadingPage/LoadingPage'
-import GraphPage from './pages/GraphPage/GraphPage'
+import React from "react";
+import PropTypes from "prop-types";
+import LocationPage from "./pages/LocationPage/LocationPage";
+import IndicatorPage from "./pages/IndicatorPage/IndicatorPage";
+import ConfirmationPage from "./pages/ConfirmationPage/ConfirmationPage";
+import LoadingPage from "./pages/LoadingPage/LoadingPage";
+import GraphPage from "./pages/GraphPage/GraphPage";
 
-const electron = window.require('electron')
-const { ipcRenderer } = electron
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 
 class AppSection extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       locationList: [],
       indicatorList: [],
-    }
+      progress: 0,
+    };
 
-    this.addLocation = this.addLocation.bind(this)
-    this.removeLocation = this.removeLocation.bind(this)
-    this.addIndicator = this.addIndicator.bind(this)
-    this.removeIndicator = this.removeIndicator.bind(this)
+    this.addLocation = this.addLocation.bind(this);
+    this.removeLocation = this.removeLocation.bind(this);
+    this.addIndicator = this.addIndicator.bind(this);
+    this.removeIndicator = this.removeIndicator.bind(this);
+    this.startPythonScript = this.startPythonScript.bind(this);
 
-    ipcRenderer.on('MESSAGE_FROM_BACKGROUND_VIA_MAIN', (event, args) => {
-      console.log(args)
-    })
-    ipcRenderer.on('report', (event, args) => {
-      console.log(args)
-    })
+    const { onPageChange } = this.props;
+
+    ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
+      console.log(args);
+      const newProgress = parseFloat(args) * 100;
+      console.log(newProgress);
+      this.setState({ progress: newProgress });
+      if (newProgress >= 100) {
+        onPageChange(1);
+      }
+    });
   }
 
-  addLocation(stateIdx, countyIdx, placeIdx) {
-    const { locationList } = this.state
+  addLocation(locationName, geographicLevel, primaryID, secondaryID) {
+    const { locationList } = this.state;
     const idx = locationList.findIndex(
-      (i) => (i.stateIdx === stateIdx
-        && i.countyIdx === countyIdx
-        && i.placeIdx === placeIdx),
-    )
+      (i) =>
+        i.geographicLevel === geographicLevel &&
+        i.primaryID === primaryID &&
+        i.secondaryID === secondaryID
+    );
     if (idx === -1) {
-      locationList.push({ stateIdx, countyIdx, placeIdx })
-      this.setState({ locationList })
+      locationList.push({
+        locationName,
+        geographicLevel,
+        primaryID,
+        secondaryID,
+      });
+      this.setState({ locationList });
     }
   }
 
   removeLocation(locationIdx) {
-    const { locationList } = this.state
+    const { locationList } = this.state;
 
     if (locationList.length > locationIdx) {
-      locationList.splice(locationIdx, 1)
-      this.setState({ locationList })
+      locationList.splice(locationIdx, 1);
+      this.setState({ locationList });
     }
   }
 
-  addIndicator(indicatorIdx, sectionIdx, tableIdx) {
-    const { indicatorList } = this.state
-    indicatorList.push({ indicatorIdx, sectionIdx, tableIdx })
-    this.setState({ indicatorList })
-    console.log(indicatorList)
+  addIndicator(sectionIdx, tableIdx) {
+    const { indicatorList } = this.state;
+    indicatorList.push({ sectionIdx, tableIdx });
+    this.setState({ indicatorList });
+    console.log(indicatorList);
   }
 
-  removeIndicator(indicatorIdx, sectionIdx, tableIdx) {
-    const { indicatorList } = this.state
+  removeIndicator(sectionIdx, tableIdx) {
+    const { indicatorList } = this.state;
     const idx = indicatorList.findIndex(
-      (i) => (i.indicatorIdx === indicatorIdx
-        && i.sectionIdx === sectionIdx
-        && i.tableIdx === tableIdx),
-    )
+      (i) => i.sectionIdx === sectionIdx && i.tableIdx === tableIdx
+    );
     if (idx !== -1) {
-      indicatorList.splice(idx, 1)
-      this.setState({ indicatorList })
+      indicatorList.splice(idx, 1);
+      this.setState({ indicatorList });
     }
 
-    console.log(indicatorList)
+    console.log(indicatorList);
+  }
+
+  startPythonScript() {
+    const { locationList, indicatorList } = this.state;
+
+    ipcRenderer.send("START_BACKGROUND_VIA_MAIN", {
+      reportArea: locationList,
+      selectedIndicators: indicatorList,
+    });
   }
 
   render() {
-    const { page, onPageChange } = this.props
-    const { locationList, indicatorList } = this.state
+    const { page } = this.props;
+    const { locationList, indicatorList, progress } = this.state;
 
-    let section
+    let section;
     if (page === 0) {
       section = (
         <LocationPage
@@ -86,7 +106,7 @@ class AppSection extends React.Component {
           onAddLocation={this.addLocation}
           onRemoveLocation={this.removeLocation}
         />
-      )
+      );
     } else if (page === 1) {
       section = (
         <IndicatorPage
@@ -94,34 +114,32 @@ class AppSection extends React.Component {
           onAddIndicator={this.addIndicator}
           onRemoveIndicator={this.removeIndicator}
         />
-      )
+      );
     } else if (page === 2) {
       section = (
         <ConfirmationPage
           locationList={locationList}
           indicatorList={indicatorList}
         />
-      )
+      );
     } else if (page === 3) {
-      section = <LoadingPage onPageChange={onPageChange} />
+      section = (
+        <LoadingPage progress={progress} onPageMount={this.startPythonScript} />
+      );
     } else if (page === 4) {
-      section = <GraphPage />
+      section = <GraphPage />;
     }
-    return (
-      <>
-        {section}
-      </>
-    )
+    return <>{section}</>;
   }
 }
 
 AppSection.propTypes = {
   page: PropTypes.number,
   onPageChange: PropTypes.func,
-}
+};
 AppSection.defaultProps = {
   page: 0,
   onPageChange: null,
-}
+};
 
-export default AppSection
+export default AppSection;

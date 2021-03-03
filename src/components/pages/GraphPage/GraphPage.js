@@ -1,18 +1,19 @@
-import React from 'react'
+import React from "react";
+import "../../css/GraphPage.css";
 
 class GraphPage extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
 
   render() {
     return (
-      <div>
-        <span>Graph Page stuff</span>
+      <div className="done">
+        <span className="done">Finished!</span>
       </div>
-    )
+    );
   }
 }
 
-export default GraphPage
+export default GraphPage;

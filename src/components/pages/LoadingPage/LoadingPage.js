@@ -1,58 +1,40 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ProgressBar from 'react-bootstrap/ProgressBar'
+import React from "react";
+import PropTypes from "prop-types";
+import ProgressBar from "react-bootstrap/ProgressBar";
+import "../../css/LoadingPage.css";
 
-const electron = window.require('electron')
-const { ipcRenderer } = electron
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 
 class LoadingPage extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {
-      progress: 0,
-    }
+    super(props);
+    this.state = {};
   }
 
   componentDidMount() {
-    ipcRenderer.send('START_BACKGROUND_VIA_MAIN', {
-      number: 25,
-    })
-
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000,
-    )
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID)
-  }
-
-  tick() {
-    const { onPageChange } = this.props
-    const { progress } = this.state
-    this.setState({ progress: (progress + 50) })
-    if (progress >= 100) {
-      onPageChange(1)
-    }
+    const { onPageMount } = this.props;
+    onPageMount();
   }
 
   render() {
-    const { progress } = this.state
+    const { progress } = this.props;
 
     return (
-      <div>
-        <ProgressBar now={progress} label={`${progress}%`} />
+      <div className="pbar">
+        <ProgressBar now={progress} label={`${progress}%`} className="pbar" />
       </div>
-    )
+    );
   }
 }
 
 LoadingPage.propTypes = {
-  onPageChange: PropTypes.func,
-}
+  progress: PropTypes.number,
+  onPageMount: PropTypes.func,
+};
 LoadingPage.defaultProps = {
-  onPageChange: null,
-}
+  progress: 0,
+  onPageMount: null,
+};
 
-export default LoadingPage
+export default LoadingPage;

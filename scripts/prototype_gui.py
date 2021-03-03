@@ -1,7 +1,7 @@
 """
 Author: Charles Herrmann
 Date: 9/28/20
-Description: GUI for Census2xlsx application
+Description: Prototype GUI for Census2xlsx application
 """
 
 import getopt
@@ -13,12 +13,12 @@ import time
 from tkinter import *
 from tkinter.ttk import *
 import tkinter.font as tkfont
-import model
+import census2xlsx
 
 windowSize = "600x400"
 
 
-class Generator (threading.Thread):
+class Generator(threading.Thread):
     def __init__(self, lock, monitorQueue, logger, dirs, geos, indicators, filename):
         threading.Thread.__init__(self)
         self.lock = lock
@@ -37,7 +37,7 @@ class Generator (threading.Thread):
         self.monitorQueue.put(40)
         self.lock.release()
 
-        self.cmodel.gen_data(self.geos, self.indicators, self.filename+".xlsx")
+        self.cmodel.gen_data(self.geos, self.indicators, self.filename + ".xlsx")
 
         self.lock.acquire()
         self.monitorQueue.put(20)
@@ -57,7 +57,6 @@ class Generator (threading.Thread):
 
 
 class Page(Frame):
-
     def __init__(self, *args, **kwargs):
         Frame.__init__(self)
 
@@ -119,7 +118,10 @@ class GeoPage(Page):
 
     def loadGeos(self, parent):
         # logger.info("Loading geographies.json")
-        with open(parent.getDir(0)+"/geographies.json", "r") as loadfile:
+        # with open(parent.getDir(0) + "/geographies.json", "r") as loadfile:
+        with open(
+            parent.getDir(0) + "./src/assets/data/geographies.json", "r"
+        ) as loadfile:
             self.geos = json.load(loadfile)
         # logger.info("geographies.json loaded")
 
@@ -150,7 +152,7 @@ class GeoPage(Page):
         elif self.levelVar.get() == self.geoLevels[3]:
             newLevelID = 2
         # else:
-            # logger.error("GeoPage optMenu has invalid state")
+        # logger.error("GeoPage optMenu has invalid state")
 
         if newLevelID != -1:
             if newLevelID != self.levelID:
@@ -174,6 +176,7 @@ class GeoPage(Page):
             print("ERROR: GeoPage has invalid levelID")
 
     """Fills either the counties or places list boxes"""
+
     def fillListBox2(self):
         # Fill in the counties for the chosen state
         if self.levelID == 1:
@@ -185,6 +188,7 @@ class GeoPage(Page):
                 self.listbox2.insert(END, county)
 
     """Reset the State Label and show listbox1"""
+
     def resetState(self):
         self.label1.config(text="Select a State")
         self.label1.pack(side="top", fill="x", expand=False)
@@ -211,19 +215,26 @@ class GeoPage(Page):
                 self.selectedGeos[self.label1.cget("text")]["Counties"] = {}
             if geo not in self.selectedGeos[self.label1.cget("text")]["Counties"]:
                 self.listbox3.insert(END, geo)
-                self.selectedGeos[self.label1.cget("text")]["Counties"][geo] = self.geos[self.label1.cget("text")]["Counties"][geo]
+                self.selectedGeos[self.label1.cget("text")]["Counties"][
+                    geo
+                ] = self.geos[self.label1.cget("text")]["Counties"][geo]
         elif self.levelID == 2:
             if self.label1.cget("text") not in self.selectedGeos:
                 self.selectedGeos[self.label1.cget("text")] = {}
-                self.selectedGeos[self.label1.cget("text")]["ID"] = self.geos[self.label1.cget("text")]["ID"]
+                self.selectedGeos[self.label1.cget("text")]["ID"] = self.geos[
+                    self.label1.cget("text")
+                ]["ID"]
                 self.selectedGeos[self.label1.cget("text")]["selected"] = False
             if "Places" not in self.selectedGeos[self.label1.cget("text")]:
                 self.selectedGeos[self.label1.cget("text")]["Places"] = {}
             if geo not in self.selectedGeos[self.label1.cget("text")]["Places"]:
                 self.listbox3.insert(END, geo)
-                self.selectedGeos[self.label1.cget("text")]["Places"][geo] = self.geos[self.label1.cget("text")]["Places"][geo]
+                self.selectedGeos[self.label1.cget("text")]["Places"][geo] = self.geos[
+                    self.label1.cget("text")
+                ]["Places"][geo]
 
     """Adds the selected state, county, or place to the selected list of geos"""
+
     def addButton(self):
         if self.levelID == 0:
             selection = self.listbox1.curselection()
@@ -306,7 +317,7 @@ class TablePage(Page):
 
     def loadTableDesc(self, parent):
         # logger.info("Loading dataTableDescriptions.json")
-        with open(parent.getDir(0)+"/dataTableDescriptions.json", "r") as loadfile:
+        with open(parent.getDir(0) + "/dataTableDescriptions.json", "r") as loadfile:
             self.desc = json.load(loadfile)
         # logger.info("dataTableDescriptions.json loaded")
 
@@ -380,8 +391,12 @@ class GenPage(Page):
         self.genFrame = Frame(self)
         self.centerFrame = Frame(self.genFrame)
 
-        self.pageNum = Label(self.centerFrame, text="Generating your file...", anchor="center")
-        self.progress = Progressbar(self.centerFrame, orient=HORIZONTAL, length=500, mode='determinate')
+        self.pageNum = Label(
+            self.centerFrame, text="Generating your file...", anchor="center"
+        )
+        self.progress = Progressbar(
+            self.centerFrame, orient=HORIZONTAL, length=500, mode="determinate"
+        )
 
         # Pack all widgets
         self.genFrame.pack(side="left", fill="both", expand=True)
@@ -395,7 +410,15 @@ class GenPage(Page):
         self.monitor_queue = queue.Queue(5)
         if self.logger:
             self.logger.info(str(time.time()) + " Main starting thread")
-        Generator(self.monitor_lock, self.monitor_queue, self.logger, dirs, geos, indicators, filename).start()
+        Generator(
+            self.monitor_lock,
+            self.monitor_queue,
+            self.logger,
+            dirs,
+            geos,
+            indicators,
+            filename,
+        ).start()
 
     def check(self):
         if self.logger:
@@ -404,8 +427,8 @@ class GenPage(Page):
         if not self.monitor_queue.empty():
             if self.logger:
                 self.logger.info(str(time.time()) + " Main got message")
-            self.progress['value'] += self.monitor_queue.get()
-            if self.progress['value'] >= 100:
+            self.progress["value"] += self.monitor_queue.get()
+            if self.progress["value"] >= 100:
                 self.exit_flag = True
         self.monitor_lock.release()
 
@@ -423,7 +446,11 @@ class FinalPage(Page):
 
         # Init all widgets
         self.finalFrame = Frame(self)
-        self.pageNum = Label(self.finalFrame, text="Your report was generated successfully!", anchor="center")
+        self.pageNum = Label(
+            self.finalFrame,
+            text="Your report was generated successfully!",
+            anchor="center",
+        )
 
         # Pack all widgets
         self.finalFrame.pack(side="left", fill="both", expand=True)
@@ -474,7 +501,9 @@ class MainView(Frame):
         # PACK ALL WIDGETS
 
         # Header Frame (All other frames get packed in show())
-        headerFrame.pack(side="top", fill="x", expand=False, padx=(10, 10), pady=(10, 0))
+        headerFrame.pack(
+            side="top", fill="x", expand=False, padx=(10, 10), pady=(10, 0)
+        )
         label1.pack(side="left")
         label2.pack(side="right")
 
@@ -516,13 +545,23 @@ class MainView(Frame):
 
         # only pack progressFrame if on first 3 pages
         if self.pageID <= 2:
-            self.progressFrame.pack(side="top", fill="x", expand=False, padx=(10, 10), pady=(0, 5))
+            self.progressFrame.pack(
+                side="top", fill="x", expand=False, padx=(10, 10), pady=(0, 5)
+            )
             self.label3.config(text=self.steps[self.pageID])
-            self.pagesFrame.pack(side="top", fill="both", expand=True, padx=(10, 10), pady=(5, 5))
-            self.navigationFrame.pack(side="bottom", fill="x", expand=False, padx=(10, 10), pady=(5, 10))
+            self.pagesFrame.pack(
+                side="top", fill="both", expand=True, padx=(10, 10), pady=(5, 5)
+            )
+            self.navigationFrame.pack(
+                side="bottom", fill="x", expand=False, padx=(10, 10), pady=(5, 10)
+            )
         else:
-            self.pagesFrame.pack(side="top", fill="both", expand=True, padx=(10, 10), pady=(5, 5))
-            self.navigationFrame.pack(side="bottom", fill="x", expand=False, padx=(10, 10), pady=(5, 10))
+            self.pagesFrame.pack(
+                side="top", fill="both", expand=True, padx=(10, 10), pady=(5, 5)
+            )
+            self.navigationFrame.pack(
+                side="bottom", fill="x", expand=False, padx=(10, 10), pady=(5, 10)
+            )
 
         # unpack buttons in navigationFrame
         self.next.pack_forget()
@@ -566,7 +605,9 @@ def main(data_dir, log_dir="", out_dir="."):
     logger = None
     # if a log_dir was given, log to that dir. Otherwise, no logging
     if log_dir != "":
-        logging.basicConfig(filename=log_dir+"/c2x.log", filemode="w", level=logging.INFO)
+        logging.basicConfig(
+            filename=log_dir + "/c2x.log", filemode="w", level=logging.INFO
+        )
         logger = logging.getLogger("view")
 
     if logger and data_dir == "data":
@@ -579,7 +620,7 @@ def main(data_dir, log_dir="", out_dir="."):
 
     root = Tk()
     root.title("C2X")
-    root.iconbitmap('assets/icon2.ico')
+    root.iconbitmap("./src/assets/icon2.ico")
     mainFrame = MainView(logger, data_dir, log_dir, out_dir)
     mainFrame.pack(side="top", fill="both", expand=True)
     root.wm_geometry(windowSize)
@@ -597,7 +638,7 @@ if __name__ == "__main__":
     OUT_DIR = ""
 
     # check how this program was executed
-    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
         # executed as a PyInstaller bundle
         DAT_DIR = "../assets/data"
         LOG_DIR = "."
@@ -605,7 +646,9 @@ if __name__ == "__main__":
     else:
         # execute as a normal python process
         try:
-            opts, args = getopt.getopt(sys.argv[1:], "hd:l:o:", ["ddir=", "ldir=", "odir="])
+            opts, args = getopt.getopt(
+                sys.argv[1:], "hd:l:o:", ["ddir=", "ldir=", "odir="]
+            )
         except getopt.GetoptError:
             print("view.py -d <data_dir> -l <logDir> -o <outputDir>")
             sys.exit(2)
@@ -621,44 +664,3 @@ if __name__ == "__main__":
                 OUT_DIR = arg
 
     main(DAT_DIR, LOG_DIR, OUT_DIR)
-
-# TODO: Code for dynamically size progress bar maybe?
-# from tkinter import *
-#
-# # a subclass of Canvas for dealing with resizing of windows
-# class ResizingCanvas(Canvas):
-#     def __init__(self,parent,**kwargs):
-#         Canvas.__init__(self,parent,**kwargs)
-#         self.bind("<Configure>", self.on_resize)
-#         self.height = self.winfo_reqheight()
-#         self.width = self.winfo_reqwidth()
-#
-#     def on_resize(self,event):
-#         # determine the ratio of old width/height to new width/height
-#         wscale = float(event.width)/self.width
-#         hscale = float(event.height)/self.height
-#         self.width = event.width
-#         self.height = event.height
-#         # resize the canvas
-#         self.config(width=self.width, height=self.height)
-#         # rescale all the objects tagged with the "all" tag
-#         self.scale("all",0,0,wscale,hscale)
-#
-# def main():
-#     root = Tk()
-#     myframe = Frame(root)
-#     myframe.pack(fill=BOTH, expand=YES)
-#     mycanvas = ResizingCanvas(myframe,width=850, height=400, bg="red", highlightthickness=0)
-#     mycanvas.pack(fill=BOTH, expand=YES)
-#
-#     # add some widgets to the canvas
-#     mycanvas.create_line(0, 0, 200, 100)
-#     mycanvas.create_line(0, 100, 200, 0, fill="red", dash=(4, 4))
-#     mycanvas.create_rectangle(50, 25, 150, 75, fill="blue")
-#
-#     # tag all of the drawn widgets
-#     mycanvas.addtag_all("all")
-#     root.mainloop()
-#
-# if __name__ == "__main__":
-#     main()
