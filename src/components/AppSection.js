@@ -6,7 +6,8 @@ import ConfirmationPage from "./pages/ConfirmationPage/ConfirmationPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import GraphPage from "./pages/GraphPage/GraphPage";
 
-const electron = window.require("electron");
+const electron = require("electron");
+
 const { ipcRenderer } = electron;
 
 class AppSection extends React.Component {
@@ -40,10 +41,11 @@ class AppSection extends React.Component {
   addLocation(locationName, geographicLevel, primaryID, secondaryID) {
     const { locationList } = this.state;
     const idx = locationList.findIndex(
-      (i) =>
-        i.geographicLevel === geographicLevel &&
-        i.primaryID === primaryID &&
-        i.secondaryID === secondaryID
+      (i) => (
+        i.geographicLevel === geographicLevel
+        && i.primaryID === primaryID
+        && i.secondaryID === secondaryID
+      )
     );
     if (idx === -1) {
       locationList.push({

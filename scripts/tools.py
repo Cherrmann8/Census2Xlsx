@@ -33,8 +33,8 @@ Reference Code:
 
 import sys
 import getopt
-import censusdata
 import json
+import censusdata
 
 # Global Variables
 censusType = "acs5"
@@ -381,45 +381,77 @@ def genCensusTables(dataDir):
 
 
 def genGeographies(dataDir):
-    geos = {}
-
+    """
+    genGeographies will save all recognized census geographies into geographies.json
+    """
     print("Acquiring Geographies...")
+
+    # temp variable for storing all geographies
+    geos = []
+
+    # create a list of state level geographies
     states = censusdata.geographies(
         censusdata.censusgeo([("state", "*")]), censusType, censusYear
     )
     s_keys = list(states.keys())
     s_keys.sort()
+
+    # for each state level geography...
     count = 0
     for s_key in s_keys:
-        geos[s_key] = {"ID": states[s_key].params()[0][1]}
-        geos[s_key]["Counties"] = {}
+        # create a temp variable for store state info
+        state_level_dict = {}
+
+        # add state name to the dictionary
+        state_level_dict["StateName"] = s_key
+
+        # add state ID to the dictionary
+        state_level_dict["StateID"] = states[s_key].params()[0][1]
+
+        # add county list to the dictionary
+        state_level_dict["Counties"] = []
         counties = censusdata.geographies(
-            censusdata.censusgeo([("state", geos[s_key]["ID"]), ("county", "*")]),
+            censusdata.censusgeo(
+                [("state", state_level_dict["StateID"]), ("county", "*")]
+            ),
             censusType,
             censusYear,
         )
         c_keys = list(counties.keys())
         c_keys.sort()
         for c_key in c_keys:
-            geos[s_key]["Counties"][c_key.split(",")[0]] = counties[c_key].params()[1][
-                1
-            ]
-        geos[s_key]["Places"] = {}
+            county_level_dict = {}
+            county_level_dict["CountyName"] = c_key.split(",")[0]
+            county_level_dict["CountyID"] = counties[c_key].params()[1][1]
+            state_level_dict["Counties"].append(county_level_dict)
+
+        # add place list to the dictionary
+        state_level_dict["Places"] = []
         places = censusdata.geographies(
-            censusdata.censusgeo([("state", geos[s_key]["ID"]), ("place", "*")]),
+            censusdata.censusgeo(
+                [("state", state_level_dict["StateID"]), ("place", "*")]
+            ),
             censusType,
             censusYear,
         )
         p_keys = list(places.keys())
         p_keys.sort()
         for p_key in p_keys:
-            geos[s_key]["Places"][p_key.split(",")[0]] = places[p_key].params()[1][1]
+            place_level_dict = {}
+            place_level_dict["PlaceName"] = p_key.split(",")[0]
+            place_level_dict["PlaceID"] = places[p_key].params()[1][1]
+            state_level_dict["Places"].append(place_level_dict)
+
+        geos.append(state_level_dict)
+
         count += 1
         print(count, len(s_keys))
     print("Done")
 
-    with open("../assets/data/geographies.json", "w") as save_file:
-        json.dump(geos, save_file, indent=4)
+    print("Saving Geographies...")
+    with open(dataDir + "\geographies.json", "w") as save_file:
+        json.dump(geos, save_file, indent=2)
+    print("Done")
 
     # TODO remove this eventually (used for searching census database geographies)
     # tmp_loc = censusdata.geographies(censusdata.censusgeo([('state', '35'), ('place', '*')]), censusType, censusYear)
@@ -442,9 +474,9 @@ def main(argv):
             print("tools.py -d <dataDir>")
             sys.exit()
         elif opt in "-d":
-            dataDir = arg + "/"
+            dataDir = arg
 
-    genCensusTables(dataDir)
+    # genCensusTables(dataDir)
     genGeographies(dataDir)
 
     # TODO: Make this its own function

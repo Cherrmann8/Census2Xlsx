@@ -15,18 +15,16 @@
       "no-const-assign": "warn",
       "no-this-before-super": "warn",
       "no-undef": "warn",
-      "no-continue": "off",
       "no-unreachable": "warn",
       "no-unused-vars": "warn",
       "constructor-super": "warn",
       "valid-typeof": "warn",
       "quotes": [
         2,
-        "single"
+        "double"
       ],
       "semi": [
-        "error",
-        "never"
+        "warn"
       ],
       "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "no-console": "off",
@@ -36,7 +34,12 @@
       "prefer-const": "warn",
       "react/jsx-boolean-value": "warn",
       "no-unneeded-ternary": "warn",
-      "global-require": "warn"
+      "global-require": "warn",
+      "comma-dangle": "warn",
+      "object-curly-newline": "warn",
+      "operator-linebreak": "warn",
+      "linebreak-style": "off"
+
     },
     "parser": "babel-eslint",
     "extends": "airbnb",

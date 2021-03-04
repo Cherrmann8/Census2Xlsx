@@ -6,9 +6,6 @@ import Card from "react-bootstrap/Card";
 import dataTables from "../../../assets/data/customTables.json";
 import "../../css/IndicatorPage.css";
 
-const electron = window.require("electron");
-const { ipcRenderer } = electron;
-
 class IndicatorPage extends React.Component {
   constructor(props) {
     super(props);

@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "../../css/LoadingPage.css";
 
-const electron = window.require("electron");
-const { ipcRenderer } = electron;
-
 class LoadingPage extends React.Component {
   constructor(props) {
     super(props);
