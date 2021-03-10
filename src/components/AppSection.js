@@ -6,9 +6,8 @@ import ConfirmationPage from "./pages/ConfirmationPage/ConfirmationPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import GraphPage from "./pages/GraphPage/GraphPage";
 
-const electron = require("electron");
-
-const { ipcRenderer } = electron;
+// const electron = window.require("electron");
+// const { ipcRenderer } = electron;
 
 class AppSection extends React.Component {
   constructor(props) {
@@ -27,15 +26,15 @@ class AppSection extends React.Component {
 
     const { onPageChange } = this.props;
 
-    ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
-      console.log(args);
-      const newProgress = parseFloat(args) * 100;
-      console.log(newProgress);
-      this.setState({ progress: newProgress });
-      if (newProgress >= 100) {
-        onPageChange(1);
-      }
-    });
+    // ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
+    //   console.log(args);
+    //   const newProgress = parseFloat(args) * 100;
+    //   console.log(newProgress);
+    //   this.setState({ progress: newProgress });
+    //   if (newProgress >= 100) {
+    //     onPageChange(1);
+    //   }
+    // });
   }
 
   addLocation(locationName, geographicLevel, primaryID, secondaryID) {
@@ -90,10 +89,10 @@ class AppSection extends React.Component {
   startPythonScript() {
     const { locationList, indicatorList } = this.state;
 
-    ipcRenderer.send("START_BACKGROUND_VIA_MAIN", {
-      reportArea: locationList,
-      selectedIndicators: indicatorList,
-    });
+    // ipcRenderer.send("START_BACKGROUND_VIA_MAIN", {
+    //   reportArea: locationList,
+    //   selectedIndicators: indicatorList,
+    // });
   }
 
   render() {

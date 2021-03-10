@@ -1,7 +1,6 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const url = require("url");
-const { PythonShell } = require("python-shell");
 const { ipcMain } = require("electron");
 
 let mainWindow;
@@ -12,16 +11,16 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-    },
+    }
   });
 
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||
-      url.format({
-        pathname: path.join(__dirname, "/../public/index.html"),
-        protocol: "file:",
-        slashes: true,
-      })
+    url.format({
+      pathname: path.join(__dirname, "/../public/index.html"),
+      protocol: "file:",
+      slashes: true,
+    })
   );
 
   mainWindow.on("closed", () => {

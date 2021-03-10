@@ -449,7 +449,7 @@ def genGeographies(dataDir):
     print("Done")
 
     print("Saving Geographies...")
-    with open(dataDir + "\geographies.json", "w") as save_file:
+    with open(dataDir + "geographies.json", "w") as save_file:
         json.dump(geos, save_file, indent=2)
     print("Done")
 
@@ -477,11 +477,11 @@ def main(argv):
             dataDir = arg
 
     # genCensusTables(dataDir)
-    genGeographies(dataDir)
+    # genGeographies(dataDir)
 
     # TODO: Make this its own function
     # """ The lines below are for searching for new table IDs """
-    # printTableSearch('INSURANCE', 'subject')
+    printTableSearch("INSURANCE", "subject")
     # concept, var_keys, var_values = getTable('S1602_C04')
     # printTableLabels(concept, var_keys, var_values)
 
