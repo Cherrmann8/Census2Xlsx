@@ -60,7 +60,7 @@ class Census2Xlsx:
     data_profile_IDs = []
 
     # flags and logger object
-    logFlag = False
+    logFlag = True
     debugFlag = False
     verboseFlag = False
     logger = None
@@ -119,6 +119,14 @@ class Census2Xlsx:
         # create tmp variables for storing census tables and custom tables
         census_tables = {}
         custom_tables = {}
+
+        # sort report_area by geographic level and then primary ID
+        report_area = sorted(
+            report_area,
+            key=lambda location: (location["geographicLevel"]),
+            reverse=True,
+        )
+        report_area = sorted(report_area, key=lambda location: (location["primaryID"]))
 
         # for each table in selected_tables, add table indicators to list to be downloaded
         self.select_tables(selected_tables)
@@ -444,6 +452,10 @@ class Census2Xlsx:
             col = 0
             # for each table in the section...
             for table_name in list(custom_tables[section_name].keys()):
+                # check if the table should be saved as percentages
+                percentage_table = False
+                if table_name[len(table_name) - 2] == "%":
+                    percentage_table = True
                 indicators = list(
                     custom_tables[section_name][table_name][
                         list(census_tables.keys())[0]
@@ -478,6 +490,9 @@ class Census2Xlsx:
                         indicator = custom_tables[section_name][table_name][
                             location_name
                         ][indicator_name]
+                        # convert indicator to a percentage depending on the table
+                        if percentage_table:
+                            indicator = str(round(indicator * 100, 2)) + "%"
                         # write the indicator data to the respective table cell
                         worksheet.write(row, col, indicator, data_format)
                         col += 1
@@ -499,32 +514,43 @@ def main(data_dir, log_dir=""):
     # create an instance of the Census2Xlsx class
     c2x = Census2Xlsx(data_dir, log_dir)
 
-    # create report_area
+    # create a test report_area
     report_area = [
+        {
+            "locationName": "Alaska",
+            "geographicLevel": "0",
+            "primaryID": "02",
+            "secondaryID": "-1",
+        },
         {
             "locationName": "Alabama",
             "geographicLevel": "0",
             "primaryID": "01",
             "secondaryID": "-1",
         },
-        # {
-        #     "location_name": "Autauga County, Alabama",
-        #     "geographic_level": "1",
-        #     "primary_ID": "01",
-        #     "secondary_ID": "001",
-        # },
-        # {
-        #     "location_name": "Abanda CDP, Alabama",
-        #     "geographic_level": "2",
-        #     "primary_ID": "01",
-        #     "secondary_ID": "00100",
-        # },
+        {
+            "locationName": "Autauga County, Alabama",
+            "geographicLevel": "1",
+            "primaryID": "01",
+            "secondaryID": "001",
+        },
+        {
+            "locationName": "Abanda CDP, Alabama",
+            "geographicLevel": "2",
+            "primaryID": "01",
+            "secondaryID": "00100",
+        },
     ]
 
+    # create a test selected_indicators
     selected_indicators = [
         {"sectionIdx": 0, "tableIdx": 0},
+        {"sectionIdx": 0, "tableIdx": 6},
+        {"sectionIdx": 0, "tableIdx": 5},
+        {"sectionIdx": 0, "tableIdx": 7},
     ]
 
+    # create test options
     options = {"outputPath": "./output/test.xlsx"}
 
     # run the Census2Xlsx generate_tables method

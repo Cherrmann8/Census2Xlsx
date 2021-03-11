@@ -438,7 +438,12 @@ def genGeographies(dataDir):
         p_keys.sort()
         for p_key in p_keys:
             place_level_dict = {}
-            place_level_dict["PlaceName"] = p_key.split(",")[0]
+            try:
+                tmp_place_name = p_key.split(",")[0]
+                tmp_index = tmp_place_name.rindex(" ")
+                place_level_dict["PlaceName"] = tmp_place_name[0:tmp_index]
+            except ValueError as e:
+                place_level_dict["PlaceName"] = p_key.split(",")[0]
             place_level_dict["PlaceID"] = places[p_key].params()[1][1]
             state_level_dict["Places"].append(place_level_dict)
 
@@ -451,15 +456,8 @@ def genGeographies(dataDir):
     print("Saving Geographies...")
     with open(dataDir + "geographies.json", "w") as save_file:
         json.dump(geos, save_file, indent=2)
-    print("Done")
 
-    # TODO remove this eventually (used for searching census database geographies)
-    # tmp_loc = censusdata.geographies(censusdata.censusgeo([('state', '35'), ('place', '*')]), censusType, censusYear)
-    # print(censusdata.censusgeo([('state', '35'), ('place', '*')]).sumlevel())
-    # l_keys = list(tmp_loc.keys())
-    # l_keys.sort()
-    # for l_key in l_keys:
-    #     print(l_key, tmp_loc[l_key])
+    print("Finished acquiring geographies...")
 
 
 def main(argv):
@@ -481,7 +479,7 @@ def main(argv):
 
     # TODO: Make this its own function
     # """ The lines below are for searching for new table IDs """
-    printTableSearch("INSURANCE", "subject")
+    printTableSearch("Poverty Status", "subject")
     # concept, var_keys, var_values = getTable('S1602_C04')
     # printTableLabels(concept, var_keys, var_values)
 
