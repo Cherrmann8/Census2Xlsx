@@ -61,7 +61,7 @@ class Census2Xlsx:
 
     # flags and logger object
     logFlag = True
-    debugFlag = False
+    debugFlag = True
     verboseFlag = False
     logger = None
 
@@ -295,6 +295,10 @@ class Census2Xlsx:
                         sys.exit(2)
                     calculator.append(custom_tables["tmp"])
                     custom_tables["tmp"] = ""
+                # if the item is "%", pop 1 variable from the stack, then push the variable back with a % appended to the end
+                if item == "%":
+                    a = calculator.pop()
+                    calculator.append(str(round(a, 2)) + "%")
                 # if the item is "+", pop and add 2 variables from the stack, then push the result to the stack
                 if item == "+":
                     b = calculator.pop()
@@ -305,6 +309,11 @@ class Census2Xlsx:
                     b = calculator.pop()
                     a = calculator.pop()
                     calculator.append(a - b)
+                # if the item is a "*", pop and multiply 2 variables from the stack, then push the result to the stack
+                if item == "*":
+                    b = calculator.pop()
+                    a = calculator.pop()
+                    calculator.append(a * b)
                 # if the item is "/", pop and divide 2 variables from the stack, then push the result to the stack
                 if item == "/":
                     b = calculator.pop()
@@ -517,37 +526,52 @@ def main(data_dir, log_dir=""):
     # create a test report_area
     report_area = [
         {
-            "locationName": "Alaska",
-            "geographicLevel": "0",
-            "primaryID": "02",
-            "secondaryID": "-1",
-        },
-        {
             "locationName": "Alabama",
             "geographicLevel": "0",
             "primaryID": "01",
             "secondaryID": "-1",
         },
-        {
-            "locationName": "Autauga County, Alabama",
-            "geographicLevel": "1",
-            "primaryID": "01",
-            "secondaryID": "001",
-        },
-        {
-            "locationName": "Abanda CDP, Alabama",
-            "geographicLevel": "2",
-            "primaryID": "01",
-            "secondaryID": "00100",
-        },
+        # {
+        #     "locationName": "Autauga County, Alabama",
+        #     "geographicLevel": "1",
+        #     "primaryID": "01",
+        #     "secondaryID": "001",
+        # },
+        # {
+        #     "locationName": "Abanda, Alabama",
+        #     "geographicLevel": "2",
+        #     "primaryID": "01",
+        #     "secondaryID": "00100",
+        # },
     ]
 
     # create a test selected_indicators
     selected_indicators = [
         {"sectionIdx": 0, "tableIdx": 0},
-        {"sectionIdx": 0, "tableIdx": 6},
+        {"sectionIdx": 0, "tableIdx": 1},
+        {"sectionIdx": 0, "tableIdx": 2},
+        {"sectionIdx": 0, "tableIdx": 3},
+        {"sectionIdx": 0, "tableIdx": 4},
         {"sectionIdx": 0, "tableIdx": 5},
+        {"sectionIdx": 0, "tableIdx": 6},
         {"sectionIdx": 0, "tableIdx": 7},
+        {"sectionIdx": 0, "tableIdx": 8},
+        {"sectionIdx": 0, "tableIdx": 9},
+        {"sectionIdx": 0, "tableIdx": 10},
+        {"sectionIdx": 1, "tableIdx": 0},
+        {"sectionIdx": 1, "tableIdx": 1},
+        {"sectionIdx": 1, "tableIdx": 2},
+        {"sectionIdx": 1, "tableIdx": 3},
+        {"sectionIdx": 1, "tableIdx": 4},
+        {"sectionIdx": 1, "tableIdx": 5},
+        {"sectionIdx": 1, "tableIdx": 6},
+        {"sectionIdx": 1, "tableIdx": 7},
+        {"sectionIdx": 2, "tableIdx": 0},
+        {"sectionIdx": 2, "tableIdx": 1},
+        {"sectionIdx": 2, "tableIdx": 2},
+        {"sectionIdx": 2, "tableIdx": 3},
+        {"sectionIdx": 2, "tableIdx": 4},
+        {"sectionIdx": 2, "tableIdx": 5},
     ]
 
     # create test options

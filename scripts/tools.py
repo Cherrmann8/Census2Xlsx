@@ -479,7 +479,7 @@ def main(argv):
 
     # TODO: Make this its own function
     # """ The lines below are for searching for new table IDs """
-    printTableSearch("Poverty Status", "subject")
+    printTableSearch("female householder", "detail")
     # concept, var_keys, var_values = getTable('S1602_C04')
     # printTableLabels(concept, var_keys, var_values)
 

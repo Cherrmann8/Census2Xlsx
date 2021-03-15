@@ -24,13 +24,15 @@ class IndicatorPage extends React.Component {
   componentDidMount() {
     const { indicatorList } = this.props;
     indicatorList.forEach((indicator) => {
-      const index = indicator.indicatorIdx.toString();
+      const index = indicator.indicatorIdx;
+      console.log(indicator)
       document.getElementById(index).checked = true;
       this.checkBoxInfo[index].checked = true;
     });
   }
 
   onCheckBoxClicked(event) {
+    console.log("hello!")
     const id = parseInt(event.target.id, 10);
     const { sid, tid } = this.checkBoxInfo[id];
     const { onAddIndicator, onRemoveIndicator } = this.props;
@@ -41,10 +43,28 @@ class IndicatorPage extends React.Component {
     ].checked;
 
     if (this.checkBoxInfo[id].checked) {
-      onAddIndicator(sid, tid);
+      onAddIndicator(id, sid, tid);
     } else {
-      onRemoveIndicator(sid, tid);
+      onRemoveIndicator(id, sid, tid);
     }
+  }
+
+  onSectionBoxClicked(event) {
+    // TODO: finish this
+    // const id = parseInt(event.target.id, 10);
+    // const { sid, tid } = this.checkBoxInfo[id];
+    const { onAddIndicator, onRemoveIndicator } = this.props;
+
+    // this.checkBoxInfo[id].checked = !this.checkBoxInfo[id].checked;
+    // document.getElementById(event.target.id).checked = this.checkBoxInfo[
+    //   id
+    // ].checked;
+
+    // if (this.checkBoxInfo[id].checked) {
+    //   onAddIndicator(id, sid, tid);
+    // } else {
+    //   onRemoveIndicator(id, sid, tid);
+    // }
   }
 
   buildIndicatorAccordion() {
@@ -93,7 +113,16 @@ class IndicatorPage extends React.Component {
           <Card>
             <Card.Header id="indicatorHeader">
               <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
-                {indicatorSection.SectionName}
+                <input
+                  type="checkbox"
+                  name={indicatorSection.SectionName}
+                  id={indicatorSection.SectionName}
+                  onChange={(e) => this.onSectionBoxClicked(e)}
+                />
+                <label htmlFor={indicatorSection.SectionName}>
+                  {indicatorSection.SectionName}
+                </label>
+                {/* {indicatorSection.SectionName} */}
               </Accordion.Toggle>
             </Card.Header>
             <Accordion.Collapse eventKey="0">

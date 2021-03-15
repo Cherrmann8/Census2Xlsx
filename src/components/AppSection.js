@@ -6,8 +6,8 @@ import ConfirmationPage from "./pages/ConfirmationPage/ConfirmationPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import GraphPage from "./pages/GraphPage/GraphPage";
 
-// const electron = window.require("electron");
-// const { ipcRenderer } = electron;
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 
 class AppSection extends React.Component {
   constructor(props) {
@@ -66,14 +66,14 @@ class AppSection extends React.Component {
     }
   }
 
-  addIndicator(sectionIdx, tableIdx) {
+  addIndicator(indicatorIdx, sectionIdx, tableIdx) {
     const { indicatorList } = this.state;
-    indicatorList.push({ sectionIdx, tableIdx });
+    indicatorList.push({ indicatorIdx, sectionIdx, tableIdx });
     this.setState({ indicatorList });
     console.log(indicatorList);
   }
 
-  removeIndicator(sectionIdx, tableIdx) {
+  removeIndicator(indicatorIdx, sectionIdx, tableIdx) {
     const { indicatorList } = this.state;
     const idx = indicatorList.findIndex(
       (i) => i.sectionIdx === sectionIdx && i.tableIdx === tableIdx

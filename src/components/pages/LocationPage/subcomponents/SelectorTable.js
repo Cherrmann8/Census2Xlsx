@@ -101,7 +101,7 @@ class SelectorTable extends React.Component {
   buildSelectorTable() {
     console.log("Building selectorTable");
 
-    const { level, activeCard, stateListTitle } = this.props;
+    const { level, activeCard, primaryTitle, secondaryTitle } = this.props;
 
     let secondaryCard = null;
     if (level !== "State") {
@@ -109,7 +109,7 @@ class SelectorTable extends React.Component {
         <Card>
           <Card.Header>
             <Accordion.Toggle as="h6" eventKey="1">
-              Select a state above
+              {secondaryTitle}
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
@@ -126,7 +126,7 @@ class SelectorTable extends React.Component {
         <Card>
           <Card.Header>
             <Accordion.Toggle as="h6" eventKey="0">
-              {stateListTitle}
+              {primaryTitle}
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
@@ -152,7 +152,8 @@ SelectorTable.propTypes = {
   level: PropTypes.string,
   // activeList: PropTypes.string,
   activeCard: PropTypes.string,
-  stateListTitle: PropTypes.string,
+  primaryTitle: PropTypes.string,
+  secondaryTitle: PropTypes.string,
   onOpenSecondary: PropTypes.func,
   setStateIdx: PropTypes.func,
   setCountyIdx: PropTypes.func,
@@ -180,7 +181,8 @@ SelectorTable.defaultProps = {
   level: "State",
   // activeList: '0',
   activeCard: "0",
-  stateListTitle: "Select a state",
+  primaryTitle: "Select a state",
+  secondaryTitle: "Select a state above",
   onOpenSecondary: null,
   setStateIdx: null,
   setCountyIdx: null,

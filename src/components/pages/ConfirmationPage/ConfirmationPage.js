@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ListGroup from "react-bootstrap/ListGroup";
-import locations from "../../../assets/data/geographies.json";
 import dataTables from "../../../assets/data/customTables.json";
 
 class ConfirmationPage extends React.Component {
@@ -18,20 +17,9 @@ class ConfirmationPage extends React.Component {
 
     let itemID = 0;
     locationList.forEach((location) => {
-      let locationName;
-      if (location.countyIdx === -1 && location.placeIdx === -1) {
-        locationName = locations[location.stateIdx].StateName;
-      } else if (location.countyIdx !== -1 && location.placeIdx === -1) {
-        locationName =
-          locations[location.stateIdx].Counties[location.countyIdx].CountyName;
-      } else if (location.countyIdx === -1 && location.placeIdx !== -1) {
-        locationName =
-          locations[location.stateIdx].Places[location.placeIdx].PlaceName;
-      }
-
       this.lList.push(
         <ListGroup.Item action eventKey={itemID} key={itemID}>
-          {locationName}
+          {location.locationName}
         </ListGroup.Item>
       );
       itemID += 1;
@@ -62,9 +50,10 @@ class ConfirmationPage extends React.Component {
 ConfirmationPage.propTypes = {
   locationList: PropTypes.arrayOf(
     PropTypes.shape({
-      stateIdx: PropTypes.number,
-      countyIdx: PropTypes.number,
-      placeIdx: PropTypes.number,
+      locationName: PropTypes.string,
+      geographicLevel: PropTypes.string,
+      primaryID: PropTypes.string,
+      secondaryID: PropTypes.string,
     })
   ),
   indicatorList: PropTypes.arrayOf(
