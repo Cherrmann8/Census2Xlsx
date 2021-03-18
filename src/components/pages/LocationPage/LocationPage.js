@@ -90,13 +90,18 @@ class LocationPage extends React.Component {
     this.setState({
       activeCard: "1",
       primaryTitle: `State selected: ${stateName}`,
-      secondaryTitle: tmpSecondaryTitle
+      secondaryTitle: tmpSecondaryTitle,
     });
   }
 
   handleAddClick() {
     const { onAddLocation } = this.props;
-    const { level, stateIdx, countyIdx, placeIdx } = this.state;
+    const {
+      level,
+      stateIdx,
+      countyIdx,
+      placeIdx,
+    } = this.state;
 
     if (stateIdx !== -1) {
       if (level === "State") {
@@ -104,7 +109,7 @@ class LocationPage extends React.Component {
           locations[stateIdx].StateName,
           "0",
           locations[stateIdx].StateID,
-          "-1"
+          "-1",
         );
         this.selectionTable.current.buildSelectionTable();
       } else if (countyIdx !== -1 && level === "County") {
@@ -112,7 +117,7 @@ class LocationPage extends React.Component {
           `${locations[stateIdx].Counties[countyIdx].CountyName}, ${locations[stateIdx].StateName}`,
           "1",
           locations[stateIdx].StateID,
-          locations[stateIdx].Counties[countyIdx].CountyID
+          locations[stateIdx].Counties[countyIdx].CountyID,
         );
         this.selectionTable.current.buildSelectionTable();
       } else if (placeIdx !== -1 && level === "Place") {
@@ -120,7 +125,7 @@ class LocationPage extends React.Component {
           `${locations[stateIdx].Places[placeIdx].PlaceName}, ${locations[stateIdx].StateName}`,
           "2",
           locations[stateIdx].StateID,
-          locations[stateIdx].Places[placeIdx].PlaceID
+          locations[stateIdx].Places[placeIdx].PlaceID,
         );
         this.selectionTable.current.buildSelectionTable();
       }
@@ -157,7 +162,12 @@ class LocationPage extends React.Component {
 
   render() {
     const { locationList } = this.props;
-    const { level, activeCard, primaryTitle, secondaryTitle } = this.state;
+    const {
+      level,
+      activeCard,
+      primaryTitle,
+      secondaryTitle,
+    } = this.state;
 
     return (
       <div className="LocationPage">
@@ -201,7 +211,7 @@ LocationPage.propTypes = {
       geographicLevel: PropTypes.string,
       primaryID: PropTypes.string,
       secondaryID: PropTypes.string,
-    })
+    }),
   ),
   onAddLocation: PropTypes.func,
   onRemoveLocation: PropTypes.func,

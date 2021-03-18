@@ -1,8 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "react-bootstrap/Button";
-import Accordion from "react-bootstrap/Accordion";
-import Card from "react-bootstrap/Card";
 import SectionAccordion from "./subcomponents/SectionAccordion";
 import CheckBoxLabel from "./subcomponents/CheckBoxLabel";
 import customTables from "../../../assets/data/customTables.json";
@@ -54,9 +51,9 @@ class IndicatorPage extends React.Component {
 
     if (tid === -1) {
       if (sid === -1) {
-        console.log("all")
+        console.log("all");
       } else {
-        console.log("section")
+        console.log("section");
         const sectionID = sid;
         let tmpID = id;
         while (this.info[tmpID].sid === sectionID && tmpID < this.info.length) {
@@ -75,7 +72,7 @@ class IndicatorPage extends React.Component {
       } else {
         onRemoveIndicator(id, sid, tid);
       }
-      console.log("else")
+      console.log("else");
     }
   }
 
@@ -86,9 +83,9 @@ class IndicatorPage extends React.Component {
     let checkboxID = 0;
 
     // build the allBox Info
-    let allInfo = {};
+    const allInfo = {};
     allInfo.name = "All Indicators";
-    allInfo.id = `cb-${checkboxID.toString()}`
+    allInfo.id = `cb-${checkboxID.toString()}`;
     allInfo.sid = -1;
     allInfo.tid = -1;
     allInfo.checked = false;
@@ -105,7 +102,7 @@ class IndicatorPage extends React.Component {
       // build a sectionBox Info
       const sectionInfo = {};
       sectionInfo.name = indicatorSection.SectionName;
-      sectionInfo.id = `cb-${checkboxID.toString()}`
+      sectionInfo.id = `cb-${checkboxID.toString()}`;
       sectionInfo.sid = i;
       sectionInfo.tid = -1;
       sectionInfo.checked = false;
@@ -116,9 +113,9 @@ class IndicatorPage extends React.Component {
         const indicator = indicatorSection.Tables[j];
 
         // build a indicatorBox Info
-        let indicatorInfo = {};
+        const indicatorInfo = {};
         indicatorInfo.name = indicator.TableName;
-        indicatorInfo.id = `cb-${checkboxID.toString()}`
+        indicatorInfo.id = `cb-${checkboxID.toString()}`;
         indicatorInfo.sid = i;
         indicatorInfo.tid = j;
         indicatorInfo.checked = false;
@@ -132,7 +129,7 @@ class IndicatorPage extends React.Component {
         <SectionAccordion
           sectionInfo={this.info[sectionID].sectionInfo}
           indicators={this.info[sectionID].indicators}
-        />
+        />,
       );
     }
   }
@@ -153,7 +150,7 @@ IndicatorPage.propTypes = {
       indicatorIdx: PropTypes.number,
       sectionIdx: PropTypes.number,
       tableIdx: PropTypes.number,
-    })
+    }),
   ),
   onAddIndicator: PropTypes.func,
   onRemoveIndicator: PropTypes.func,

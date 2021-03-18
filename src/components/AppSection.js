@@ -44,7 +44,7 @@ class AppSection extends React.Component {
         i.geographicLevel === geographicLevel
         && i.primaryID === primaryID
         && i.secondaryID === secondaryID
-      )
+      ),
     );
     if (idx === -1) {
       locationList.push({
@@ -76,7 +76,7 @@ class AppSection extends React.Component {
   removeIndicator(indicatorIdx, sectionIdx, tableIdx) {
     const { indicatorList } = this.state;
     const idx = indicatorList.findIndex(
-      (i) => i.sectionIdx === sectionIdx && i.tableIdx === tableIdx
+      (i) => i.sectionIdx === sectionIdx && i.tableIdx === tableIdx,
     );
     if (idx !== -1) {
       indicatorList.splice(idx, 1);

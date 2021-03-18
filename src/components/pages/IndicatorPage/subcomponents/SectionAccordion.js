@@ -12,10 +12,10 @@ class SectionAccordion extends React.Component {
   }
 
   render() {
-    const { sectionInfo, indicators } = this.props
+    const { sectionInfo, indicators } = this.props;
     const indicatorBoxes = [];
     indicators.forEach((indicator) => {
-      indicatorBoxes.push(<CheckBoxLabel info={indicator} />)
+      indicatorBoxes.push(<CheckBoxLabel info={indicator} />);
     });
 
     return (

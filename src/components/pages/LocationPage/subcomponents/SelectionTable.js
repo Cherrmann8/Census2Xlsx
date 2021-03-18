@@ -40,7 +40,7 @@ class SelectionTable extends React.Component {
           onClick={(e) => this.onLocationListClick(e)}
         >
           {location.locationName}
-        </ListGroup.Item>
+        </ListGroup.Item>,
       );
 
       itemID += 1;
@@ -74,7 +74,7 @@ SelectionTable.propTypes = {
       geographicLevel: PropTypes.string,
       primaryID: PropTypes.string,
       secondaryID: PropTypes.string,
-    })
+    }),
   ),
   setLocationIdx: PropTypes.func,
   locations: PropTypes.arrayOf(
@@ -85,15 +85,15 @@ SelectionTable.propTypes = {
         PropTypes.shape({
           CountyName: PropTypes.string,
           CountyID: PropTypes.string,
-        })
+        }),
       ),
       Places: PropTypes.arrayOf(
         PropTypes.shape({
           PlaceName: PropTypes.string,
           PlaceID: PropTypes.string,
-        })
+        }),
       ),
-    })
+    }),
   ),
 };
 SelectionTable.defaultProps = {

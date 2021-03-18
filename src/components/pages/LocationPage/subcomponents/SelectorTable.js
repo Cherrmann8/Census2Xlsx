@@ -179,7 +179,7 @@ SelectorTable.propTypes = {
           PlaceID: PropTypes.string,
         }),
       ),
-    })
+    }),
   ),
 };
 SelectorTable.defaultProps = {
