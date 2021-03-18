@@ -50,21 +50,21 @@ class LocationPage extends React.Component {
 
     e.path.forEach((element) => {
       if (element.id === "SelectorTable") {
-        selectorClicked = true
+        selectorClicked = true;
       } else if (element.id === "SelectionTable") {
-        selectionClicked = true
+        selectionClicked = true;
       }
     });
 
     if (!selectorClicked && !selectionClicked) {
-      console.log("neither")
+      console.log("neither");
     } else if (selectorClicked && !selectionClicked) {
-      console.log("selector Clicked")
+      console.log("selector Clicked");
     } else if (!selectorClicked && selectionClicked) {
-      console.log("selection Clicked")
+      console.log("selection Clicked");
     }
 
-    console.log(document.activeElement)
+    console.log(document.activeElement);
   };
 
   handleLevelChange(newLevel) {
@@ -83,9 +83,9 @@ class LocationPage extends React.Component {
     const { level } = this.state;
     let tmpSecondaryTitle;
     if (level === "County") {
-      tmpSecondaryTitle = "Select a county"
+      tmpSecondaryTitle = "Select a county";
     } else if (level === "Place") {
-      tmpSecondaryTitle = "Select a place"
+      tmpSecondaryTitle = "Select a place";
     }
     this.setState({
       activeCard: "1",

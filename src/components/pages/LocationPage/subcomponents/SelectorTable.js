@@ -24,7 +24,7 @@ class SelectorTable extends React.Component {
           onClick={(e) => this.onStateListClick(e)}
         >
           {location.StateName}
-        </ListGroup.Item>
+        </ListGroup.Item>,
       );
       itemID += 1;
     });
@@ -75,7 +75,7 @@ class SelectorTable extends React.Component {
               onClick={(e) => this.onSecondariesListClick(e)}
             >
               {secondary.CountyName}
-            </ListGroup.Item>
+            </ListGroup.Item>,
           );
           itemID += 1;
         });
@@ -90,7 +90,7 @@ class SelectorTable extends React.Component {
               onClick={(e) => this.onSecondariesListClick(e)}
             >
               {secondary.PlaceName}
-            </ListGroup.Item>
+            </ListGroup.Item>,
           );
           itemID += 1;
         });
@@ -101,7 +101,12 @@ class SelectorTable extends React.Component {
   buildSelectorTable() {
     console.log("Building selectorTable");
 
-    const { level, activeCard, primaryTitle, secondaryTitle } = this.props;
+    const {
+      level,
+      activeCard,
+      primaryTitle,
+      secondaryTitle,
+    } = this.props;
 
     let secondaryCard = null;
     if (level !== "State") {
@@ -166,13 +171,13 @@ SelectorTable.propTypes = {
         PropTypes.shape({
           CountyName: PropTypes.string,
           CountyID: PropTypes.string,
-        })
+        }),
       ),
       Places: PropTypes.arrayOf(
         PropTypes.shape({
           PlaceName: PropTypes.string,
           PlaceID: PropTypes.string,
-        })
+        }),
       ),
     })
   ),

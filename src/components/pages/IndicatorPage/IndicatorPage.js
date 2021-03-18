@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
-import dataTables from "../../../assets/data/customTables.json";
+import SectionAccordion from "./subcomponents/SectionAccordion";
+import CheckBoxLabel from "./subcomponents/CheckBoxLabel";
+import customTables from "../../../assets/data/customTables.json";
 import "../../css/IndicatorPage.css";
 
 class IndicatorPage extends React.Component {
@@ -11,131 +13,137 @@ class IndicatorPage extends React.Component {
     super(props);
     this.state = {};
 
-    this.indicatorSections = [];
-    this.sectionCheckBoxes = {};
-    this.checkBoxInfo = [];
+    this.sectionAccordions = [];
+    // info = {
+    //   allInfo: {info},
+    //   sectionID: {
+    //     sectionInfo: {info},
+    //     indicators: [
+    //       {info},
+    //       ...
+    //     ]
+    //   },
+    //   ...
+    // }
+    this.info = {};
 
     this.onCheckBoxClicked = this.onCheckBoxClicked.bind(this);
 
     // build the indicatorAccordion
-    this.buildIndicatorAccordion();
+    this.buildPage();
   }
 
   componentDidMount() {
     const { indicatorList } = this.props;
     indicatorList.forEach((indicator) => {
       const index = indicator.indicatorIdx;
-      console.log(indicator)
       document.getElementById(index).checked = true;
-      this.checkBoxInfo[index].checked = true;
+      this.info[index].checked = true;
     });
   }
 
   onCheckBoxClicked(event) {
-    console.log("hello!")
-    const id = parseInt(event.target.id, 10);
-    const { sid, tid } = this.checkBoxInfo[id];
+    const id = parseInt(event.target.id.substring(3, event.target.id.length), 10);
+    const { sid, tid } = this.info[id];
     const { onAddIndicator, onRemoveIndicator } = this.props;
 
-    this.checkBoxInfo[id].checked = !this.checkBoxInfo[id].checked;
-    document.getElementById(event.target.id).checked = this.checkBoxInfo[
+    this.info[id].checked = !this.info[id].checked;
+    document.getElementById(event.target.id).checked = this.info[
       id
     ].checked;
 
-    if (this.checkBoxInfo[id].checked) {
-      onAddIndicator(id, sid, tid);
+    if (tid === -1) {
+      if (sid === -1) {
+        console.log("all")
+      } else {
+        console.log("section")
+        const sectionID = sid;
+        let tmpID = id;
+        while (this.info[tmpID].sid === sectionID && tmpID < this.info.length) {
+          if (this.info[tmpID].checked !== this.info[id].checked) {
+            this.info[tmpID].checked = this.info[id].checked;
+            document.getElementById(`cb-${tmpID}`).checked = this.info[
+              id
+            ].checked;
+          }
+          tmpID += 1;
+        }
+      }
     } else {
-      onRemoveIndicator(id, sid, tid);
+      if (this.info[id].checked) {
+        onAddIndicator(id, sid, tid);
+      } else {
+        onRemoveIndicator(id, sid, tid);
+      }
+      console.log("else")
     }
   }
 
-  onSectionBoxClicked(event) {
-    // TODO: finish this
-    // const id = parseInt(event.target.id, 10);
-    // const { sid, tid } = this.checkBoxInfo[id];
-    const { onAddIndicator, onRemoveIndicator } = this.props;
-
-    // this.checkBoxInfo[id].checked = !this.checkBoxInfo[id].checked;
-    // document.getElementById(event.target.id).checked = this.checkBoxInfo[
-    //   id
-    // ].checked;
-
-    // if (this.checkBoxInfo[id].checked) {
-    //   onAddIndicator(id, sid, tid);
-    // } else {
-    //   onRemoveIndicator(id, sid, tid);
-    // }
-  }
-
-  buildIndicatorAccordion() {
+  buildPage() {
     // build the indicator accordion
     let i;
     let j;
     let checkboxID = 0;
 
-    for (i = 0; i < dataTables.length; i += 1) {
-      const indicatorSection = dataTables[i];
-      this.sectionCheckBoxes[i] = [];
+    // build the allBox Info
+    let allInfo = {};
+    allInfo.name = "All Indicators";
+    allInfo.id = `cb-${checkboxID.toString()}`
+    allInfo.sid = -1;
+    allInfo.tid = -1;
+    allInfo.checked = false;
+    this.info.allInfo = allInfo;
 
-      // build this sections checkboxes
+    checkboxID += 1;
+
+    for (i = 0; i < customTables.length; i += 1) {
+      const indicatorSection = customTables[i];
+      const sectionID = checkboxID;
+      this.info[sectionID] = {};
+      this.info[sectionID].indicators = [];
+
+      // build a sectionBox Info
+      const sectionInfo = {};
+      sectionInfo.name = indicatorSection.SectionName;
+      sectionInfo.id = `cb-${checkboxID.toString()}`
+      sectionInfo.sid = i;
+      sectionInfo.tid = -1;
+      sectionInfo.checked = false;
+      this.info[sectionID].sectionInfo = sectionInfo;
+      checkboxID += 1;
+
       for (j = 0; j < indicatorSection.Tables.length; j += 1) {
         const indicator = indicatorSection.Tables[j];
 
-        let cbInfo = {};
-        cbInfo.name = indicator.TableName;
-        cbInfo.id = checkboxID.toString();
-        cbInfo.sid = i;
-        cbInfo.tid = j;
-        cbInfo.checked = false;
-        this.checkBoxInfo.push(cbInfo);
-
-        this.sectionCheckBoxes[i].push(
-          <div key={cbInfo.id}>
-            <input
-              type="checkbox"
-              name={this.checkBoxInfo[checkboxID].name}
-              id={this.checkBoxInfo[checkboxID].id}
-              onChange={(e) => this.onCheckBoxClicked(e)}
-            />
-            <label htmlFor={this.checkBoxInfo[checkboxID].id}>
-              {this.checkBoxInfo[checkboxID].name}
-            </label>
-            <br />
-          </div>
-        );
+        // build a indicatorBox Info
+        let indicatorInfo = {};
+        indicatorInfo.name = indicator.TableName;
+        indicatorInfo.id = `cb-${checkboxID.toString()}`
+        indicatorInfo.sid = i;
+        indicatorInfo.tid = j;
+        indicatorInfo.checked = false;
+        this.info[sectionID].indicators.push(indicatorInfo);
 
         checkboxID += 1;
       }
 
-      // build this sections accordion
-      this.indicatorSections.push(
-        <Accordion defaultActiveKey="0">
-          <Card>
-            <Card.Header id="indicatorHeader">
-              <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
-                <input
-                  type="checkbox"
-                  name={indicatorSection.SectionName}
-                  id={indicatorSection.SectionName}
-                  onChange={(e) => this.onSectionBoxClicked(e)}
-                />
-                <label htmlFor={indicatorSection.SectionName}>
-                  {indicatorSection.SectionName}
-                </label>
-                {/* {indicatorSection.SectionName} */}
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>{this.sectionCheckBoxes[i]}</Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
+      // build this sectionBox
+      this.sectionAccordions.push(
+        <SectionAccordion
+          sectionInfo={this.info[sectionID].sectionInfo}
+          indicators={this.info[sectionID].indicators}
+        />
       );
     }
   }
 
   render() {
-    return <div id="IndicatorAccordion">{this.indicatorSections}</div>;
+    return (
+      <div id="IndicatorPage">
+        <CheckBoxLabel info={this.info.allInfo} onCheckBoxClicked={this.onCheckBoxClicked} />
+        {this.sectionAccordions}
+      </div>
+    );
   }
 }
 

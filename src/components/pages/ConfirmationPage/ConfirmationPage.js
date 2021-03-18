@@ -20,7 +20,7 @@ class ConfirmationPage extends React.Component {
       this.lList.push(
         <ListGroup.Item action eventKey={itemID} key={itemID}>
           {location.locationName}
-        </ListGroup.Item>
+        </ListGroup.Item>,
       );
       itemID += 1;
     });
@@ -33,7 +33,7 @@ class ConfirmationPage extends React.Component {
             dataTables[indicator.sectionIdx].Tables[indicator.tableIdx]
               .TableName
           }
-        </ListGroup.Item>
+        </ListGroup.Item>,
       );
       itemID += 1;
     });
@@ -54,14 +54,14 @@ ConfirmationPage.propTypes = {
       geographicLevel: PropTypes.string,
       primaryID: PropTypes.string,
       secondaryID: PropTypes.string,
-    })
+    }),
   ),
   indicatorList: PropTypes.arrayOf(
     PropTypes.shape({
       indicatorIdx: PropTypes.number,
       sectionIdx: PropTypes.number,
       tableIdx: PropTypes.number,
-    })
+    }),
   ),
 };
 ConfirmationPage.defaultProps = {

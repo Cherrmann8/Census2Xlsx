@@ -6,8 +6,8 @@ import ConfirmationPage from "./pages/ConfirmationPage/ConfirmationPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import GraphPage from "./pages/GraphPage/GraphPage";
 
-const electron = window.require("electron");
-const { ipcRenderer } = electron;
+// const electron = window.require("electron");
+// const { ipcRenderer } = electron;
 
 class AppSection extends React.Component {
   constructor(props) {
