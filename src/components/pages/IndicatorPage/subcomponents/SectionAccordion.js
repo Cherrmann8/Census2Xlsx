@@ -12,10 +12,15 @@ class SectionAccordion extends React.Component {
   }
 
   render() {
-    const { sectionInfo, indicators } = this.props;
+    const { sectionInfo, onCheckBoxClicked } = this.props;
     const indicatorBoxes = [];
-    indicators.forEach((indicator) => {
-      indicatorBoxes.push(<CheckBoxLabel info={indicator} />);
+    sectionInfo.indicators.forEach((indicator) => {
+      indicatorBoxes.push(
+        <CheckBoxLabel
+          info={indicator}
+          onCheckBoxClicked={onCheckBoxClicked}
+        />,
+      );
     });
 
     return (
@@ -30,7 +35,7 @@ class SectionAccordion extends React.Component {
                       type="checkbox"
                       name={sectionInfo.name}
                       id={sectionInfo.id}
-                      onChange={(e) => this.onCheckBoxClicked(e)}
+                      onChange={(e) => onCheckBoxClicked(e)}
                     />
                     {sectionInfo.name}
                   </label>
@@ -51,23 +56,21 @@ SectionAccordion.propTypes = {
   sectionInfo: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
-    sid: PropTypes.number,
-    tid: PropTypes.number,
+    checked: PropTypes.bool,
+    indicators: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        id: PropTypes.string,
+        sid: PropTypes.number,
+        tid: PropTypes.number,
+      }),
+    ),
   }),
-  indicators: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      id: PropTypes.string,
-      sid: PropTypes.number,
-      tid: PropTypes.number,
-    }),
-  ),
-  // onSectionClicked: PropTypes.func,
+  onCheckBoxClicked: PropTypes.func,
 };
 SectionAccordion.defaultProps = {
   sectionInfo: null,
-  indicators: null,
-  // onSectionClicked: null,
+  onCheckBoxClicked: null,
 };
 
 export default SectionAccordion;

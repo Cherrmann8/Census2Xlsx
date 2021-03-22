@@ -13,17 +13,23 @@ class IndicatorPage extends React.Component {
     this.sectionAccordions = [];
     // info = {
     //   allInfo: {info},
-    //   sectionID: {
-    //     sectionInfo: {info},
-    //     indicators: [
-    //       {info},
-    //       ...
-    //     ]
-    //   },
-    //   ...
+    //   sections: [
+    //     {
+    //       name,
+    //       id,
+    //       checked,
+    //       indicators: [
+    //         {info},
+    //         ...
+    //       ]
+    //     },
+    //     ...
+    //   ]
     // }
     this.info = {};
 
+    this.handleIndicatorChange = this.handleIndicatorChange.bind(this);
+    this.handleSectionChange = this.handleSectionChange.bind(this);
     this.onCheckBoxClicked = this.onCheckBoxClicked.bind(this);
 
     // build the indicatorAccordion
@@ -32,103 +38,109 @@ class IndicatorPage extends React.Component {
 
   componentDidMount() {
     const { indicatorList } = this.props;
-    indicatorList.forEach((indicator) => {
-      const index = indicator.indicatorIdx;
-      document.getElementById(index).checked = true;
-      this.info[index].checked = true;
-    });
+    // TODO: Implement persistent indicator selection display
+    // indicatorList.forEach((indicator) => {
+    //   const index = indicator.indicatorIdx;
+    //   document.getElementById(index).checked = true;
+    //   this.info[index].checked = true;
+    // });
+    console.log(indicatorList);
+  }
+
+  handleSectionChange(id, sid, checked) {
+    this.info.sections[sid].checked = checked;
+    document.getElementById(id).checked = checked;
+    for (let i = 0; i < this.info.sections[sid].indicators.length; i += 1) {
+      if (this.info.sections[sid].indicators[i].checked !== this.info.sections[sid].checked) {
+        this.handleIndicatorChange(`cb.${sid}.${i}`, sid, i, this.info.sections[sid].checked);
+      }
+    }
+  }
+
+  handleIndicatorChange(id, sid, tid, checked) {
+    const { onAddIndicator, onRemoveIndicator } = this.props;
+
+    this.info.sections[sid].indicators[tid].checked = checked;
+    document.getElementById(id).checked = checked;
+    if (this.info.sections[sid].indicators[tid].checked) {
+      onAddIndicator(sid, tid);
+    } else {
+      onRemoveIndicator(sid, tid);
+    }
   }
 
   onCheckBoxClicked(event) {
-    const id = parseInt(event.target.id.substring(3, event.target.id.length), 10);
-    const { sid, tid } = this.info[id];
-    const { onAddIndicator, onRemoveIndicator } = this.props;
+    // Get the section and table IDs from the target ID
+    const tmpIDs = event.target.id.split(".");
+    const sid = parseInt(tmpIDs[1], 10);
+    const tid = parseInt(tmpIDs[2], 10);
 
-    this.info[id].checked = !this.info[id].checked;
-    document.getElementById(event.target.id).checked = this.info[
-      id
-    ].checked;
+    console.log(`${sid}.${tid}`);
 
     if (tid === -1) {
       if (sid === -1) {
-        console.log("all");
-      } else {
-        console.log("section");
-        const sectionID = sid;
-        let tmpID = id;
-        while (this.info[tmpID].sid === sectionID && tmpID < this.info.length) {
-          if (this.info[tmpID].checked !== this.info[id].checked) {
-            this.info[tmpID].checked = this.info[id].checked;
-            document.getElementById(`cb-${tmpID}`).checked = this.info[
-              id
-            ].checked;
+        // All Indicators checkbox clicked. Change all checkboxes to match
+        this.info.allInfo.checked = !this.info.allInfo.checked;
+        document.getElementById(event.target.id).checked = this.info.allInfo.checked;
+
+        for (let i = 0; i < this.info.sections.length; i += 1) {
+          if (this.info.sections[i].checked !== this.info.allInfo.checked) {
+            this.handleSectionChange(`cb.${i}.-1`, i, this.info.allInfo.checked);
           }
-          tmpID += 1;
         }
+      } else {
+        // Section checkbox clicked. Change all section checkboxes to match
+        this.handleSectionChange(event.target.id, sid, !this.info.sections[sid].checked);
       }
     } else {
-      if (this.info[id].checked) {
-        onAddIndicator(id, sid, tid);
-      } else {
-        onRemoveIndicator(id, sid, tid);
-      }
-      console.log("else");
+      // Indicator checkbox was clicked. Change checkbox to match
+      this.handleIndicatorChange(
+        event.target.id,
+        sid,
+        tid,
+        !this.info.sections[sid].indicators[tid].checked,
+      );
     }
   }
 
   buildPage() {
     // build the indicator accordion
-    let i;
-    let j;
-    let checkboxID = 0;
+    this.info.sections = [];
+    this.info.allInfo = {};
 
     // build the allBox Info
-    const allInfo = {};
-    allInfo.name = "All Indicators";
-    allInfo.id = `cb-${checkboxID.toString()}`;
-    allInfo.sid = -1;
-    allInfo.tid = -1;
-    allInfo.checked = false;
-    this.info.allInfo = allInfo;
+    this.info.allInfo.name = "All Indicators";
+    this.info.allInfo.id = "cb.-1.-1";
+    this.info.allInfo.checked = false;
 
-    checkboxID += 1;
-
-    for (i = 0; i < customTables.length; i += 1) {
+    for (let i = 0; i < customTables.length; i += 1) {
       const indicatorSection = customTables[i];
-      const sectionID = checkboxID;
-      this.info[sectionID] = {};
-      this.info[sectionID].indicators = [];
+      const sectionInfo = {};
+      sectionInfo.indicators = [];
 
       // build a sectionBox Info
-      const sectionInfo = {};
       sectionInfo.name = indicatorSection.SectionName;
-      sectionInfo.id = `cb-${checkboxID.toString()}`;
-      sectionInfo.sid = i;
-      sectionInfo.tid = -1;
+      sectionInfo.id = `cb.${i}.-1`;
       sectionInfo.checked = false;
-      this.info[sectionID].sectionInfo = sectionInfo;
-      checkboxID += 1;
 
-      for (j = 0; j < indicatorSection.Tables.length; j += 1) {
+      for (let j = 0; j < indicatorSection.Tables.length; j += 1) {
         const indicator = indicatorSection.Tables[j];
 
         // build a indicatorBox Info
         const indicatorInfo = {};
         indicatorInfo.name = indicator.TableName;
-        indicatorInfo.id = `cb-${checkboxID.toString()}`;
-        indicatorInfo.sid = i;
-        indicatorInfo.tid = j;
+        indicatorInfo.id = `cb.${i}.${j}`;
         indicatorInfo.checked = false;
-        this.info[sectionID].indicators.push(indicatorInfo);
-
-        checkboxID += 1;
+        sectionInfo.indicators.push(indicatorInfo);
       }
+
+      this.info.sections.push(sectionInfo);
 
       // build this sectionBox
       this.sectionAccordions.push(
         <SectionAccordion
-          sectionInfo={this.info[sectionID].sectionInfo}
-          indicators={this.info[sectionID].indicators}
+          sectionInfo={this.info.sections[i]}
+          onCheckBoxClicked={this.onCheckBoxClicked}
         />,
       );
     }

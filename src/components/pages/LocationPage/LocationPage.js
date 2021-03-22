@@ -196,7 +196,6 @@ class LocationPage extends React.Component {
             ref={this.selectionTable}
             locationList={locationList}
             setLocationIdx={this.setLocationIdx}
-            locations={locations}
           />
         </div>
       </div>

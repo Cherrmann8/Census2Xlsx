@@ -27,7 +27,7 @@ class SelectionTable extends React.Component {
   buildSelectionTable() {
     console.log("Building selectionTable");
 
-    const { locationList, locations } = this.props;
+    const { locationList } = this.props;
     this.selectionList = [];
     let itemID = 0;
 
@@ -77,29 +77,10 @@ SelectionTable.propTypes = {
     }),
   ),
   setLocationIdx: PropTypes.func,
-  locations: PropTypes.arrayOf(
-    PropTypes.shape({
-      StateName: PropTypes.string,
-      StateID: PropTypes.string,
-      Counties: PropTypes.arrayOf(
-        PropTypes.shape({
-          CountyName: PropTypes.string,
-          CountyID: PropTypes.string,
-        }),
-      ),
-      Places: PropTypes.arrayOf(
-        PropTypes.shape({
-          PlaceName: PropTypes.string,
-          PlaceID: PropTypes.string,
-        }),
-      ),
-    }),
-  ),
 };
 SelectionTable.defaultProps = {
   locationList: null,
   setLocationIdx: null,
-  locations: null,
 };
 
 export default SelectionTable;
