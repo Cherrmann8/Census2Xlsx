@@ -1,15 +1,14 @@
 """
+File: genLocations.py
+Brief: A script for cacheing US Census tables.
+Details: Looks up US Census table names and ids of interest and saves the information to a Json file.
+
 Author: Charles Herrmann
 Date: 9/28/20
-Description: A script for cacheing data to Json files to speed up the application.
-    The first Json file is censusTables.json which stores Table IDs from the census website.
-    The second Json file is geographies.json which stores all the available locations. 
 
 Variable Descriptions:
- -  Tables dictionary = {Concept: {TableID: Label}}
-    The Table IDs on the census website
- -  Geos dictionary = {State_Name: {ID: State_ID, Counties: {County_Name: County_ID}}}
-    The Geographies available for the user
+ -  tables dictionary = {Concept: {TableID: Label}}
+    Stores US Census tables of interest and is saved to a Json file
 
 Reference Code:
  -  Example print json to console
@@ -22,13 +21,6 @@ Reference Code:
  -  Example print table
     concept, var_keys, var_values = getTable('tableID')
     printTableLabels(concept, var_keys, var_values)
- -  The code below is for quickly searching geographies available in the census
-    # geos = censusdata.geographies(censusdata.censusgeo([('zip code tabulation area', '11693')]), 'acs5', 2018)
-    # g_keys = list(geos.keys())
-    # g_keys.sort()
-    # for key in g_keys:
-    #     print(key, '-', geos[key])
-
 """
 
 import sys
@@ -54,14 +46,14 @@ def printTableSearch(label, tableType):
 
 
 def printTableCheck(tables):
-    concepts = 0  # total number of concepts
-    labels = 0  # total number of labels
+    concepts = 0  # total number of tables
+    labels = 0  # total number of indicators
     for tableType in tables.keys():
         table_keys = list(tables[tableType].keys())
         for i in range(len(table_keys)):
             concepts += 1
             labels += len(tables[tableType][table_keys[i]])
-    print("Number of concepts:", concepts, "\nNumber of labels:", labels)
+    print("Number of tables:", concepts, "\nNumber of indicators:", labels)
 
 
 def printTable(tables):
@@ -70,12 +62,6 @@ def printTable(tables):
             print(concept)
             for label in tables[tableType][concept].keys():
                 print(label + ": " + tables[tableType][concept][label])
-
-
-def printGeos(geo):
-    g_keys = list(geo.keys())
-    for key in g_keys:
-        print(key, geo[key])
 
 
 def getLabel(var_values, index):
@@ -366,120 +352,57 @@ def fillTables(tables):
     tables["Subject Tables"][concept][var_keys[0]] = getLabel(var_values, 0)
 
 
-def genCensusTables(dataDir):
+def genCensusTables(dataDir, infoFlag):
     tables = {"Detailed Tables": {}, "Subject Tables": {}, "Data Profiles": {}}
 
-    print("Acquiring Data Tables...")
+    print("Acquiring Census Tables...")
     fillTables(tables)
-    print("Done")
+    print("Finished Acquiring Census Tables")
 
-    printTableCheck(tables)
-    printTable(tables)
+    if infoFlag:
+        printTableCheck(tables)
 
-    with open(dataDir + "censusTables.json", "w") as save_file:
+    print("Saving Census Tables...")
+    fileName = dataDir + "censusTables.json"
+    with open(fileName, "w") as save_file:
         json.dump(tables, save_file, indent=4)
+    print(f"Census Tables saved to: {fileName}")
 
 
-def genGeographies(dataDir):
-    """
-    genGeographies will save all recognized census geographies into geographies.json
-    """
-    print("Acquiring Geographies...")
-
-    # temp variable for storing all geographies
-    geos = []
-
-    # create a list of state level geographies
-    states = censusdata.geographies(
-        censusdata.censusgeo([("state", "*")]), censusType, censusYear
-    )
-    s_keys = list(states.keys())
-    s_keys.sort()
-
-    # for each state level geography...
-    count = 0
-    for s_key in s_keys:
-        # create a temp variable for store state info
-        state_level_dict = {}
-
-        # add state name to the dictionary
-        state_level_dict["StateName"] = s_key
-
-        # add state ID to the dictionary
-        state_level_dict["StateID"] = states[s_key].params()[0][1]
-
-        # add county list to the dictionary
-        state_level_dict["Counties"] = []
-        counties = censusdata.geographies(
-            censusdata.censusgeo(
-                [("state", state_level_dict["StateID"]), ("county", "*")]
-            ),
-            censusType,
-            censusYear,
-        )
-        c_keys = list(counties.keys())
-        c_keys.sort()
-        for c_key in c_keys:
-            county_level_dict = {}
-            county_level_dict["CountyName"] = c_key.split(",")[0]
-            county_level_dict["CountyID"] = counties[c_key].params()[1][1]
-            state_level_dict["Counties"].append(county_level_dict)
-
-        # add place list to the dictionary
-        state_level_dict["Places"] = []
-        places = censusdata.geographies(
-            censusdata.censusgeo(
-                [("state", state_level_dict["StateID"]), ("place", "*")]
-            ),
-            censusType,
-            censusYear,
-        )
-        p_keys = list(places.keys())
-        p_keys.sort()
-        for p_key in p_keys:
-            place_level_dict = {}
-            try:
-                tmp_place_name = p_key.split(",")[0]
-                tmp_index = tmp_place_name.rindex(" ")
-                place_level_dict["PlaceName"] = tmp_place_name[0:tmp_index]
-            except ValueError as e:
-                place_level_dict["PlaceName"] = p_key.split(",")[0]
-            place_level_dict["PlaceID"] = places[p_key].params()[1][1]
-            state_level_dict["Places"].append(place_level_dict)
-
-        geos.append(state_level_dict)
-
-        count += 1
-        print(count, len(s_keys))
-    print("Done")
-
-    print("Saving Geographies...")
-    with open(dataDir + "geographies.json", "w") as save_file:
-        json.dump(geos, save_file, indent=2)
-
-    print("Finished acquiring geographies...")
+def usage():
+    print("Usage: genCensusTables.py -d <dataDir>")
+    print("Arguments:")
+    print("-d: (Required) path to assets directory")
+    print("-i: print info on how many tables and indicators were saved")
 
 
 def main(argv):
     dataDir = ""
+    infoFlag = False
+
     try:
-        opts, args = getopt.getopt(argv, "hd:", ["ddir="])
+        opts, args = getopt.getopt(argv, "hd:i", ["ddir="])
     except getopt.GetoptError:
-        print("tools.py -d <dataDir>")
+        usage()
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("tools.py -d <dataDir>")
+            usage()
             sys.exit()
         elif opt in "-d":
             dataDir = arg
+        elif opt in "-i":
+            infoFlag = True
 
-    # genCensusTables(dataDir)
-    # genGeographies(dataDir)
+    if dataDir == "":
+        usage()
+        sys.exit(2)
+
+    genCensusTables(dataDir, infoFlag)
 
     # TODO: Make this its own function
     # """ The lines below are for searching for new table IDs """
-    printTableSearch("female householder", "detail")
+    # printTableSearch("female householder", "detail")
     # concept, var_keys, var_values = getTable('S1602_C04')
     # printTableLabels(concept, var_keys, var_values)
 

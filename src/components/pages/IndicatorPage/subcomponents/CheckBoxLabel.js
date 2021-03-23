@@ -9,18 +9,19 @@ class CheckBoxLabel extends React.Component {
   }
 
   render() {
-    const { info, onCheckBoxClicked } = this.props;
+    const { id, name, checked, onClick } = this.props;
 
     return (
       <>
-        <label htmlFor={info.id}>
+        <label htmlFor={id}>
           <input
             type="checkbox"
-            name={info.name}
-            id={info.id}
-            onChange={(e) => onCheckBoxClicked(e)}
+            name={name}
+            id={id}
+            checked={checked}
+            onChange={(e) => onClick(e)}
           />
-          {info.name}
+          {name}
         </label>
         <br />
       </>
@@ -29,17 +30,16 @@ class CheckBoxLabel extends React.Component {
 }
 
 CheckBoxLabel.propTypes = {
-  info: PropTypes.shape({
-    name: PropTypes.string,
-    id: PropTypes.string,
-    sid: PropTypes.number,
-    tid: PropTypes.number,
-  }),
-  onCheckBoxClicked: PropTypes.func,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  checked: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 CheckBoxLabel.defaultProps = {
-  info: null,
-  onCheckBoxClicked: null,
+  id: null,
+  name: null,
+  checked: false,
+  onClick: null,
 };
 
 export default CheckBoxLabel;

@@ -8,32 +8,26 @@ import "../../css/IndicatorPage.css";
 class IndicatorPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+
+    let cbStates = {};
+    cbStates.all = false;
+    for (let i = 0; i < customTables.length; i += 1) {
+      cbStates[`${i}`] = {};
+      cbStates[`${i}`]["-1"] = false;
+      for (let j = 0; j < customTables[i].SectionTables.length; j += 1) {
+        cbStates[`${i}`][`${j}`] = false;
+      }
+    }
+
+    this.state = {
+      checkBoxStates: cbStates,
+    };
 
     this.sectionAccordions = [];
-    // info = {
-    //   allInfo: {info},
-    //   sections: [
-    //     {
-    //       name,
-    //       id,
-    //       checked,
-    //       indicators: [
-    //         {info},
-    //         ...
-    //       ]
-    //     },
-    //     ...
-    //   ]
-    // }
-    this.info = {};
 
-    this.handleIndicatorChange = this.handleIndicatorChange.bind(this);
-    this.handleSectionChange = this.handleSectionChange.bind(this);
-    this.onCheckBoxClicked = this.onCheckBoxClicked.bind(this);
-
-    // build the indicatorAccordion
-    this.buildPage();
+    this.handleTableChange = this.handleTableChange.bind(this);
+    this.handleStateChange = this.handleStateChange.bind(this);
+    this.onAllBoxClicked = this.onAllBoxClicked.bind(this);
   }
 
   componentDidMount() {
@@ -44,112 +38,91 @@ class IndicatorPage extends React.Component {
     //   document.getElementById(index).checked = true;
     //   this.info[index].checked = true;
     // });
-    console.log(indicatorList);
   }
 
-  handleSectionChange(id, sid, checked) {
-    this.info.sections[sid].checked = checked;
-    document.getElementById(id).checked = checked;
-    for (let i = 0; i < this.info.sections[sid].indicators.length; i += 1) {
-      if (this.info.sections[sid].indicators[i].checked !== this.info.sections[sid].checked) {
-        this.handleIndicatorChange(`cb.${sid}.${i}`, sid, i, this.info.sections[sid].checked);
-      }
-    }
-  }
-
-  handleIndicatorChange(id, sid, tid, checked) {
+  handleTableChange(sid, tid, checked) {
     const { onAddIndicator, onRemoveIndicator } = this.props;
 
-    this.info.sections[sid].indicators[tid].checked = checked;
-    document.getElementById(id).checked = checked;
-    if (this.info.sections[sid].indicators[tid].checked) {
-      onAddIndicator(sid, tid);
+    if (checked) {
+      const tableName = customTables[sid].SectionTables[tid].TableName;
+      onAddIndicator(sid, tid, tableName);
     } else {
       onRemoveIndicator(sid, tid);
     }
   }
 
-  onCheckBoxClicked(event) {
-    // Get the section and table IDs from the target ID
-    const tmpIDs = event.target.id.split(".");
-    const sid = parseInt(tmpIDs[1], 10);
-    const tid = parseInt(tmpIDs[2], 10);
+  handleStateChange(id, checked) {
+    const { checkBoxStates } = this.state;
 
-    console.log(`${sid}.${tid}`);
+    const tmpIDs = id.split(".");
+    const sid = parseInt(tmpIDs[0], 10);
+    const tid = parseInt(tmpIDs[1], 10);
 
     if (tid === -1) {
       if (sid === -1) {
         // All Indicators checkbox clicked. Change all checkboxes to match
-        this.info.allInfo.checked = !this.info.allInfo.checked;
-        document.getElementById(event.target.id).checked = this.info.allInfo.checked;
-
-        for (let i = 0; i < this.info.sections.length; i += 1) {
-          if (this.info.sections[i].checked !== this.info.allInfo.checked) {
-            this.handleSectionChange(`cb.${i}.-1`, i, this.info.allInfo.checked);
-          }
-        }
+        checkBoxStates.all = checked
       } else {
         // Section checkbox clicked. Change all section checkboxes to match
-        this.handleSectionChange(event.target.id, sid, !this.info.sections[sid].checked);
+        checkBoxStates[sid][tid] = checked
+
+        let allChecked = true;
+        for (let i = 0; i < customTables.length; i += 1) {
+          if (!checkBoxStates[i]["-1"]) {
+            allChecked = false;
+          }
+        }
+
+        if (allChecked !== checkBoxStates.all) {
+          this.handleStateChange("-1.-1", allChecked);
+        }
       }
     } else {
       // Indicator checkbox was clicked. Change checkbox to match
-      this.handleIndicatorChange(
-        event.target.id,
-        sid,
-        tid,
-        !this.info.sections[sid].indicators[tid].checked,
-      );
+      checkBoxStates[sid][tid] = checked
+      this.handleTableChange(sid, tid, checked)
     }
+
+    this.setState({ checkBoxStates });
   }
 
-  buildPage() {
-    // build the indicator accordion
-    this.info.sections = [];
-    this.info.allInfo = {};
-
-    // build the allBox Info
-    this.info.allInfo.name = "All Indicators";
-    this.info.allInfo.id = "cb.-1.-1";
-    this.info.allInfo.checked = false;
+  onAllBoxClicked(event) {
+    const { checkBoxStates } = this.state;
 
     for (let i = 0; i < customTables.length; i += 1) {
-      const indicatorSection = customTables[i];
-      const sectionInfo = {};
-      sectionInfo.indicators = [];
-
-      // build a sectionBox Info
-      sectionInfo.name = indicatorSection.SectionName;
-      sectionInfo.id = `cb.${i}.-1`;
-      sectionInfo.checked = false;
-
-      for (let j = 0; j < indicatorSection.Tables.length; j += 1) {
-        const indicator = indicatorSection.Tables[j];
-
-        // build a indicatorBox Info
-        const indicatorInfo = {};
-        indicatorInfo.name = indicator.TableName;
-        indicatorInfo.id = `cb.${i}.${j}`;
-        indicatorInfo.checked = false;
-        sectionInfo.indicators.push(indicatorInfo);
+      if (checkBoxStates[i]["-1"] !== event.target.checked) {
+        checkBoxStates[i]["-1"] = event.target.checked;
       }
-
-      this.info.sections.push(sectionInfo);
-
-      // build this sectionBox
-      this.sectionAccordions.push(
-        <SectionAccordion
-          sectionInfo={this.info.sections[i]}
-          onCheckBoxClicked={this.onCheckBoxClicked}
-        />,
-      );
+      for (let j = 0; j < customTables[i].SectionTables.length; j += 1) {
+        if (checkBoxStates[i][j] !== event.target.checked) {
+          this.handleStateChange(`${i}.${j}`, event.target.checked)
+        }
+      }
     }
+
+    this.handleStateChange("-1.-1", event.target.checked)
   }
 
   render() {
+    const { checkBoxStates } = this.state;
+    this.sectionAccordions = [];
+
+    for (let i = 0; i < customTables.length; i += 1) {
+      const customSection = customTables[i];
+      this.sectionAccordions.push(
+        <SectionAccordion
+          key={`${i}`}
+          sid={`${i}`}
+          sectionInfo={customSection}
+          sectionStates={checkBoxStates[i]}
+          handleStateChange={this.handleStateChange}
+        />,
+      );
+    }
+
     return (
       <div id="IndicatorPage">
-        <CheckBoxLabel info={this.info.allInfo} onCheckBoxClicked={this.onCheckBoxClicked} />
+        <CheckBoxLabel id="-1.-1" name="All Tables" checked={checkBoxStates.all} onClick={this.onAllBoxClicked} />
         {this.sectionAccordions}
       </div>
     );
@@ -159,9 +132,9 @@ class IndicatorPage extends React.Component {
 IndicatorPage.propTypes = {
   indicatorList: PropTypes.arrayOf(
     PropTypes.shape({
-      indicatorIdx: PropTypes.number,
       sectionIdx: PropTypes.number,
       tableIdx: PropTypes.number,
+      tableName: PropTypes.string,
     }),
   ),
   onAddIndicator: PropTypes.func,

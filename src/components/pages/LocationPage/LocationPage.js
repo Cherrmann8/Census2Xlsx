@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import LocationLevelButtons from "./subcomponents/LocationLevelButtons";
 import SelectorTable from "./subcomponents/SelectorTable";
 import SelectionTable from "./subcomponents/SelectionTable";
-import locations from "../../../assets/data/geographies.json";
+import locations from "../../../assets/data/locations.json";
 import "../../css/LocationPage.css";
 
 class LocationPage extends React.Component {

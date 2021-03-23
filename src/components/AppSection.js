@@ -66,13 +66,13 @@ class AppSection extends React.Component {
     }
   }
 
-  addIndicator(sectionIdx, tableIdx) {
+  addIndicator(sectionIdx, tableIdx, tableName) {
     const { indicatorList } = this.state;
     const idx = indicatorList.findIndex(
       (i) => i.sectionIdx === sectionIdx && i.tableIdx === tableIdx,
     );
     if (idx === -1) {
-      indicatorList.push({ sectionIdx, tableIdx });
+      indicatorList.push({ tableName, sectionIdx, tableIdx });
       this.setState({ indicatorList });
     } else {
       console.log("tried to add an indicator twice");
