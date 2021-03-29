@@ -1,0 +1,22 @@
+.ConfirmationPage {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
+
+#ListHeader {
+  padding: 0%;
+}
+
+.ConfirmationTables {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+#ConfirmationList {
+  padding: 0%;
+  overflow-y: auto;
+  width: 40vw;
+  height: 65vh;
+}

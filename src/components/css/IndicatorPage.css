@@ -1,3 +1,7 @@
 #IndicatorPage #indicatorHeader {
   padding: 0%;
 }
+
+.SectionAccordion {
+  width: 70vw;
+}

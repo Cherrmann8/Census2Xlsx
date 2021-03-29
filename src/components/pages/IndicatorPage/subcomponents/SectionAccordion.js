@@ -48,6 +48,7 @@ class SectionAccordion extends React.Component {
       const table = sectionInfo.SectionTables[i];
       sectionTables.push(
         <CheckBoxLabel
+          key={`${sid}.${i}`}
           id={`${sid}.${i}`}
           name={table.TableName}
           checked={sectionStates[i]}

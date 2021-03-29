@@ -1,7 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import dataTables from "../../../assets/data/customTables.json";
+import "../../css/ConfirmationPage.css";
+
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 
 class ConfirmationPage extends React.Component {
   constructor(props) {
@@ -10,6 +18,22 @@ class ConfirmationPage extends React.Component {
 
     this.lList = [];
     this.iList = [];
+
+    this.dialogue = this.dialogue.bind(this);
+
+    ipcRenderer.on("RETURN_DIALOG", (event, args) => {
+      console.log(args);
+    });
+  }
+
+  dialogue() {
+    // const electron = window.require("electron");
+    // const { dialog } = electron;
+    const { locationList } = this.props;
+    console.log("clicked!");
+    // console.log(dialog.showOpenDialog(electron.renderer.Remote.getCurrentWindow(), {}))
+
+    ipcRenderer.send("START_DIALOG");
   }
 
   render() {
@@ -30,8 +54,7 @@ class ConfirmationPage extends React.Component {
       this.iList.push(
         <ListGroup.Item action eventKey={itemID} key={itemID}>
           {
-            dataTables[indicator.sectionIdx].Tables[indicator.tableIdx]
-              .TableName
+            indicator.tableName
           }
         </ListGroup.Item>,
       );
@@ -39,9 +62,45 @@ class ConfirmationPage extends React.Component {
     });
 
     return (
-      <div>
-        <ListGroup>{this.lList}</ListGroup>
-        <ListGroup>{this.iList}</ListGroup>
+      <div className="ConfirmationPage">
+        <div className="ConfirmationTables">
+          <Accordion defaultActiveKey="0">
+            <Card>
+              <Card.Header id="ListHeader">
+                <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
+                  Report Area
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body id="ConfirmationList">
+                  <ListGroup variant="flush">
+                    {this.lList}
+                  </ListGroup>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+          <Accordion defaultActiveKey="0">
+            <Card>
+              <Card.Header id="ListHeader">
+                <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
+                  Selected Tables
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body id="ConfirmationList">
+                  <ListGroup variant="flush">
+                    {this.iList}
+                  </ListGroup>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+        </div>
+        <Form.File
+          name="file"
+          label="Save as"
+        />
       </div>
     );
   }

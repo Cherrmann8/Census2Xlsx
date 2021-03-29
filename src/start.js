@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const url = require("url");
 const { ipcMain } = require("electron");
+const { dialog } = require("electron");
 
 let mainWindow;
 
@@ -86,12 +87,6 @@ ipcMain.on("START_BACKGROUND_VIA_MAIN", (event, args) => {
   cache.selectedIndicators = args.selectedIndicators;
 });
 
-// This event listener will listen for data being sent back
-// from the background renderer process
-ipcMain.on("MESSAGE_FROM_BACKGROUND", (event, args) => {
-  mainWindow.webContents.send("MESSAGE_FROM_BACKGROUND_VIA_MAIN", args);
-});
-
 ipcMain.on("BACKGROUND_READY", (event, args) => {
   event.reply("START_PROCESSING", {
     reportArea: cache.reportArea,
@@ -99,9 +94,49 @@ ipcMain.on("BACKGROUND_READY", (event, args) => {
   });
 });
 
+ipcMain.on("FAKE_BACKGROUND_VIA_MAIN", (event, args) => {
+  hiddenWindow = new BrowserWindow({
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
+
+  hiddenWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "/../public/fakeHidden.html"),
+      protocol: "file:",
+      slashes: true,
+    })
+  );
+
+  hiddenWindow.webContents.openDevTools();
+
+  hiddenWindow.on("closed", () => {
+    hiddenWindow = null;
+  });
+});
+
+ipcMain.on("BACKGROUND_FAKED", (event, args) => {
+  event.reply("FAKE_PROCESSING");
+});
+
+// This event listener will listen for data being sent back
+// from the background renderer process
+ipcMain.on("MESSAGE_FROM_BACKGROUND", (event, args) => {
+  mainWindow.webContents.send("MESSAGE_FROM_BACKGROUND_VIA_MAIN", args);
+});
+
 ipcMain.on("GET_WINDOW_COUNT", (event, args) => {
   const c = BrowserWindow.getAllWindows();
   event.reply("RETURN_WINDOW_COUNT", {
     count: c,
   });
+});
+
+ipcMain.on("START_DIALOG", (event, args) => {
+    const filePath = dialog.showSaveDialogSync();
+    event.reply("RETURN_DIALOG", {
+      filePath: filePath,
+    });
 });

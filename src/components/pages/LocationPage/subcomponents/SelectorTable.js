@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import FormControl from "react-bootstrap/FormControl";
 import ListGroup from "react-bootstrap/ListGroup";
+import { Container, Row } from "react-bootstrap";
 
 class SelectorTable extends React.Component {
   constructor(props) {
@@ -11,45 +13,102 @@ class SelectorTable extends React.Component {
     this.state = {};
 
     // put each state name into the listgroup
-    this.stateList = [];
-    this.secondariesList = [];
+    this.primaryList = [];
+    this.filteredPrimaryList = [];
+    this.secondaryList = [];
+    this.filteredSecondaryList = [];
+    this.hideAll = true;
     const { locations } = this.props;
     let itemID = 0;
     locations.forEach((location) => {
-      this.stateList.push(
+      this.primaryList.push(
         <ListGroup.Item
           action
           eventKey={itemID}
           key={itemID}
-          onClick={(e) => this.onStateListClick(e)}
+          onClick={(e) => this.onPrimaryListClick(e)}
         >
           {location.StateName}
-        </ListGroup.Item>,
+        </ListGroup.Item>
       );
       itemID += 1;
     });
+    this.filteredPrimaryList = this.primaryList;
 
-    this.onSecondariesListClick = this.onSecondariesListClick.bind(this);
-    this.onStateListClick = this.onStateListClick.bind(this);
-    this.buildSelectorTable = this.buildSelectorTable.bind(this);
+    this.formFilter = React.createRef();
+
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleResetClick = this.handleResetClick.bind(this);
+    this.onSecondayListClick = this.onSecondaryListClick.bind(this);
+    this.onPrimaryListClick = this.onPrimaryListClick.bind(this);
   }
 
-  onSecondariesListClick(event) {
-    const { level, setCountyIdx, setPlaceIdx } = this.props;
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions.bind(this));
+  }
+
+  componentDidUpdate() {
+    this.updateDimensions();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions());
+  }
+
+  handleFilterReset() {
+    this.formFilter.current.value = "";
+    this.filteredPrimaryList = this.primaryList;
+  }
+
+  handleFilterChange(event) {
+    const { activeList } = this.props;
+    const filter = event.target.value.toUpperCase();
+
+    if (activeList === "0") {
+      this.filteredPrimaryList = [];
+      this.primaryList.forEach((location) => {
+        const item = location.props.children.toUpperCase();
+        if (item.indexOf(filter) >= 0) {
+          this.filteredPrimaryList.push(location);
+        }
+      });
+    } else {
+      this.filteredSecondaryList = [];
+      this.secondaryList.forEach((location) => {
+        const item = location.props.children.toUpperCase();
+        if (item.indexOf(filter) >= 0) {
+          this.filteredSecondaryList.push(location);
+        }
+      });
+    }
+    this.forceUpdate();
+  }
+
+  handleResetClick() {
+    const { onCloseSecondary } = this.props;
+    this.handleFilterReset();
+    onCloseSecondary();
+  }
+
+  onSecondaryListClick(event) {
+    const { level, setCountyIdx, setPlaceIdx, onDoubleClick } = this.props;
 
     const tmpSecondaryIdx = event.target.attributes[0].value;
-    // console.log(tmpSecondaryIdx)
 
     if (level === "County") {
       setCountyIdx(tmpSecondaryIdx);
     } else if (level === "Place") {
       setPlaceIdx(tmpSecondaryIdx);
     }
+
+    if (event.detail === 2) {
+      onDoubleClick();
+    }
   }
 
-  onStateListClick(event) {
+  onPrimaryListClick(event) {
     const tmpStateIdx = event.target.attributes[0].value;
-    const { level, onOpenSecondary, setStateIdx } = this.props;
+    const { level, onOpenSecondary, setStateIdx, onDoubleClick } = this.props;
 
     // set the stateIdx
     setStateIdx(tmpStateIdx);
@@ -57,22 +116,23 @@ class SelectorTable extends React.Component {
     if (level !== "State") {
       const { locations } = this.props;
 
-      // change the stateList title
+      // change the primaryList title
       onOpenSecondary(locations[tmpStateIdx].StateName);
+      this.handleFilterReset();
 
       // create secondaryList
-      this.secondariesList = [];
-      let tmpSecondaries = null;
+      this.secondaryList = [];
+      let tmpSecondary = null;
       let itemID = 0;
       if (level === "County") {
-        tmpSecondaries = locations[tmpStateIdx].Counties;
-        tmpSecondaries.forEach((secondary) => {
-          this.secondariesList.push(
+        tmpSecondary = locations[tmpStateIdx].Counties;
+        tmpSecondary.forEach((secondary) => {
+          this.secondaryList.push(
             <ListGroup.Item
               action
               eventKey={itemID}
               key={itemID}
-              onClick={(e) => this.onSecondariesListClick(e)}
+              onClick={(e) => this.onSecondaryListClick(e)}
             >
               {secondary.CountyName}
             </ListGroup.Item>,
@@ -80,14 +140,14 @@ class SelectorTable extends React.Component {
           itemID += 1;
         });
       } else if (level === "Place") {
-        tmpSecondaries = locations[tmpStateIdx].Places;
-        tmpSecondaries.forEach((secondary) => {
-          this.secondariesList.push(
+        tmpSecondary = locations[tmpStateIdx].Places;
+        tmpSecondary.forEach((secondary) => {
+          this.secondaryList.push(
             <ListGroup.Item
               action
               eventKey={itemID}
               key={itemID}
-              onClick={(e) => this.onSecondariesListClick(e)}
+              onClick={(e) => this.onSecondaryListClick(e)}
             >
               {secondary.PlaceName}
             </ListGroup.Item>,
@@ -95,71 +155,103 @@ class SelectorTable extends React.Component {
           itemID += 1;
         });
       }
+      this.filteredSecondaryList = this.secondaryList;
+    } else {
+      if (event.detail === 2) {
+        onDoubleClick();
+      }
     }
   }
 
-  buildSelectorTable() {
-    console.log("Building selectorTable");
+  updateDimensions() {
+    const { level } = this.props;
+    // console.log("---")
+    const SelectorHeader = document.getElementById("SelectorAccordionHeader").clientHeight;
+    // console.log(SelectorHeader);
+    // const SelectorBody = document.getElementById("SelectorList").clientHeight;
+    // console.log(SelectorBody);
 
-    const {
-      level,
-      activeCard,
-      primaryTitle,
-      secondaryTitle,
-    } = this.props;
+    const SelectionHeader = document.getElementById("SelectionAccordionHeader").clientHeight;
+    // console.log(SelectionHeader);
+    const SelectionBody = document.getElementById("SelectionList").clientHeight;
+    // console.log(SelectionBody);
 
-    let secondaryCard = null;
-    if (level !== "State") {
-      secondaryCard = (
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as="h6" eventKey="1">
-              {secondaryTitle}
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body id="SelectorList">
-              <ListGroup variant="flush">{this.secondariesList}</ListGroup>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      );
-    }
-
-    return (
-      <Accordion defaultActiveKey={activeCard} activeKey={activeCard}>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as="h6" eventKey="0">
-              {primaryTitle}
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body id="SelectorList">
-              <ListGroup variant="flush">{this.stateList}</ListGroup>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        {secondaryCard}
-      </Accordion>
-    );
+    const targetHeight = (SelectionHeader + SelectionBody) - SelectorHeader;
+    // console.log(targetHeight);
+    document.getElementById("SelectorList").style.height = `${targetHeight}px`;
   }
 
   render() {
     // build the selectorTable
-    const selectorTable = this.buildSelectorTable();
+    const {
+      level,
+      activeList,
+      primaryTitle,
+      secondaryTitle,
+      activePrimaryItem,
+      activeSecondaryItem,
+    } = this.props;
 
-    return <div id="SelectorTable">{selectorTable}</div>;
+    let resetStateButton = (
+      <Button id="ResetStateButton" onClick={this.handleResetClick}>
+        Reset
+      </Button>
+    );
+
+    let listGroupItems;
+    let activeItem;
+    if (activeList === "0") {
+      listGroupItems = this.filteredPrimaryList;
+      activeItem = activePrimaryItem;
+    } else {
+      listGroupItems = this.filteredSecondaryList;
+      activeItem = activeSecondaryItem;
+    }
+
+    return (
+      <div id="SelectorTable">
+        <Accordion defaultActiveKey="0" activeKey="0">
+          <Card>
+            <Card.Header id="SelectorAccordionHeader">
+              <Accordion.Toggle as="h6" eventKey="0">
+                <div id="SelectorHeader">
+                  <div id="SelectorPrimaryHeader">
+                    {primaryTitle}
+                    {activeList !== "0" ? resetStateButton : null}
+                  </div>
+                  {activeList !== "0" ? secondaryTitle : null}
+                  <FormControl
+                    ref={this.formFilter}
+                    onKeyUp={(e) => this.handleFilterChange(e)}
+                    placeholder="filter..."
+                  />
+                </div>
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey="0">
+              <Card.Body id="SelectorList">
+                <ListGroup variant="flush" activeKey={activeItem}>
+                  {listGroupItems}
+                </ListGroup>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
+      </div>
+    );
   }
 }
 
 SelectorTable.propTypes = {
   level: PropTypes.string,
-  // activeList: PropTypes.string,
-  activeCard: PropTypes.string,
+  activeList: PropTypes.string,
   primaryTitle: PropTypes.string,
   secondaryTitle: PropTypes.string,
   onOpenSecondary: PropTypes.func,
+  onCloseSecondary: PropTypes.func,
+  onDoubleClick: PropTypes.func,
+  activePrimaryItem: PropTypes.string,
+  activeSecondaryItem: PropTypes.string,
   setStateIdx: PropTypes.func,
   setCountyIdx: PropTypes.func,
   setPlaceIdx: PropTypes.func,
@@ -184,11 +276,14 @@ SelectorTable.propTypes = {
 };
 SelectorTable.defaultProps = {
   level: "State",
-  // activeList: '0',
-  activeCard: "0",
+  activeList: "0",
   primaryTitle: "Select a state",
   secondaryTitle: "Select a state above",
   onOpenSecondary: null,
+  onCloseSecondary: null,
+  onDoubleClick: null,
+  activePrimaryItem: null,
+  activeSecondaryItem: null,
   setStateIdx: null,
   setCountyIdx: null,
   setPlaceIdx: null,

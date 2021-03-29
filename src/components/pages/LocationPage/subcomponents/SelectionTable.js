@@ -31,6 +31,8 @@ class SelectionTable extends React.Component {
     this.selectionList = [];
     let itemID = 0;
 
+    console.log(locationList);
+
     locationList.forEach((location) => {
       this.selectionList.push(
         <ListGroup.Item
@@ -48,16 +50,18 @@ class SelectionTable extends React.Component {
   }
 
   render() {
+    const { activeSelectionItem } = this.props;
+
     return (
       <div id="SelectionTable">
         <Accordion defaultActiveKey="0" activeKey="0">
           <Card>
-            <Card.Header>
+            <Card.Header id="SelectionAccordionHeader">
               <h6>Report Area</h6>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
               <Card.Body id="SelectionList">
-                <ListGroup variant="flush">{this.selectionList}</ListGroup>
+                <ListGroup variant="flush" activeKey={activeSelectionItem}>{this.selectionList}</ListGroup>
               </Card.Body>
             </Accordion.Collapse>
           </Card>
@@ -76,10 +80,12 @@ SelectionTable.propTypes = {
       secondaryID: PropTypes.string,
     }),
   ),
+  activeSelectionItem: PropTypes.string,
   setLocationIdx: PropTypes.func,
 };
 SelectionTable.defaultProps = {
   locationList: null,
+  activeSelectionItem: null,
   setLocationIdx: null,
 };
 

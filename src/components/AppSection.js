@@ -6,8 +6,8 @@ import ConfirmationPage from "./pages/ConfirmationPage/ConfirmationPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import GraphPage from "./pages/GraphPage/GraphPage";
 
-// const electron = window.require("electron");
-// const { ipcRenderer } = electron;
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 
 class AppSection extends React.Component {
   constructor(props) {
@@ -26,15 +26,14 @@ class AppSection extends React.Component {
 
     const { onPageChange } = this.props;
 
-    // ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
-    //   console.log(args);
-    //   const newProgress = parseFloat(args) * 100;
-    //   console.log(newProgress);
-    //   this.setState({ progress: newProgress });
-    //   if (newProgress >= 100) {
-    //     onPageChange(1);
-    //   }
-    // });
+    ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
+      console.log(args)
+      const newProgress = parseFloat(args) * 100;
+      this.setState({ progress: newProgress });
+      if (newProgress >= 100) {
+        onPageChange(1);
+      }
+    });
   }
 
   addLocation(locationName, geographicLevel, primaryID, secondaryID) {
@@ -64,6 +63,9 @@ class AppSection extends React.Component {
       locationList.splice(locationIdx, 1);
       this.setState({ locationList });
     }
+
+    console.log("appsection");
+    console.log(locationList);
   }
 
   addIndicator(sectionIdx, tableIdx, tableName) {
@@ -101,6 +103,8 @@ class AppSection extends React.Component {
     //   reportArea: locationList,
     //   selectedIndicators: indicatorList,
     // });
+
+    ipcRenderer.send("FAKE_BACKGROUND_VIA_MAIN");
   }
 
   render() {

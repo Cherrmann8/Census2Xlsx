@@ -12,7 +12,10 @@ class LocationPage extends React.Component {
     super(props);
     this.state = {
       level: "State",
-      activeCard: "0",
+      activeList: "0",
+      activePrimaryItem: "",
+      activeSecondaryItem: "",
+      activeSelectionItem: "",
       primaryTitle: "Select a state:",
       secondaryTitle: "Select a state above",
       stateIdx: -1,
@@ -25,6 +28,7 @@ class LocationPage extends React.Component {
 
     this.handleLevelChange = this.handleLevelChange.bind(this);
     this.handleOpenSecondary = this.handleOpenSecondary.bind(this);
+    this.handleCloseSecondary = this.handleCloseSecondary.bind(this);
     this.handleAddClick = this.handleAddClick.bind(this);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.setStateIdx = this.setStateIdx.bind(this);
@@ -45,6 +49,7 @@ class LocationPage extends React.Component {
   }
 
   handleClick = (e) => {
+    const { level } = this.state;
     let selectorClicked = false;
     let selectionClicked = false;
 
@@ -56,21 +61,36 @@ class LocationPage extends React.Component {
       }
     });
 
-    if (!selectorClicked && !selectionClicked) {
-      console.log("neither");
-    } else if (selectorClicked && !selectionClicked) {
-      console.log("selector Clicked");
+    if (selectorClicked && !selectionClicked) {
+      this.setState({
+        activeSelectionItem: "",
+        locationIdx: -1,
+      });
     } else if (!selectorClicked && selectionClicked) {
-      console.log("selection Clicked");
+      if (level === "State") {
+        this.setState({
+          activePrimaryItem: "",
+          stateIdx: -1,
+        });
+      } else {
+        this.setState({
+          activeSecondaryItem: "",
+          countyIdx: -1,
+          placeIdx: -1,
+        });
+      }
     }
-
-    console.log(document.activeElement);
   };
 
   handleLevelChange(newLevel) {
+    const { activeList } = this.state;
+    if (activeList !== "0") {
+      this.handleCloseSecondary();
+    }
+
     this.setState({
       level: newLevel,
-      activeCard: "0",
+      activeList: "0",
       primaryTitle: "Select a state:",
       secondaryTitle: "Select a state above",
       stateIdx: -1,
@@ -81,16 +101,29 @@ class LocationPage extends React.Component {
 
   handleOpenSecondary(stateName) {
     const { level } = this.state;
+
     let tmpSecondaryTitle;
     if (level === "County") {
       tmpSecondaryTitle = "Select a county";
     } else if (level === "Place") {
       tmpSecondaryTitle = "Select a place";
     }
+
     this.setState({
-      activeCard: "1",
+      activeList: "1",
       primaryTitle: `State selected: ${stateName}`,
       secondaryTitle: tmpSecondaryTitle,
+    });
+  }
+
+  handleCloseSecondary() {
+    this.setState({
+      activeList: "0",
+      primaryTitle: "Select a state:",
+      secondaryTitle: "Select a state above",
+      stateIdx: -1,
+      countyIdx: -1,
+      placeIdx: -1,
     });
   }
 
@@ -133,8 +166,6 @@ class LocationPage extends React.Component {
   }
 
   handleRemoveClick() {
-    console.log("LocationPage  rc");
-    console.log(document.getElementsByClassName("active"));
     const { onRemoveLocation } = this.props;
     const { locationIdx } = this.state;
 
@@ -146,27 +177,34 @@ class LocationPage extends React.Component {
 
   setStateIdx(newIdx) {
     this.setState({ stateIdx: parseInt(newIdx, 10) });
+    this.setState({ activePrimaryItem: newIdx, activeSecondaryItem: "" });
   }
 
   setCountyIdx(newIdx) {
     this.setState({ countyIdx: parseInt(newIdx, 10) });
+    this.setState({ activeSecondaryItem: newIdx, activePrimaryItem: "" });
   }
 
   setPlaceIdx(newIdx) {
     this.setState({ placeIdx: parseInt(newIdx, 10) });
+    this.setState({ activeSecondaryItem: newIdx, activePrimaryItem: "" });
   }
 
   setLocationIdx(newIdx) {
     this.setState({ locationIdx: newIdx });
+    this.setState({ activeSelectionItem: newIdx });
   }
 
   render() {
     const { locationList } = this.props;
     const {
       level,
-      activeCard,
+      activeList,
       primaryTitle,
       secondaryTitle,
+      activePrimaryItem,
+      activeSecondaryItem,
+      activeSelectionItem,
     } = this.state;
 
     return (
@@ -175,10 +213,14 @@ class LocationPage extends React.Component {
         <div className="LocationTables">
           <SelectorTable
             level={level}
-            activeCard={activeCard}
+            activeList={activeList}
             primaryTitle={primaryTitle}
             secondaryTitle={secondaryTitle}
             onOpenSecondary={this.handleOpenSecondary}
+            onCloseSecondary={this.handleCloseSecondary}
+            onDoubleClick={this.handleAddClick}
+            activePrimaryItem={activePrimaryItem}
+            activeSecondaryItem={activeSecondaryItem}
             setStateIdx={this.setStateIdx}
             setCountyIdx={this.setCountyIdx}
             setPlaceIdx={this.setPlaceIdx}
@@ -195,6 +237,7 @@ class LocationPage extends React.Component {
           <SelectionTable
             ref={this.selectionTable}
             locationList={locationList}
+            activeSelectionItem={activeSelectionItem}
             setLocationIdx={this.setLocationIdx}
           />
         </div>
