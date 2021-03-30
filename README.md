@@ -8,7 +8,7 @@
 <br/>
 <p align="center">
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/coverage-62%-yellow" alt="coverage status">
+        <img src="https://img.shields.io/badge/coverage-62%25-yellow" alt="coverage status">
     </a>
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
         <img src="https://img.shields.io/badge/tests-passing-brightgreen" alt="test status">
