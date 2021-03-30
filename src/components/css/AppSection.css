@@ -1,0 +1,59 @@
+@keyframes enterRight {
+  from {
+    opacity: 0;
+    transform: translate(100px);
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+#AppSection.enterRight {
+  animation-name: enterRight;
+  animation-duration: 0.25s;
+}
+
+@keyframes exitRight {
+  from {
+    opacity: 100;
+  }
+  to {
+    opacity: 0;
+    transform: translate(100px);
+  }
+}
+
+#AppSection.exitRight {
+  animation-name: exitRight;
+  animation-duration: 0.25s;
+}
+
+@keyframes enterLeft {
+  from {
+    opacity: 0;
+    transform: translate(-100px);
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+#AppSection.enterLeft {
+  animation-name: enterLeft;
+  animation-duration: 0.25s;
+}
+
+@keyframes exitLeft {
+  from {
+    opacity: 100;
+  }
+  to {
+    opacity: 0;
+    transform: translate(-100px);
+  }
+}
+
+#AppSection.exitLeft {
+  animation-name: exitLeft;
+  animation-duration: 0.25s;
+}

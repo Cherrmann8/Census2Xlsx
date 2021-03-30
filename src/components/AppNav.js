@@ -1,22 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ProgressBar from "react-bootstrap/ProgressBar";
+import "./css/AppNav.css";
 
 function AppNav(props) {
   const { page } = props;
   let title;
+
   if (page === 0) {
-    title = <span>Location Page</span>;
+    title = "Select Report Area";
   } else if (page === 1) {
-    title = <span>Indicator Page</span>;
+    title = "Select Report Indicators";
   } else if (page === 2) {
-    title = <span>Confirmation Page</span>;
-  } else if (page === 3) {
-    title = <span>Loading Page</span>;
+    title = "Confirm Report";
   } else if (page === 4) {
-    title = <span>Graph Page</span>;
+    title = "Download Graphs";
   }
 
-  return <div>{title}</div>;
+  return (
+    <div id="AppNav">
+      <div id="AppNavHeader">
+        <h4 id="NavPage">
+          {title}
+        </h4>
+      </div>
+    </div>
+  );
 }
 
 AppNav.propTypes = {

@@ -5,6 +5,7 @@ import IndicatorPage from "./pages/IndicatorPage/IndicatorPage";
 import ConfirmationPage from "./pages/ConfirmationPage/ConfirmationPage";
 import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import GraphPage from "./pages/GraphPage/GraphPage";
+import "./css/AppSection.css";
 
 const electron = window.require("electron");
 const { ipcRenderer } = electron;
@@ -142,7 +143,7 @@ class AppSection extends React.Component {
     } else if (page === 4) {
       section = <GraphPage />;
     }
-    return <>{section}</>;
+    return <div id="AppSection">{section}</div>;
   }
 }
 

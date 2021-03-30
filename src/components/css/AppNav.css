@@ -1,0 +1,74 @@
+#AppNav {
+  width: 75vw;
+}
+
+#AppNavHeader {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+#NavPage {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes enterRight {
+  from {
+    opacity: 0;
+    transform: translate(100px);
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+#NavPage.enterRight {
+  animation-name: enterRight;
+  animation-duration: 0.25s;
+}
+
+@keyframes exitRight {
+  from {
+    opacity: 100;
+  }
+  to {
+    opacity: 0;
+    transform: translate(100px);
+  }
+}
+
+#NavPage.exitRight {
+  animation-name: exitRight;
+  animation-duration: 0.25s;
+}
+
+@keyframes enterLeft {
+  from {
+    opacity: 0;
+    transform: translate(-100px);
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+#NavPage.enterLeft {
+  animation-name: enterLeft;
+  animation-duration: 0.25s;
+}
+
+@keyframes exitLeft {
+  from {
+    opacity: 100;
+  }
+  to {
+    opacity: 0;
+    transform: translate(-100px);
+  }
+}
+
+#NavPage.exitLeft {
+  animation-name: exitLeft;
+  animation-duration: 0.25s;
+}

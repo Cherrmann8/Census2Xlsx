@@ -45,6 +45,7 @@ class SelectorTable extends React.Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.updateDimensions.bind(this));
+    this.updateDimensions();
   }
 
   componentDidUpdate() {

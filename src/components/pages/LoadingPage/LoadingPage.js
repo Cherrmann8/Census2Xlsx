@@ -8,18 +8,11 @@ class LoadingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-
-    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
     const { onPageMount } = this.props;
     onPageMount();
-  }
-
-  handleClick() {
-    const { progress } = this.props;
-    console.log(`Pressed! ${progress}`);
   }
 
   render() {
@@ -28,7 +21,6 @@ class LoadingPage extends React.Component {
     return (
       <div className="pbar">
         <ProgressBar now={progress} label={`${progress}%`} className="pbar" />
-        <Button onClick={this.handleClick}>Press Me</Button>
       </div>
     );
   }

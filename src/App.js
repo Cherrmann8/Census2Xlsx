@@ -4,6 +4,7 @@ import "./App.css";
 import AppHeader from "./components/AppHeader";
 import AppSection from "./components/AppSection";
 import AppFooter from "./components/AppFooter";
+import IndicatorPage from "./components/pages/IndicatorPage/IndicatorPage";
 
 class App extends React.Component {
   constructor(props) {
@@ -12,17 +13,81 @@ class App extends React.Component {
       page: 0,
     };
 
+    this.incPage = this.incPage.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+  componentDidMount() {
+    const navPage = document.getElementById("NavPage");
+    navPage.addEventListener("animationend", (e) => {
+      if (navPage.className === "exitRight") {
+        navPage.className = "enterLeft";
+        this.decPage();
+      } else if (navPage.className === "exitLeft") {
+        navPage.className = "enterRight";
+        this.incPage();
+      } else if (navPage.className === "enterRight") {
+        navPage.className += "";
+      } else if (navPage.className === "enterLeft") {
+        navPage.className += "";
+      }
+    });
+
+    const appSection = document.getElementById("AppSection");
+    appSection.addEventListener("animationend", (e) => {
+      if (appSection.className === "exitRight") {
+        appSection.className = "enterLeft";
+      } else if (appSection.className === "exitLeft") {
+        appSection.className = "enterRight";
+      } else if (appSection.className === "enterRight") {
+        appSection.className += "";
+      } else if (appSection.className === "enterLeft") {
+        appSection.className += "";
+      }
+    });
   }
 
   handlePageChange(increment) {
     const { page } = this.state;
     const newPage = page + increment;
 
-    if (newPage <= 4 && newPage >= 0) {
-      this.setState({ page: newPage });
-    } else if (newPage === 5) {
+    const navPage = document.getElementById("NavPage");
+    const appSection = document.getElementById("AppSection");
+
+    if (increment > 0) {
+      navPage.className = "exitLeft";
+      appSection.className = "exitLeft";
+    } else if (increment < 0) {
+      navPage.className = "exitRight";
+      appSection.className = "exitRight";
+    }
+
+    // if (newPage >= 0 && newPage <= 4) {
+    //   this.setState({ page: newPage });
+    // } else if (newPage === 5) {
+    //   this.setState({ page: 0 });
+    // }
+  }
+
+  incPage() {
+    console.log("inc")
+    const { page } = this.state;
+
+    if (page + 1 === 5) {
       this.setState({ page: 0 });
+    } else {
+      this.setState({ page: page + 1 });
+    }
+  }
+
+  decPage() {
+    console.log("dec")
+    const { page } = this.state;
+
+    if (page - 1 === -1) {
+      this.setState({ page: 0 });
+    } else {
+      this.setState({ page: page - 1 });
     }
   }
 
