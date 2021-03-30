@@ -1,14 +1,20 @@
 <br/>
 <p align="center">
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img width="50%" src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/icon.svg" alt="Census2Xlsx logo">
+        <img width="25%" height="25%" src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/icon.png" alt="Census2Xlsx logo">
     </a>
+    <h1>
+      Census2Xlsx
+    </h1>
 </p>
 
 <br/>
 <p align="center">
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/<build>-<passing>-<brightgreen>" alt="build status">
+        <img src="https://img.shields.io/badge/build-62.5% coverage-yellow" alt="build status">
+    </a>
+    <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
+        <img src="https://img.shields.io/badge/tests-passing-brightgreen" alt="build status">
     </a>
 </p>
 <br/>
