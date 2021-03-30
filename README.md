@@ -8,19 +8,19 @@
 <br/>
 <p align="center">
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/coverage-62%-yellow" alt="build status">
+        <img src="https://img.shields.io/badge/coverage-62%-yellow" alt="coverage status">
     </a>
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/tests-passing-brightgreen" alt="build status">
+        <img src="https://img.shields.io/badge/tests-passing-brightgreen" alt="test status">
     </a>
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/Python-3.7-informational" alt="build status">
+        <img src="https://img.shields.io/badge/Python-3.7-informational" alt="python version">
     </a>
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/Electron-11.2.1-informational" alt="build status">
+        <img src="https://img.shields.io/badge/Electron-11.2.1-informational" alt="electron version">
     </a>
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/React-17.0.1-informational" alt="build status">
+        <img src="https://img.shields.io/badge/React-17.0.1-informational" alt="react version">
     </a>
 </p>
 <br/>
