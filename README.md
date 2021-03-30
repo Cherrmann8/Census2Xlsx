@@ -1,9 +1,17 @@
 <br/>
 <p align="center">
-    <a href="" target="_blank">
-        <img width="50%" alt="Census2Xlsx logo">
+    <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
+        <img width="50%" src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/icon.svg" alt="Census2Xlsx logo">
     </a>
 </p>
+
+<br/>
+<p align="center">
+    <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
+        <img src="https://img.shields.io/badge/<build>-<passing>-<brightgreen>" alt="build status">
+    </a>
+</p>
+<br/>
 
 # Census2Xlsx
 
@@ -22,10 +30,13 @@ This application was developed for Heartland Grant Solutions: http://www.heartla
 ## Terminology
 
 Location: A geographic location described by a census geocode. Locations can represent a variety of geographic levels defined but the US census. Currently support state, county, and place geographic levels.
+
 Report Area: A set of locations.
 
 Indicator: A data point used to convey the state, level, or amount of something.
+
 Table: A set of related indicators.
+
 Section: A set of related tables.
 
 ## Features
