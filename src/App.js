@@ -1,22 +1,26 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
 import AppHeader from "./components/AppHeader";
 import AppSection from "./components/AppSection";
 import AppFooter from "./components/AppFooter";
-import IndicatorPage from "./components/pages/IndicatorPage/IndicatorPage";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       page: 0,
+      invalidLocations: true,
+      invalidIndicators: true,
     };
 
     this.appSection = React.createRef();
 
-    this.incPage = this.incPage.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.setInvalidLocations = this.setInvalidLocations.bind(this);
+    this.setInvalidIndicators = this.setInvalidIndicators.bind(this);
+    this.incPage = this.incPage.bind(this);
+    this.decPage = this.decPage.bind(this);
   }
 
   componentDidMount() {
@@ -70,6 +74,14 @@ class App extends React.Component {
     }
   }
 
+  setInvalidLocations(invalid) {
+    this.setState({ invalidLocations: invalid });
+  }
+
+  setInvalidIndicators(invalid) {
+    this.setState({ invalidIndicators: invalid });
+  }
+
   incPage() {
     console.log("inc")
     const { page } = this.state;
@@ -94,7 +106,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { page } = this.state;
+    const { page, invalidLocations, invalidIndicators } = this.state;
 
     return (
       <div className="App">
@@ -103,11 +115,24 @@ class App extends React.Component {
         </div>
 
         <div className="App-section">
-          <AppSection ref={this.appSection} page={page} onPageChange={this.handlePageChange} />
+          <AppSection
+            ref={this.appSection}
+            page={page}
+            onPageChange={this.handlePageChange}
+            invalidLocations={invalidLocations}
+            setInvalidLocations={this.setInvalidLocations}
+            invalidIndicators={invalidIndicators}
+            setInvalidIndicators={this.setInvalidIndicators}
+          />
         </div>
 
         <div className="App-footer">
-          <AppFooter page={page} onPageChange={this.handlePageChange} />
+          <AppFooter
+            page={page}
+            onPageChange={this.handlePageChange}
+            invalidLocations={invalidLocations}
+            invalidIndicators={invalidIndicators}
+          />
         </div>
       </div>
     );

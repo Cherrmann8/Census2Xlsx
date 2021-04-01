@@ -36,7 +36,7 @@ class SelectorTable extends React.Component {
 
     this.formFilter = React.createRef();
 
-    this.updateDimensions = this.updateDimensions.bind(this)
+    this.updateDimensions = this.updateDimensions.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.onSecondayListClick = this.onSecondaryListClick.bind(this);
@@ -44,7 +44,7 @@ class SelectorTable extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.updateDimensions());
+    window.addEventListener("resize", this.updateDimensions, true);
     this.updateDimensions();
   }
 
@@ -53,7 +53,7 @@ class SelectorTable extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions());
+    window.removeEventListener("resize", this.updateDimensions, true);
   }
 
   handleFilterReset() {
@@ -166,7 +166,7 @@ class SelectorTable extends React.Component {
 
   updateDimensions() {
     const { level } = this.props;
-    // console.log("---")
+    console.log("updating selectorTable dimensions")
     const SelectorHeader = document.getElementById("SelectorAccordionHeader").clientHeight;
     // console.log(SelectorHeader);
     // const SelectorBody = document.getElementById("SelectorList").clientHeight;
@@ -193,6 +193,8 @@ class SelectorTable extends React.Component {
       activeSecondaryItem,
     } = this.props;
 
+    console.log("rendering selector table");
+
     let resetStateButton = (
       <Button id="ResetStateButton" onClick={this.handleResetClick}>
         Reset
@@ -214,7 +216,7 @@ class SelectorTable extends React.Component {
         <Accordion defaultActiveKey="0" activeKey="0">
           <Card>
             <Card.Header id="SelectorAccordionHeader">
-              <Accordion.Toggle as="h6" eventKey="0">
+              <Accordion.Toggle as="span" eventKey="0">
                 <div id="SelectorHeader">
                   <div id="SelectorPrimaryHeader">
                     {primaryTitle}

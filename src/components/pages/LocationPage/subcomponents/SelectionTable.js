@@ -57,7 +57,7 @@ class SelectionTable extends React.Component {
         <Accordion defaultActiveKey="0" activeKey="0">
           <Card>
             <Card.Header id="SelectionAccordionHeader">
-              <h6>Report Area</h6>
+              <span>Report Area</span>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
               <Card.Body id="SelectionList">

@@ -12,8 +12,6 @@ body,
 }
 
 .App {
-  /* background-color: #282c34; */
-  /* color: white; */
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;

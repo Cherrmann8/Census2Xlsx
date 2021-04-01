@@ -1,11 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ProgressBar from "react-bootstrap/ProgressBar";
-import Button from "react-bootstrap/Button";
 import "../../css/LoadingPage.css";
-
-const electron = window.require("electron");
-const { ipcRenderer } = electron;
 
 class LoadingPage extends React.Component {
   constructor(props) {
@@ -37,7 +33,7 @@ LoadingPage.propTypes = {
 };
 LoadingPage.defaultProps = {
   progress: 0,
-  progressDialog: "",
+  progressDialog: "Starting your download...",
   onPageMount: null,
 };
 

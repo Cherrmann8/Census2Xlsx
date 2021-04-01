@@ -17,7 +17,7 @@ class LocationPage extends React.Component {
       activeSecondaryItem: "",
       activeSelectionItem: "",
       primaryTitle: "Select a state:",
-      secondaryTitle: "Select a state above",
+      secondaryTitle: "",
       stateIdx: -1,
       countyIdx: -1,
       placeIdx: -1,
@@ -92,7 +92,7 @@ class LocationPage extends React.Component {
       level: newLevel,
       activeList: "0",
       primaryTitle: "Select a state:",
-      secondaryTitle: "Select a state above",
+      secondaryTitle: "",
       stateIdx: -1,
       countyIdx: -1,
       placeIdx: -1,
@@ -104,9 +104,9 @@ class LocationPage extends React.Component {
 
     let tmpSecondaryTitle;
     if (level === "County") {
-      tmpSecondaryTitle = "Select a county";
+      tmpSecondaryTitle = "Select a county:";
     } else if (level === "Place") {
-      tmpSecondaryTitle = "Select a place";
+      tmpSecondaryTitle = "Select a place:";
     }
 
     this.setState({
@@ -120,7 +120,7 @@ class LocationPage extends React.Component {
     this.setState({
       activeList: "0",
       primaryTitle: "Select a state:",
-      secondaryTitle: "Select a state above",
+      secondaryTitle: "",
       stateIdx: -1,
       countyIdx: -1,
       placeIdx: -1,

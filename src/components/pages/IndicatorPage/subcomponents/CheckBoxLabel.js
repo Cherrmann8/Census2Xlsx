@@ -13,14 +13,14 @@ class CheckBoxLabel extends React.Component {
 
     return (
       <>
-        <label htmlFor={id}>
+        <label htmlFor={id} className="CheckBoxLabel">
           <input
             type="checkbox"
             name={name}
             id={id}
             className="checkBoxLabel"
             checked={checked}
-            onChange={(e) => onClick(e)}
+            onChange={onClick}
           />
           {name}
         </label>

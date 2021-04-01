@@ -6,8 +6,8 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import "../../css/ConfirmationPage.css";
 import { Col, Form, Row } from "react-bootstrap";
+import "../../css/ConfirmationPage.css";
 
 const electron = window.require("electron");
 const { ipcRenderer } = electron;
@@ -57,7 +57,7 @@ class ConfirmationPage extends React.Component {
   }
 
   render() {
-    const { fileName, filePath, invalidStatus } = this.props;
+    const { fileName, filePath, invalidFileName, invalidFilePath } = this.props;
 
     return (
       <div className="ConfirmationPage">
@@ -105,7 +105,7 @@ class ConfirmationPage extends React.Component {
                   id="fileName"
                   placeholder="Enter a file name..."
                   onChange={this.onNameChange}
-                  isInvalid={invalidStatus.invalidFileName}
+                  isInvalid={invalidFileName}
                 />
                 <InputGroup.Append>
                   <InputGroup.Text>.xlsx</InputGroup.Text>
@@ -125,6 +125,7 @@ class ConfirmationPage extends React.Component {
                   id="filePath"
                   placeholder={filePath}
                   value={filePath}
+                  isInvalid={false}
                 />
                 <InputGroup.Append>
                   <Button onClick={this.dialog}>Choose...</Button>
@@ -159,12 +160,8 @@ ConfirmationPage.propTypes = {
   ),
   fileName: PropTypes.string,
   filePath: PropTypes.string,
-  invalidStatus: PropTypes.shape({
-    invalidLocations: PropTypes.bool,
-    invalidIndicators: PropTypes.bool,
-    invalidFileName: PropTypes.bool,
-    invalidFilePath: PropTypes.bool,
-  }),
+  invalidFileName: PropTypes.bool,
+  invalidFilePath: PropTypes.bool,
   onFileNameChange: PropTypes.func,
 };
 ConfirmationPage.defaultProps = {
@@ -172,7 +169,8 @@ ConfirmationPage.defaultProps = {
   indicatorList: null,
   fileName: "",
   filePath: "",
-  invalidStatus: null,
+  invalidFileName: false,
+  invalidFilePath: false,
   onFileNameChange: null,
 };
 

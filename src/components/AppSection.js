@@ -19,13 +19,9 @@ class AppSection extends React.Component {
       fileName: "",
       filePath: "",
       progress: 0,
-      progressDialog: "",
-      invalidStatus: {
-        invalidLocations: false,
-        invalidIndicators: false,
-        invalidFileName: false,
-        invalidFilePath: false,
-      }
+      progressDialog: "Starting your download...",
+      invalidFileName: false,
+      invalidFilePath: false,
     };
 
     this.setFileName = this.setFileName.bind(this);
@@ -92,6 +88,7 @@ class AppSection extends React.Component {
   }
 
   addLocation(locationName, geographicLevel, primaryID, secondaryID) {
+    const { setInvalidLocations } = this.props;
     const { locationList } = this.state;
     const idx = locationList.findIndex(
       (i) => (
@@ -109,9 +106,15 @@ class AppSection extends React.Component {
       });
       this.setState({ locationList });
     }
+    setInvalidLocations(false);
   }
 
   removeLocation(locationIdx) {
+    const {
+      invalidLocations,
+      setInvalidLocations,
+      invalidIndicators,
+      setInvalidIndicators } = this.props;
     const { locationList } = this.state;
 
     if (locationList.length > locationIdx) {
@@ -119,15 +122,19 @@ class AppSection extends React.Component {
       this.setState({ locationList });
     }
 
-    console.log("appsection");
-    console.log(locationList);
+    if (locationList.length === 0) {
+      setInvalidLocations(true);
+    }
   }
 
   addIndicator(sectionIdx, tableIdx, tableName) {
+    const { setInvalidIndicators } = this.props;
     const { indicatorList } = this.state;
+
     const idx = indicatorList.findIndex(
       (i) => i.sectionIdx === sectionIdx && i.tableIdx === tableIdx,
     );
+
     if (idx === -1) {
       indicatorList.push({ tableName, sectionIdx, tableIdx });
       this.setState({ indicatorList });
@@ -135,20 +142,29 @@ class AppSection extends React.Component {
       console.log("tried to add an indicator twice");
     }
 
-    console.log(indicatorList);
+    console.log("Ind valid");
+    setInvalidIndicators(false);
   }
 
   removeIndicator(sectionIdx, tableIdx) {
+    const { setInvalidIndicators } = this.props;
     const { indicatorList } = this.state;
+
     const idx = indicatorList.findIndex(
       (i) => i.sectionIdx === sectionIdx && i.tableIdx === tableIdx,
     );
+
     if (idx !== -1) {
       indicatorList.splice(idx, 1);
       this.setState({ indicatorList });
     }
 
     console.log(indicatorList);
+
+    if (indicatorList.length === 0) {
+      console.log("Ind invalid");
+      setInvalidIndicators(true);
+    }
   }
 
   confirmDownload() {
@@ -211,7 +227,8 @@ class AppSection extends React.Component {
       filePath,
       progress,
       progressDialog,
-      invalidStatus
+      invalidFileName,
+      invalidFilePath,
     } = this.state;
 
     let section;
@@ -238,7 +255,8 @@ class AppSection extends React.Component {
           indicatorList={indicatorList}
           fileName={fileName}
           filePath={filePath}
-          invalidStatus={invalidStatus}
+          invalidFileName={invalidFileName}
+          invalidFilePath={invalidFilePath}
           onFileNameChange={this.setFileName}
         />
       );
@@ -260,10 +278,18 @@ class AppSection extends React.Component {
 AppSection.propTypes = {
   page: PropTypes.number,
   onPageChange: PropTypes.func,
+  invalidLocations: PropTypes.bool,
+  setInvalidLocations: PropTypes.func,
+  invalidIndicators: PropTypes.bool,
+  setInvalidIndicators: PropTypes.func,
 };
 AppSection.defaultProps = {
   page: 0,
   onPageChange: null,
+  invalidLocations: true,
+  setInvalidLocations: null,
+  invalidIndicators: true,
+  setInvalidIndicators: null,
 };
 
 export default AppSection;

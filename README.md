@@ -7,6 +7,7 @@
 
 <br/>
 <p align="center">
+    <!-- Shhhh, dont tell anyone... -->
     <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
         <img src="https://img.shields.io/badge/coverage-62%25-yellow" alt="coverage status">
     </a>
@@ -54,6 +55,8 @@ Section: A set of related tables.
 ## Features
 
 - Create a report with custom locations and indicators
+  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/LocationPage.png" alt="Location Page">
+  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/IndicatorPage.png" alt="Location Page">
 - Download report as a .xlsx file
 - Download report graphs as .png files
 

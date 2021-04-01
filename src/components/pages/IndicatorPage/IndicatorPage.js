@@ -33,7 +33,6 @@ class IndicatorPage extends React.Component {
   componentDidMount() {
     const { indicatorList } = this.props;
     const { checkBoxStates } = this.state;
-    console.log(indicatorList);
     indicatorList.forEach((indicator) => {
       checkBoxStates[`${indicator.sectionIdx}`][`${indicator.tableIdx}`] = true;
       this.setState({ checkBoxStates });
@@ -97,7 +96,6 @@ class IndicatorPage extends React.Component {
 
   updateStates() {
     const { checkBoxStates } = this.state;
-    console.log(checkBoxStates);
 
     let allChecked = true;
     for (let i = 0; i < customTables.length; i += 1) {

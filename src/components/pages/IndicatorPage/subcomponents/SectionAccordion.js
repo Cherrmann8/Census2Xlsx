@@ -2,19 +2,33 @@ import React from "react";
 import PropTypes from "prop-types";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
+import { Button } from "react-bootstrap";
 import CheckBoxLabel from "./CheckBoxLabel";
 import "../../../css/IndicatorPage.css";
 
 class SectionAccordion extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { activeKey: "1" };
 
+    this.onAccordionToggleClicked = this.onAccordionToggleClicked.bind(this);
     this.onSectionBoxClicked = this.onSectionBoxClicked.bind(this);
     this.onTableBoxClicked = this.onTableBoxClicked.bind(this);
   }
 
+  onAccordionToggleClicked() {
+    const { activeKey } = this.state;
+
+    if (activeKey === "0") {
+      this.setState({ activeKey: "1" });
+    } else {
+      this.setState({ activeKey: "0" });
+    }
+  }
+
   onSectionBoxClicked(event) {
+    this.setState({ activeKey: "0" });
+
     const { sid, sectionInfo, sectionStates, handleStateChange } = this.props;
     handleStateChange(event.target.id, event.target.checked);
 
@@ -43,6 +57,7 @@ class SectionAccordion extends React.Component {
 
   render() {
     const { sid, sectionInfo, sectionStates } = this.props;
+    const { activeKey } = this.state;
     const sectionTables = [];
     for (let i = 0; i < sectionInfo.SectionTables.length; i += 1) {
       const table = sectionInfo.SectionTables[i];
@@ -59,21 +74,19 @@ class SectionAccordion extends React.Component {
 
     return (
       <div className="SectionAccordion">
-        <Accordion defaultActiveKey={sid}>
+        <Accordion activeKey={activeKey}>
           <Card>
             <Card.Header id="indicatorHeader">
-              <Accordion.Toggle as={Card.Header} variant="link" eventKey={sid}>
-                <div>
-                  <CheckBoxLabel
-                    id={`${sid}.-1`}
-                    name={sectionInfo.SectionName}
-                    checked={sectionStates["-1"]}
-                    onClick={this.onSectionBoxClicked}
-                  />
-                </div>
+              <Accordion.Toggle as={Card.Header} variant="link" eventKey="0" onClick={this.onAccordionToggleClicked}>
+                <CheckBoxLabel
+                  id={`${sid}.-1`}
+                  name={sectionInfo.SectionName}
+                  checked={sectionStates["-1"]}
+                  onClick={this.onSectionBoxClicked}
+                />
               </Accordion.Toggle>
             </Card.Header>
-            <Accordion.Collapse eventKey={sid}>
+            <Accordion.Collapse eventKey="0">
               <Card.Body>{sectionTables}</Card.Body>
             </Accordion.Collapse>
           </Card>

@@ -1,17 +1,19 @@
 .ProgressInfo {
-  width: 80vw;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
 }
 
 #ProgressBar {
-  width: auto;
+  width: 80vw;
   height: 3vh;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 #ProgressDialog {
-  width: auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
   height: 3vh;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 2vh;
 }
