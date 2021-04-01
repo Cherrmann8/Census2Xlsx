@@ -16,9 +16,19 @@ class AppSection extends React.Component {
     this.state = {
       locationList: [],
       indicatorList: [],
+      fileName: "",
+      filePath: "",
       progress: 0,
+      progressDialog: "",
+      invalidStatus: {
+        invalidLocations: false,
+        invalidIndicators: false,
+        invalidFileName: false,
+        invalidFilePath: false,
+      }
     };
 
+    this.setFileName = this.setFileName.bind(this);
     this.addLocation = this.addLocation.bind(this);
     this.removeLocation = this.removeLocation.bind(this);
     this.addIndicator = this.addIndicator.bind(this);
@@ -26,13 +36,57 @@ class AppSection extends React.Component {
     this.startPythonScript = this.startPythonScript.bind(this);
 
     const { onPageChange } = this.props;
-
     ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
-      console.log(args)
-      const newProgress = parseFloat(args) * 100;
-      this.setState({ progress: newProgress });
+      const tmpMessage = args.split(" ");
+      const newProgress = parseFloat(tmpMessage[tmpMessage.length - 1]) * 100;
+      const newDialog = tmpMessage.slice(0, tmpMessage.length - 1).join(" ");
+
+      this.setState({ progress: newProgress, progressDialog: newDialog });
       if (newProgress >= 100) {
         onPageChange(1);
+      }
+    });
+
+    ipcRenderer.on("RETURN_DIALOG", (event, args) => {
+      if (args.filePath && args.filePath.length > 0) {
+        this.setState({ filePath: args.filePath });
+      }
+    });
+
+    ipcRenderer.on("RETURN_DOWNLOADS_PATH", (event, args) => {
+      this.setState({ filePath: args.downloadsPath });
+    });
+
+    ipcRenderer.send("GET_DOWNLOADS_PATH");
+  }
+
+  setFileName(name) {
+    const { invalidStatus } = this.state;
+    this.setState({ fileName: name });
+    if (invalidStatus.invalidFileName) {
+      this.setState({
+        invalidStatus: {
+          invalidLocations: invalidStatus.invalidLocations,
+          invalidIndicators: invalidStatus.invalidIndicators,
+          invalidFileName: false,
+          invalidFilePath: invalidStatus.invalidFilePath,
+        }
+      });
+    }
+  }
+
+  reset() {
+    this.setState({
+      locationList: [],
+      indicatorList: [],
+      fileName: "",
+      progress: 0,
+      progressDialog: "",
+      invalidStatus: {
+        invalidLocations: false,
+        invalidIndicators: false,
+        invalidFileName: false,
+        invalidFilePath: false,
       }
     });
   }
@@ -97,6 +151,46 @@ class AppSection extends React.Component {
     console.log(indicatorList);
   }
 
+  confirmDownload() {
+    const {
+      locationList,
+      indicatorList,
+      fileName,
+      filePath,
+      invalidStatus
+    } = this.state;
+
+    let invalidLoc = false;
+    let invalidInd = false;
+    let invalidName = false;
+    let invalidPath = false;
+
+    if (locationList.length === 0) {
+      invalidLoc = true;
+    }
+
+    if (indicatorList.length === 0) {
+      invalidInd = true;
+    }
+
+    if (fileName.length === 0) {
+      invalidName = true;
+    }
+
+    this.setState({ invalidStatus: {
+      invalidLocations: invalidLoc,
+      invalidIndicators: invalidInd,
+      invalidFileName: invalidName,
+      invalidFilePath: invalidPath,
+    } });
+
+    if (invalidLoc || invalidInd || invalidName || invalidPath) {
+      return false;
+    }
+
+    return true;
+  }
+
   startPythonScript() {
     const { locationList, indicatorList } = this.state;
 
@@ -110,7 +204,15 @@ class AppSection extends React.Component {
 
   render() {
     const { page } = this.props;
-    const { locationList, indicatorList, progress } = this.state;
+    const {
+      locationList,
+      indicatorList,
+      fileName,
+      filePath,
+      progress,
+      progressDialog,
+      invalidStatus
+    } = this.state;
 
     let section;
     if (page === 0) {
@@ -134,11 +236,19 @@ class AppSection extends React.Component {
         <ConfirmationPage
           locationList={locationList}
           indicatorList={indicatorList}
+          fileName={fileName}
+          filePath={filePath}
+          invalidStatus={invalidStatus}
+          onFileNameChange={this.setFileName}
         />
       );
     } else if (page === 3) {
       section = (
-        <LoadingPage progress={progress} onPageMount={this.startPythonScript} />
+        <LoadingPage
+          progress={progress}
+          progressDialog={progressDialog}
+          onPageMount={this.startPythonScript}
+        />
       );
     } else if (page === 4) {
       section = <GraphPage />;

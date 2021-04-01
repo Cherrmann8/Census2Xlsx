@@ -13,6 +13,8 @@ class App extends React.Component {
       page: 0,
     };
 
+    this.appSection = React.createRef();
+
     this.incPage = this.incPage.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
   }
@@ -49,7 +51,12 @@ class App extends React.Component {
 
   handlePageChange(increment) {
     const { page } = this.state;
-    const newPage = page + increment;
+
+    if (page + increment === 3) {
+      if (!this.appSection.current.confirmDownload()) {
+        return;
+      }
+    }
 
     const navPage = document.getElementById("NavPage");
     const appSection = document.getElementById("AppSection");
@@ -61,12 +68,6 @@ class App extends React.Component {
       navPage.className = "exitRight";
       appSection.className = "exitRight";
     }
-
-    // if (newPage >= 0 && newPage <= 4) {
-    //   this.setState({ page: newPage });
-    // } else if (newPage === 5) {
-    //   this.setState({ page: 0 });
-    // }
   }
 
   incPage() {
@@ -74,6 +75,7 @@ class App extends React.Component {
     const { page } = this.state;
 
     if (page + 1 === 5) {
+      this.appSection.current.reset();
       this.setState({ page: 0 });
     } else {
       this.setState({ page: page + 1 });
@@ -101,7 +103,7 @@ class App extends React.Component {
         </div>
 
         <div className="App-section">
-          <AppSection page={page} onPageChange={this.handlePageChange} />
+          <AppSection ref={this.appSection} page={page} onPageChange={this.handlePageChange} />
         </div>
 
         <div className="App-footer">

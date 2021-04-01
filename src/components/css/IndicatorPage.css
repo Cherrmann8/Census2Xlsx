@@ -3,5 +3,10 @@
 }
 
 .SectionAccordion {
-  width: 70vw;
+  width: 75vw;
+  margin-bottom: 2vh;
+}
+
+.checkBoxLabel {
+  margin-right: 7px;
 }

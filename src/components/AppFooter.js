@@ -30,7 +30,7 @@ class AppFooter extends React.Component {
     if (page === 1 || page === 2) {
       b1 = (
         <Button variant="primary" onClick={this.lastPageClick}>
-          Last Page
+          Back
         </Button>
       );
     }
@@ -38,7 +38,7 @@ class AppFooter extends React.Component {
     if (page === 0 || page === 1) {
       b2 = (
         <Button variant="primary" onClick={this.nextPageClick}>
-          Next Page
+          Next
         </Button>
       );
     } else if (page === 2) {

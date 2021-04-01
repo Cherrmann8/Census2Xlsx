@@ -5,7 +5,6 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Container, Row } from "react-bootstrap";
 
 class SelectorTable extends React.Component {
   constructor(props) {
@@ -37,6 +36,7 @@ class SelectorTable extends React.Component {
 
     this.formFilter = React.createRef();
 
+    this.updateDimensions = this.updateDimensions.bind(this)
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
     this.onSecondayListClick = this.onSecondaryListClick.bind(this);
@@ -44,7 +44,7 @@ class SelectorTable extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    window.addEventListener("resize", this.updateDimensions());
     this.updateDimensions();
   }
 

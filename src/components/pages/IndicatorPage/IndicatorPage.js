@@ -32,12 +32,14 @@ class IndicatorPage extends React.Component {
 
   componentDidMount() {
     const { indicatorList } = this.props;
-    // TODO: Implement persistent indicator selection display
-    // indicatorList.forEach((indicator) => {
-    //   const index = indicator.indicatorIdx;
-    //   document.getElementById(index).checked = true;
-    //   this.info[index].checked = true;
-    // });
+    const { checkBoxStates } = this.state;
+    console.log(indicatorList);
+    indicatorList.forEach((indicator) => {
+      checkBoxStates[`${indicator.sectionIdx}`][`${indicator.tableIdx}`] = true;
+      this.setState({ checkBoxStates });
+    });
+
+    this.updateStates();
   }
 
   handleTableChange(sid, tid, checked) {
@@ -65,17 +67,6 @@ class IndicatorPage extends React.Component {
       } else {
         // Section checkbox clicked. Change all section checkboxes to match
         checkBoxStates[sid][tid] = checked
-
-        let allChecked = true;
-        for (let i = 0; i < customTables.length; i += 1) {
-          if (!checkBoxStates[i]["-1"]) {
-            allChecked = false;
-          }
-        }
-
-        if (allChecked !== checkBoxStates.all) {
-          this.handleStateChange("-1.-1", allChecked);
-        }
       }
     } else {
       // Indicator checkbox was clicked. Change checkbox to match
@@ -84,6 +75,7 @@ class IndicatorPage extends React.Component {
     }
 
     this.setState({ checkBoxStates });
+    this.updateStates();
   }
 
   onAllBoxClicked(event) {
@@ -101,6 +93,34 @@ class IndicatorPage extends React.Component {
     }
 
     this.handleStateChange("-1.-1", event.target.checked)
+  }
+
+  updateStates() {
+    const { checkBoxStates } = this.state;
+    console.log(checkBoxStates);
+
+    let allChecked = true;
+    for (let i = 0; i < customTables.length; i += 1) {
+      let tableChecked = true;
+      for (let j = 0; j < customTables[i].SectionTables.length; j += 1) {
+        if (!checkBoxStates[i][j]) {
+          tableChecked = false;
+        }
+      }
+
+      if (tableChecked) {
+        checkBoxStates[i]["-1"] = true;
+      } else {
+        checkBoxStates[i]["-1"] = false;
+        allChecked = false;
+      }
+    }
+
+    if (allChecked) {
+      checkBoxStates.all = true;
+    } else {
+      checkBoxStates.all = false;
+    }
   }
 
   render() {

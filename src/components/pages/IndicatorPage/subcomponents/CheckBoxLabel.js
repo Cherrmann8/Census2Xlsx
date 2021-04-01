@@ -18,6 +18,7 @@ class CheckBoxLabel extends React.Component {
             type="checkbox"
             name={name}
             id={id}
+            className="checkBoxLabel"
             checked={checked}
             onChange={(e) => onClick(e)}
           />

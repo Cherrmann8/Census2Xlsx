@@ -135,8 +135,24 @@ ipcMain.on("GET_WINDOW_COUNT", (event, args) => {
 });
 
 ipcMain.on("START_DIALOG", (event, args) => {
-    const filePath = dialog.showSaveDialogSync();
-    event.reply("RETURN_DIALOG", {
-      filePath: filePath,
-    });
+  let options = {
+    title: "Choose a directory to save to",
+    defaultPath : app.getPath("downloads"),
+    buttonLabel : "Open directory",
+    properties :[
+      "openDirectory",
+      "createDirectory",
+    ]
+  }
+  const filePath = dialog.showOpenDialogSync(options);
+  event.reply("RETURN_DIALOG", {
+    filePath: filePath,
+  });
+});
+
+ipcMain.on("GET_DOWNLOADS_PATH", (event, args) => {
+  const downloadsPath = app.getPath("downloads");
+  event.reply("RETURN_DOWNLOADS_PATH", {
+    downloadsPath: downloadsPath,
+  });
 });

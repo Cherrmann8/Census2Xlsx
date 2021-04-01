@@ -14,9 +14,26 @@
   justify-content: space-between;
 }
 
+/* .ConfirmationTables * {
+  border-color: red;
+} */
+
 #ConfirmationList {
   padding: 0%;
   overflow-y: auto;
   width: 40vw;
-  height: 65vh;
+  height: 55vh;
+  border-width: 5vw;
+}
+
+#locationConfTable {
+  margin-right: 1vw;
+}
+
+#indicatorConfTable {
+  margin-left: 1vw;
+}
+
+#ConfirmationForm {
+  margin-top: 2vh;
 }

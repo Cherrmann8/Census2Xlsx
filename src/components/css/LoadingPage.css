@@ -1,5 +1,17 @@
-.pbar {
+.ProgressInfo {
   width: 80vw;
+}
+
+#ProgressBar {
+  width: auto;
   height: 3vh;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#ProgressDialog {
+  width: auto;
+  height: 3vh;
+  margin-left: auto;
+  margin-right: auto;
 }

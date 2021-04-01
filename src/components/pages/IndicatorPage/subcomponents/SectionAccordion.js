@@ -64,16 +64,12 @@ class SectionAccordion extends React.Component {
             <Card.Header id="indicatorHeader">
               <Accordion.Toggle as={Card.Header} variant="link" eventKey={sid}>
                 <div>
-                  <label htmlFor={`${sid}.-1`}>
-                    <input
-                      type="checkbox"
-                      name={sectionInfo.SectionName}
-                      id={`${sid}.-1`}
-                      checked={sectionStates["-1"]}
-                      onChange={(e) => this.onSectionBoxClicked(e)}
-                    />
-                    {sectionInfo.SectionName}
-                  </label>
+                  <CheckBoxLabel
+                    id={`${sid}.-1`}
+                    name={sectionInfo.SectionName}
+                    checked={sectionStates["-1"]}
+                    onClick={this.onSectionBoxClicked}
+                  />
                 </div>
               </Accordion.Toggle>
             </Card.Header>
