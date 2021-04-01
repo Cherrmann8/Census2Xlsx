@@ -55,8 +55,8 @@ Section: A set of related tables.
 ## Features
 
 - Create a report with custom locations and indicators
-  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/LocationPage.png" alt="Location Page">
-  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/IndicatorPage.png" alt="Location Page">
+  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/LocationPage.PNG" alt="Location Page">
+  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/IndicatorPage.PNG" alt="Location Page">
 - Download report as a .xlsx file
 - Download report graphs as .png files
 
