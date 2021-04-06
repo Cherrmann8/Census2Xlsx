@@ -78,7 +78,6 @@
   },
   "build": {
     "appId": "com.C2X.Census2Xlsx",
-    "win": {},
     "files": [
       "build/**/*",
       "node_modules/**/*"

@@ -34,14 +34,14 @@ class AppSection extends React.Component {
     const { onPageChange } = this.props;
     ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
       console.log(args);
-      // const tmpMessage = args.split(" ");
-      // const newProgress = parseFloat(tmpMessage[tmpMessage.length - 1]) * 100;
-      // const newDialog = tmpMessage.slice(0, tmpMessage.length - 1).join(" ");
+      const tmpMessage = args.split(" ");
+      const newProgress = parseFloat(tmpMessage[tmpMessage.length - 1]) * 100;
+      const newDialog = tmpMessage.slice(0, tmpMessage.length - 1).join(" ");
 
-      // this.setState({ progress: newProgress, progressDialog: newDialog });
-      // if (newProgress >= 100) {
-      //   onPageChange(1);
-      // }
+      this.setState({ progress: newProgress, progressDialog: newDialog });
+      if (newProgress > 100) {
+        onPageChange(1);
+      }
     });
 
     ipcRenderer.on("RETURN_DIALOG", (event, args) => {
@@ -94,8 +94,6 @@ class AppSection extends React.Component {
       fileName,
       filePath,
     } = this.state;
-
-    console.log(`${filePath} + ${fileName}`);
 
     if (fileName.length === 0) {
       setInvalidFileName(true);
@@ -196,8 +194,7 @@ class AppSection extends React.Component {
     ipcRenderer.send("START_BACKGROUND_VIA_MAIN", {
       reportArea: locationList,
       selectedIndicators: indicatorList,
-      fileName: fileName,
-      filePath: filePath,
+      options: { outputFile: `${filePath}\\${fileName}.xlsx` },
     });
 
     // ipcRenderer.send("FAKE_BACKGROUND_VIA_MAIN");

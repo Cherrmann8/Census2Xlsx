@@ -12,8 +12,9 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-    }
+    },
   });
+  mainWindow.setIcon(path.join(__dirname, '/assets/icon2.ico'));
 
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||
@@ -53,8 +54,7 @@ app.on("activate", () => {
 let cache = {
   reportArea: undefined,
   selectedIndicators: undefined,
-  fileName: undefined,
-  filePath: undefined,
+  options: undefined,
 };
 
 // a window object outside the function scope prevents
@@ -87,16 +87,14 @@ ipcMain.on("START_BACKGROUND_VIA_MAIN", (event, args) => {
 
   cache.reportArea = args.reportArea;
   cache.selectedIndicators = args.selectedIndicators;
-  cache.fileName = args.fileName;
-  cache.filePath = args.filePath;
+  cache.options = args.options;
 });
 
 ipcMain.on("BACKGROUND_READY", (event, args) => {
   event.reply("START_PROCESSING", {
     reportArea: cache.reportArea,
     selectedIndicators: cache.selectedIndicators,
-    fileName: cache.fileName,
-    filePath: cache.filePath,
+    options: cache.options,
   });
 });
 

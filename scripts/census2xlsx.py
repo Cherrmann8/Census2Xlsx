@@ -145,7 +145,7 @@ class Census2Xlsx:
         # print(json.dumps(custom_tables, indent=4))
 
         # save custom_tables to .xlsx file defined by output_path
-        workbook = xlsxwriter.Workbook(options["outputPath"])
+        workbook = xlsxwriter.Workbook(options["outputFile"])
         self.save_tables(workbook, census_tables, custom_tables)
         workbook.close()
 
@@ -154,13 +154,10 @@ class Census2Xlsx:
 
     def select_tables(self, selected_tables):
         for table in selected_tables:
-            formulas = list(
-                self.custom_tables_file[table["sectionIdx"]]["Tables"][
-                    table["tableIdx"]
-                ].values()
-            )[1:]
-            for formula in formulas:
-                for item in formula:
+            for indicator in self.custom_tables_file[table["sectionIdx"]][
+                "SectionTables"
+            ][table["tableIdx"]]["TableIndicators"]:
+                for item in indicator["IndicatorFormula"]:
                     if len(item) != 1 and item[0] != "!":
                         # Indicator ID into detailed_table_IDs
                         if item[0] == "B":
@@ -359,18 +356,17 @@ class Census2Xlsx:
             section_name = self.custom_tables_file[table["sectionIdx"]]["SectionName"]
             if section_name not in custom_tables:
                 custom_tables[section_name] = {}
-            table_name = self.custom_tables_file[table["sectionIdx"]]["Tables"][
+            table_name = self.custom_tables_file[table["sectionIdx"]]["SectionTables"][
                 table["tableIdx"]
             ]["TableName"]
             custom_tables[section_name][table_name] = {}
-            indicators = list(
-                self.custom_tables_file[table["sectionIdx"]]["Tables"][
-                    table["tableIdx"]
-                ]
-            )[1:]
+            indicators = self.custom_tables_file[table["sectionIdx"]]["SectionTables"][
+                table["tableIdx"]
+            ]["TableIndicators"]
             for location_name in list(census_tables.keys()):
                 custom_tables[section_name][table_name][location_name] = {}
-                for indicator_name in indicators:
+                for indicator in indicators:
+                    indicator_name = indicator["IndicatorName"]
                     custom_tables[section_name][table_name][location_name][
                         indicator_name
                     ] = {}
@@ -387,9 +383,7 @@ class Census2Xlsx:
                     custom_tables[section_name][table_name][location_name][
                         indicator_name
                     ] = self.calculate_formula(
-                        self.custom_tables_file[table["sectionIdx"]]["Tables"][
-                            table["tableIdx"]
-                        ][indicator_name],
+                        indicator["IndicatorFormula"],
                         location_name,
                         census_tables,
                         custom_tables,
@@ -548,29 +542,29 @@ def main(data_dir, log_dir=""):
     # create a test selected_indicators
     selected_indicators = [
         {"sectionIdx": 0, "tableIdx": 0},
-        {"sectionIdx": 0, "tableIdx": 1},
-        {"sectionIdx": 0, "tableIdx": 2},
-        {"sectionIdx": 0, "tableIdx": 3},
-        {"sectionIdx": 0, "tableIdx": 4},
-        {"sectionIdx": 0, "tableIdx": 5},
-        {"sectionIdx": 0, "tableIdx": 6},
-        {"sectionIdx": 0, "tableIdx": 7},
-        {"sectionIdx": 0, "tableIdx": 8},
-        {"sectionIdx": 0, "tableIdx": 9},
-        {"sectionIdx": 0, "tableIdx": 10},
-        {"sectionIdx": 1, "tableIdx": 0},
-        {"sectionIdx": 1, "tableIdx": 1},
-        {"sectionIdx": 1, "tableIdx": 2},
-        {"sectionIdx": 1, "tableIdx": 3},
-        {"sectionIdx": 1, "tableIdx": 4},
-        {"sectionIdx": 1, "tableIdx": 5},
-        {"sectionIdx": 1, "tableIdx": 6},
-        {"sectionIdx": 1, "tableIdx": 7},
-        {"sectionIdx": 2, "tableIdx": 0},
-        {"sectionIdx": 2, "tableIdx": 1},
-        {"sectionIdx": 2, "tableIdx": 2},
-        {"sectionIdx": 2, "tableIdx": 3},
-        {"sectionIdx": 2, "tableIdx": 4},
+        # {"sectionIdx": 0, "tableIdx": 1},
+        # {"sectionIdx": 0, "tableIdx": 2},
+        # {"sectionIdx": 0, "tableIdx": 3},
+        # {"sectionIdx": 0, "tableIdx": 4},
+        # {"sectionIdx": 0, "tableIdx": 5},
+        # {"sectionIdx": 0, "tableIdx": 6},
+        # {"sectionIdx": 0, "tableIdx": 7},
+        # {"sectionIdx": 0, "tableIdx": 8},
+        # {"sectionIdx": 0, "tableIdx": 9},
+        # {"sectionIdx": 0, "tableIdx": 10},
+        # {"sectionIdx": 1, "tableIdx": 0},
+        # {"sectionIdx": 1, "tableIdx": 1},
+        # {"sectionIdx": 1, "tableIdx": 2},
+        # {"sectionIdx": 1, "tableIdx": 3},
+        # {"sectionIdx": 1, "tableIdx": 4},
+        # {"sectionIdx": 1, "tableIdx": 5},
+        # {"sectionIdx": 1, "tableIdx": 6},
+        # {"sectionIdx": 1, "tableIdx": 7},
+        # {"sectionIdx": 2, "tableIdx": 0},
+        # {"sectionIdx": 2, "tableIdx": 1},
+        # {"sectionIdx": 2, "tableIdx": 2},
+        # {"sectionIdx": 2, "tableIdx": 3},
+        # {"sectionIdx": 2, "tableIdx": 4},
         {"sectionIdx": 2, "tableIdx": 5},
     ]
 

@@ -4,12 +4,12 @@
 	const path = require('path')
 
 	ipcRenderer.on('START_PROCESSING', (event, args) => {
-		const { reportArea, selectedIndicators, fileName, filePath } = args
+		const { reportArea, selectedIndicators, options } = args
 
 		let pyshell = new PythonShell(path.join(__dirname, '/../scripts/pyInterface.py'), {
 			mode: 'text',
 			pythonPath: 'python3',
-			args: [JSON.stringify(reportArea), JSON.stringify(selectedIndicators), fileName, filePath],
+			args: [JSON.stringify(reportArea), JSON.stringify(selectedIndicators), JSON.stringify(options)],
 		})
 
 		pyshell.on('message', function(results) {

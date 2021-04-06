@@ -9,8 +9,8 @@ class GraphPage extends React.Component {
 
   render() {
     return (
-      <div className="done">
-        <span className="done">Finished!</span>
+      <div className="GraphPage">
+        <span id="OutputMessage">Finished!</span>
       </div>
     );
   }
