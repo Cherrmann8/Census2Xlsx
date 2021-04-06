@@ -12,6 +12,8 @@ class App extends React.Component {
       page: 0,
       invalidLocations: true,
       invalidIndicators: true,
+      invalidFileName: false,
+      invalidFilePath: false,
     };
 
     this.appSection = React.createRef();
@@ -19,6 +21,8 @@ class App extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.setInvalidLocations = this.setInvalidLocations.bind(this);
     this.setInvalidIndicators = this.setInvalidIndicators.bind(this);
+    this.setInvalidFileName = this.setInvalidFileName.bind(this);
+    this.setInvalidFilePath = this.setInvalidFilePath.bind(this);
     this.incPage = this.incPage.bind(this);
     this.decPage = this.decPage.bind(this);
   }
@@ -54,7 +58,13 @@ class App extends React.Component {
   }
 
   handlePageChange(increment) {
-    const { page } = this.state;
+    const {
+      page,
+      invalidLocations,
+      invalidIndicators,
+      invalidFileName,
+      invalidFilePath
+    } = this.state;
 
     if (page + increment === 3) {
       if (!this.appSection.current.confirmDownload()) {
@@ -82,13 +92,27 @@ class App extends React.Component {
     this.setState({ invalidIndicators: invalid });
   }
 
+  setInvalidFileName(invalid) {
+    this.setState({ invalidFileName: invalid });
+  }
+
+  setInvalidFilePath(invalid) {
+    this.setState({ invalidFilePath: invalid });
+  }
+
   incPage() {
     console.log("inc")
     const { page } = this.state;
 
     if (page + 1 === 5) {
       this.appSection.current.reset();
-      this.setState({ page: 0 });
+      this.setState({
+        page: 0,
+        invalidLocations: true,
+        invalidIndicators: true,
+        invalidFileName: true,
+        invalidFilePath: true,
+      });
     } else {
       this.setState({ page: page + 1 });
     }
@@ -106,7 +130,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { page, invalidLocations, invalidIndicators } = this.state;
+    const {
+      page,
+      invalidLocations,
+      invalidIndicators,
+      invalidFileName,
+      invalidFilePath
+    } = this.state;
 
     return (
       <div className="App">
@@ -119,10 +149,12 @@ class App extends React.Component {
             ref={this.appSection}
             page={page}
             onPageChange={this.handlePageChange}
-            invalidLocations={invalidLocations}
             setInvalidLocations={this.setInvalidLocations}
-            invalidIndicators={invalidIndicators}
             setInvalidIndicators={this.setInvalidIndicators}
+            invalidFileName={invalidFileName}
+            setInvalidFileName={this.setInvalidFileName}
+            invalidFilePath={invalidFilePath}
+            setInvalidFilePath={this.setInvalidFilePath}
           />
         </div>
 

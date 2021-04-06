@@ -17,14 +17,14 @@ class AppSection extends React.Component {
       locationList: [],
       indicatorList: [],
       fileName: "",
-      filePath: "",
+      filePath: ipcRenderer.send("GET_DOWNLOADS_PATH"),
       progress: 0,
-      progressDialog: "Starting your download...",
-      invalidFileName: false,
-      invalidFilePath: false,
+      progressDialog: "Starting your download",
     };
 
     this.setFileName = this.setFileName.bind(this);
+    this.reset = this.reset.bind(this);
+    this.confirmDownload = this.confirmDownload.bind(this);
     this.addLocation = this.addLocation.bind(this);
     this.removeLocation = this.removeLocation.bind(this);
     this.addIndicator = this.addIndicator.bind(this);
@@ -33,14 +33,15 @@ class AppSection extends React.Component {
 
     const { onPageChange } = this.props;
     ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
-      const tmpMessage = args.split(" ");
-      const newProgress = parseFloat(tmpMessage[tmpMessage.length - 1]) * 100;
-      const newDialog = tmpMessage.slice(0, tmpMessage.length - 1).join(" ");
+      console.log(args);
+      // const tmpMessage = args.split(" ");
+      // const newProgress = parseFloat(tmpMessage[tmpMessage.length - 1]) * 100;
+      // const newDialog = tmpMessage.slice(0, tmpMessage.length - 1).join(" ");
 
-      this.setState({ progress: newProgress, progressDialog: newDialog });
-      if (newProgress >= 100) {
-        onPageChange(1);
-      }
+      // this.setState({ progress: newProgress, progressDialog: newDialog });
+      // if (newProgress >= 100) {
+      //   onPageChange(1);
+      // }
     });
 
     ipcRenderer.on("RETURN_DIALOG", (event, args) => {
@@ -52,39 +53,60 @@ class AppSection extends React.Component {
     ipcRenderer.on("RETURN_DOWNLOADS_PATH", (event, args) => {
       this.setState({ filePath: args.downloadsPath });
     });
-
-    ipcRenderer.send("GET_DOWNLOADS_PATH");
   }
 
   setFileName(name) {
-    const { invalidStatus } = this.state;
+    const { setInvalidFileName } = this.props;
     this.setState({ fileName: name });
-    if (invalidStatus.invalidFileName) {
-      this.setState({
-        invalidStatus: {
-          invalidLocations: invalidStatus.invalidLocations,
-          invalidIndicators: invalidStatus.invalidIndicators,
-          invalidFileName: false,
-          invalidFilePath: invalidStatus.invalidFilePath,
-        }
-      });
-    }
+    setInvalidFileName(false);
   }
 
   reset() {
+    const {
+      setInvalidLocations,
+      setInvalidIndicators,
+      setInvalidFileName,
+      setInvalidFilePath
+    } = this.props;
+
+    setInvalidLocations(true);
+    setInvalidIndicators(true);
+    setInvalidFileName(false);
+    setInvalidFilePath(false);
+
     this.setState({
       locationList: [],
       indicatorList: [],
       fileName: "",
+      filePath: ipcRenderer.send("GET_DOWNLOADS_PATH"),
       progress: 0,
-      progressDialog: "",
-      invalidStatus: {
-        invalidLocations: false,
-        invalidIndicators: false,
-        invalidFileName: false,
-        invalidFilePath: false,
-      }
+      progressDialog: "Starting your download",
     });
+  }
+
+  confirmDownload() {
+    const {
+      setInvalidFileName,
+      setInvalidFilePath
+    } = this.props;
+
+    const {
+      fileName,
+      filePath,
+    } = this.state;
+
+    console.log(`${filePath} + ${fileName}`);
+
+    if (fileName.length === 0) {
+      setInvalidFileName(true);
+      return false;
+    }
+    if (fileName.length === 0) {
+      setInvalidFilePath(true);
+      return false;
+    }
+
+    return true;
   }
 
   addLocation(locationName, geographicLevel, primaryID, secondaryID) {
@@ -110,11 +132,7 @@ class AppSection extends React.Component {
   }
 
   removeLocation(locationIdx) {
-    const {
-      invalidLocations,
-      setInvalidLocations,
-      invalidIndicators,
-      setInvalidIndicators } = this.props;
+    const { setInvalidLocations } = this.props;
     const { locationList } = this.state;
 
     if (locationList.length > locationIdx) {
@@ -167,59 +185,31 @@ class AppSection extends React.Component {
     }
   }
 
-  confirmDownload() {
+  startPythonScript() {
     const {
       locationList,
       indicatorList,
       fileName,
       filePath,
-      invalidStatus
     } = this.state;
 
-    let invalidLoc = false;
-    let invalidInd = false;
-    let invalidName = false;
-    let invalidPath = false;
+    ipcRenderer.send("START_BACKGROUND_VIA_MAIN", {
+      reportArea: locationList,
+      selectedIndicators: indicatorList,
+      fileName: fileName,
+      filePath: filePath,
+    });
 
-    if (locationList.length === 0) {
-      invalidLoc = true;
-    }
-
-    if (indicatorList.length === 0) {
-      invalidInd = true;
-    }
-
-    if (fileName.length === 0) {
-      invalidName = true;
-    }
-
-    this.setState({ invalidStatus: {
-      invalidLocations: invalidLoc,
-      invalidIndicators: invalidInd,
-      invalidFileName: invalidName,
-      invalidFilePath: invalidPath,
-    } });
-
-    if (invalidLoc || invalidInd || invalidName || invalidPath) {
-      return false;
-    }
-
-    return true;
-  }
-
-  startPythonScript() {
-    const { locationList, indicatorList } = this.state;
-
-    // ipcRenderer.send("START_BACKGROUND_VIA_MAIN", {
-    //   reportArea: locationList,
-    //   selectedIndicators: indicatorList,
-    // });
-
-    ipcRenderer.send("FAKE_BACKGROUND_VIA_MAIN");
+    // ipcRenderer.send("FAKE_BACKGROUND_VIA_MAIN");
   }
 
   render() {
-    const { page } = this.props;
+    const {
+      page,
+      invalidFileName,
+      invalidFilePath,
+    } = this.props;
+
     const {
       locationList,
       indicatorList,
@@ -227,8 +217,6 @@ class AppSection extends React.Component {
       filePath,
       progress,
       progressDialog,
-      invalidFileName,
-      invalidFilePath,
     } = this.state;
 
     let section;
@@ -278,18 +266,22 @@ class AppSection extends React.Component {
 AppSection.propTypes = {
   page: PropTypes.number,
   onPageChange: PropTypes.func,
-  invalidLocations: PropTypes.bool,
   setInvalidLocations: PropTypes.func,
-  invalidIndicators: PropTypes.bool,
   setInvalidIndicators: PropTypes.func,
+  invalidFileName: PropTypes.bool,
+  setInvalidFileName: PropTypes.bool,
+  invalidFilePath: PropTypes.bool,
+  setInvalidFilePath: PropTypes.func,
 };
 AppSection.defaultProps = {
   page: 0,
   onPageChange: null,
-  invalidLocations: true,
   setInvalidLocations: null,
-  invalidIndicators: true,
   setInvalidIndicators: null,
+  invalidFileName: false,
+  setInvalidFileName: null,
+  invalidFilePath: false,
+  setInvalidFilePath: null,
 };
 
 export default AppSection;

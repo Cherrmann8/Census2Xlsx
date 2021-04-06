@@ -53,6 +53,8 @@ app.on("activate", () => {
 let cache = {
   reportArea: undefined,
   selectedIndicators: undefined,
+  fileName: undefined,
+  filePath: undefined,
 };
 
 // a window object outside the function scope prevents
@@ -85,12 +87,16 @@ ipcMain.on("START_BACKGROUND_VIA_MAIN", (event, args) => {
 
   cache.reportArea = args.reportArea;
   cache.selectedIndicators = args.selectedIndicators;
+  cache.fileName = args.fileName;
+  cache.filePath = args.filePath;
 });
 
 ipcMain.on("BACKGROUND_READY", (event, args) => {
   event.reply("START_PROCESSING", {
     reportArea: cache.reportArea,
     selectedIndicators: cache.selectedIndicators,
+    fileName: cache.fileName,
+    filePath: cache.filePath,
   });
 });
 
