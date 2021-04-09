@@ -1,23 +1,3 @@
-# [
-#   {
-#     "SectionName": "Demographics",
-#     "SectionTables": [
-#       {
-#         "TableName": "Race/Ethnicity of Population",
-#         "TableIndicators": [
-#           {
-#             "IndicatorName": "White Percent",
-#             "IndicatorFormula": [
-#               "B01001A_001E",
-#               "B01001_001E",
-#               "/",
-#               "! 100",
-#               "*",
-#               "%"
-#             ]
-#           }
-#         ],
-
 import sys
 import getopt
 import json

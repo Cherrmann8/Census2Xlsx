@@ -5,6 +5,8 @@ import AppFooter from "./components/AppFooter";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+const path = require("path");
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +27,9 @@ class App extends React.Component {
     this.setInvalidFilePath = this.setInvalidFilePath.bind(this);
     this.incPage = this.incPage.bind(this);
     this.decPage = this.decPage.bind(this);
+
+    console.log(process.env.ELECTRON_START_URL);
+    console.log(process.env.PUBLIC_URL);
   }
 
   componentDidMount() {

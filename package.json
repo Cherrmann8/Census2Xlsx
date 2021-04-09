@@ -78,12 +78,14 @@
   },
   "build": {
     "appId": "com.C2X.Census2Xlsx",
+    "extends": null,
     "files": [
       "build/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "src/start.js"
     ],
     "directories": {
-      "buildResources": "assets"
+      "buildResources": "build"
     }
   },
   "husky": {

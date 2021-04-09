@@ -16,8 +16,6 @@ Reference Code:
  -  Code used to load the censusTables.json file
     with open('censusTables.json', 'r') as loadfile:
        loadedTables = json.load(loadfile)
- -  Example search
-    printTableSearch('searchTerm')
  -  Example print table
     concept, var_keys, var_values = getTable('tableID')
     printTableLabels(concept, var_keys, var_values)
@@ -37,12 +35,6 @@ def printTableLabels(concept, var_keys, var_values):
     print(concept)
     for i in range(len(var_values)):
         print(i, ": ", var_values[i], " - ", var_keys[i])
-
-
-def printTableSearch(label, tableType):
-    tmp = censusdata.search(censusType, censusYear, "label", label, tabletype=tableType)
-    for item in tmp:
-        print(item)
 
 
 def printTableCheck(tables):

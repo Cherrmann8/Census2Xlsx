@@ -12,14 +12,17 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+      webSecurity: false
     },
   });
-  mainWindow.setIcon(path.join(__dirname, '/assets/icon2.ico'));
+  // mainWindow.setIcon(path.join(__dirname, '/assets/icon2.ico'));
+  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.loadFile(path.join(process.env.PUBLIC_URL, "index.html"));
 
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||
     url.format({
-      pathname: path.join(__dirname, "/../public/index.html"),
+      pathname: path.join(__dirname, '../build/index.html'),
       protocol: "file:",
       slashes: true,
     })
@@ -30,7 +33,6 @@ function createWindow() {
   });
 
   mainWindow.menuBarVisible = false;
-  mainWindow.webContents.openDevTools();
 }
 
 app.on("ready", createWindow);

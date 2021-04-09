@@ -266,7 +266,7 @@ AppSection.propTypes = {
   setInvalidLocations: PropTypes.func,
   setInvalidIndicators: PropTypes.func,
   invalidFileName: PropTypes.bool,
-  setInvalidFileName: PropTypes.bool,
+  setInvalidFileName: PropTypes.func,
   invalidFilePath: PropTypes.bool,
   setInvalidFilePath: PropTypes.func,
 };

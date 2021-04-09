@@ -825,7 +825,7 @@
         ]
       },
       {
-        "TableName": "Families in Poverty by Type",
+        "TableName": "Families in Poverty by Family Type",
         "TableIndicators": [
           {
             "IndicatorName": "Total Families Percent",
@@ -963,6 +963,53 @@
             "IndicatorFormula": [
               "S1501_C01_013E",
               "S1501_C01_006E",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Cost Burdened Households (30%)",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Total Households",
+            "IndicatorFormula": [
+              "B25106_001E"
+            ]
+          },
+          {
+            "IndicatorName": "Cost Burdened Households (Exceed 30% of Income)",
+            "IndicatorFormula": [
+              "B25106_006E",
+              "B25106_010E",
+              "B25106_014E",
+              "B25106_018E",
+              "B25106_022E",
+              "B25106_028E",
+              "B25106_032E",
+              "B25106_036E",
+              "B25106_040E",
+              "B25106_044E",
+              "+",
+              "+",
+              "+",
+              "+",
+              "+",
+              "+",
+              "+",
+              "+",
+              "+",
+              "s"
+            ]
+          },
+          {
+            "IndicatorName": "Cost Burdened Households Percent",
+            "IndicatorFormula": [
+              "l",
+              "B25106_001E",
               "/",
               "! 100",
               "*",
@@ -1111,6 +1158,34 @@
               "B13014_004E",
               "B13014_010E",
               "+"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Teen Birth Rate",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Female Population Age 15-19",
+            "IndicatorFormula": [
+              "S1301_C01_002E"
+            ]
+          },
+          {
+            "IndicatorName": "Teen Births in the past 12 months",
+            "IndicatorFormula": [
+              "S1301_C02_002E"
+            ]
+          },
+          {
+            "IndicatorName": "Teen Births, Rate per 1,000 Population",
+            "IndicatorFormula": [
+              "S1301_C02_002E",
+              "S1301_C01_002E",
+              "! 1000",
+              "/",
+              "/",
+              "r"
             ]
           }
         ]

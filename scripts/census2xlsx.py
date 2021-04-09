@@ -54,7 +54,7 @@ class Census2Xlsx:
     # censusdata package variables
     # TODO: dynamically set census_type and census_year
     census_type = "acs5"
-    census_year = 2018
+    census_year = 2019
     detailed_table_IDs = []
     subject_table_IDs = []
     data_profile_IDs = []
@@ -292,6 +292,10 @@ class Census2Xlsx:
                         sys.exit(2)
                     calculator.append(custom_tables["tmp"])
                     custom_tables["tmp"] = ""
+                # if the item is "r", round the variable at the top of the stack
+                if item == "r":
+                    a = calculator.pop()
+                    calculator.append(round(a, 2))
                 # if the item is "%", pop 1 variable from the stack, then push the variable back with a % appended to the end
                 if item == "%":
                     a = calculator.pop()
@@ -455,10 +459,6 @@ class Census2Xlsx:
             col = 0
             # for each table in the section...
             for table_name in list(custom_tables[section_name].keys()):
-                # check if the table should be saved as percentages
-                percentage_table = False
-                if table_name[len(table_name) - 2] == "%":
-                    percentage_table = True
                 indicators = list(
                     custom_tables[section_name][table_name][
                         list(census_tables.keys())[0]
@@ -493,9 +493,6 @@ class Census2Xlsx:
                         indicator = custom_tables[section_name][table_name][
                             location_name
                         ][indicator_name]
-                        # convert indicator to a percentage depending on the table
-                        if percentage_table:
-                            indicator = str(round(indicator * 100, 2)) + "%"
                         # write the indicator data to the respective table cell
                         worksheet.write(row, col, indicator, data_format)
                         col += 1
