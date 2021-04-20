@@ -9,7 +9,7 @@ class IndicatorPage extends React.Component {
   constructor(props) {
     super(props);
 
-    let cbStates = {};
+    const cbStates = {};
     cbStates.all = false;
     for (let i = 0; i < customTables.length; i += 1) {
       cbStates[`${i}`] = {};
@@ -62,15 +62,15 @@ class IndicatorPage extends React.Component {
     if (tid === -1) {
       if (sid === -1) {
         // All Indicators checkbox clicked. Change all checkboxes to match
-        checkBoxStates.all = checked
+        checkBoxStates.all = checked;
       } else {
         // Section checkbox clicked. Change all section checkboxes to match
-        checkBoxStates[sid][tid] = checked
+        checkBoxStates[sid][tid] = checked;
       }
     } else {
       // Indicator checkbox was clicked. Change checkbox to match
-      checkBoxStates[sid][tid] = checked
-      this.handleTableChange(sid, tid, checked)
+      checkBoxStates[sid][tid] = checked;
+      this.handleTableChange(sid, tid, checked);
     }
 
     this.setState({ checkBoxStates });
@@ -86,12 +86,12 @@ class IndicatorPage extends React.Component {
       }
       for (let j = 0; j < customTables[i].SectionTables.length; j += 1) {
         if (checkBoxStates[i][j] !== event.target.checked) {
-          this.handleStateChange(`${i}.${j}`, event.target.checked)
+          this.handleStateChange(`${i}.${j}`, event.target.checked);
         }
       }
     }
 
-    this.handleStateChange("-1.-1", event.target.checked)
+    this.handleStateChange("-1.-1", event.target.checked);
   }
 
   updateStates() {

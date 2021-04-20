@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ProgressBar from "react-bootstrap/ProgressBar";
 import "./css/AppNav.css";
 
 function AppNav(props) {

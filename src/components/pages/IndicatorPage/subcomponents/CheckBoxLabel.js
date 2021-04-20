@@ -9,7 +9,12 @@ class CheckBoxLabel extends React.Component {
   }
 
   render() {
-    const { id, name, checked, onClick } = this.props;
+    const {
+      id,
+      name,
+      checked,
+      onClick,
+    } = this.props;
 
     return (
       <>

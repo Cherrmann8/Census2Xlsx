@@ -1,3 +1,4 @@
+import os
 import sys
 import logging
 import json
@@ -5,27 +6,13 @@ import time
 import census2xlsx
 import xlsxwriter
 
-data_dir = "./src/assets/data"
 log_dir = "./logs"
 
 report_area = json.loads(sys.argv[1])
 selected_indicators = json.loads(sys.argv[2])
 options = json.loads(sys.argv[3])
 
-logging.basicConfig(filemode="w", level=logging.INFO)
-logger = logging.getLogger("pyInterface")
-formatter = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s", "%H:%M:%S"
-)
-fh = logging.FileHandler("./logs/pyInterface.log", "w+")
-fh.setFormatter(formatter)
-logger.addHandler(fh)
-
-logger.info("Report Area: %s", report_area)
-logger.info("Selected Indicators: %s", selected_indicators)
-logger.info("Options: %s", options)
-
-c2x = census2xlsx.Census2Xlsx(data_dir, log_dir)
+c2x = census2xlsx.Census2Xlsx(options["dataDir"], log_dir)
 
 # create tmp variables for storing census tables and custom tables
 census_tables = {}

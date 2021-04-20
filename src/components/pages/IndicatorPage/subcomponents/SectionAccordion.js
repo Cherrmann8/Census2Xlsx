@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
-import { Button } from "react-bootstrap";
 import CheckBoxLabel from "./CheckBoxLabel";
 import "../../../css/IndicatorPage.css";
 
@@ -27,9 +26,14 @@ class SectionAccordion extends React.Component {
   }
 
   onSectionBoxClicked(event) {
-    this.setState({ activeKey: "0" });
+    const {
+      sid,
+      sectionInfo,
+      sectionStates,
+      handleStateChange,
+    } = this.props;
 
-    const { sid, sectionInfo, sectionStates, handleStateChange } = this.props;
+    this.setState({ activeKey: "0" });
     handleStateChange(event.target.id, event.target.checked);
 
     for (let i = 0; i < sectionInfo.SectionTables.length; i += 1) {
@@ -40,7 +44,12 @@ class SectionAccordion extends React.Component {
   }
 
   onTableBoxClicked(event) {
-    const { sid, sectionInfo, sectionStates, handleStateChange } = this.props;
+    const {
+      sid,
+      sectionInfo,
+      sectionStates,
+      handleStateChange,
+    } = this.props;
     handleStateChange(event.target.id, event.target.checked);
 
     let sectionChecked = true;

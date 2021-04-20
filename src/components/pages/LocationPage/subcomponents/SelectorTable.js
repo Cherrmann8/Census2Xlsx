@@ -28,7 +28,7 @@ class SelectorTable extends React.Component {
           onClick={(e) => this.onPrimaryListClick(e)}
         >
           {location.StateName}
-        </ListGroup.Item>
+        </ListGroup.Item>,
       );
       itemID += 1;
     });
@@ -92,7 +92,12 @@ class SelectorTable extends React.Component {
   }
 
   onSecondaryListClick(event) {
-    const { level, setCountyIdx, setPlaceIdx, onDoubleClick } = this.props;
+    const {
+      level,
+      setCountyIdx,
+      setPlaceIdx,
+      onDoubleClick,
+    } = this.props;
 
     const tmpSecondaryIdx = event.target.attributes[0].value;
 
@@ -109,7 +114,12 @@ class SelectorTable extends React.Component {
 
   onPrimaryListClick(event) {
     const tmpStateIdx = event.target.attributes[0].value;
-    const { level, onOpenSecondary, setStateIdx, onDoubleClick } = this.props;
+    const {
+      level,
+      onOpenSecondary,
+      setStateIdx,
+      onDoubleClick,
+    } = this.props;
 
     // set the stateIdx
     setStateIdx(tmpStateIdx);
@@ -166,26 +176,18 @@ class SelectorTable extends React.Component {
 
   updateDimensions() {
     const { level } = this.props;
-    console.log("updating selectorTable dimensions")
-    const SelectorHeader = document.getElementById("SelectorAccordionHeader").clientHeight;
-    // console.log(SelectorHeader);
-    // const SelectorBody = document.getElementById("SelectorList").clientHeight;
-    // console.log(SelectorBody);
 
+    const SelectorHeader = document.getElementById("SelectorAccordionHeader").clientHeight;
     const SelectionHeader = document.getElementById("SelectionAccordionHeader").clientHeight;
-    // console.log(SelectionHeader);
     const SelectionBody = document.getElementById("SelectionList").clientHeight;
-    // console.log(SelectionBody);
 
     const targetHeight = (SelectionHeader + SelectionBody) - SelectorHeader;
-    // console.log(targetHeight);
     document.getElementById("SelectorList").style.height = `${targetHeight}px`;
   }
 
   render() {
     // build the selectorTable
     const {
-      level,
       activeList,
       primaryTitle,
       secondaryTitle,
@@ -195,7 +197,7 @@ class SelectorTable extends React.Component {
 
     console.log("rendering selector table");
 
-    let resetStateButton = (
+    const resetStateButton = (
       <Button id="ResetStateButton" onClick={this.handleResetClick}>
         Reset
       </Button>

@@ -48,7 +48,7 @@ class ConfirmationPage extends React.Component {
 
   onNameChange = (e) => {
     const { onFileNameChange } = this.props;
-    onFileNameChange(e.target.value)
+    onFileNameChange(e.target.value);
   }
 
   dialog() {
@@ -57,7 +57,12 @@ class ConfirmationPage extends React.Component {
   }
 
   render() {
-    const { fileName, filePath, invalidFileName, invalidFilePath } = this.props;
+    const {
+      fileName,
+      filePath,
+      invalidFileName,
+      invalidFilePath,
+    } = this.props;
 
     return (
       <div className="ConfirmationPage">

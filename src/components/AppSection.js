@@ -66,7 +66,7 @@ class AppSection extends React.Component {
       setInvalidLocations,
       setInvalidIndicators,
       setInvalidFileName,
-      setInvalidFilePath
+      setInvalidFilePath,
     } = this.props;
 
     setInvalidLocations(true);
@@ -87,13 +87,10 @@ class AppSection extends React.Component {
   confirmDownload() {
     const {
       setInvalidFileName,
-      setInvalidFilePath
+      setInvalidFilePath,
     } = this.props;
 
-    const {
-      fileName,
-      filePath,
-    } = this.state;
+    const { fileName } = this.state;
 
     if (fileName.length === 0) {
       setInvalidFileName(true);
@@ -194,7 +191,9 @@ class AppSection extends React.Component {
     ipcRenderer.send("START_BACKGROUND_VIA_MAIN", {
       reportArea: locationList,
       selectedIndicators: indicatorList,
-      options: { outputFile: `${filePath}\\${fileName}.xlsx` },
+      options: {
+        outputFile: `${filePath}\\${fileName}.xlsx`,
+      },
     });
 
     // ipcRenderer.send("FAKE_BACKGROUND_VIA_MAIN");

@@ -67,6 +67,7 @@ let hiddenWindow;
 // from visible renderer process
 ipcMain.on("START_BACKGROUND_VIA_MAIN", (event, args) => {
   hiddenWindow = new BrowserWindow({
+    // Show needs to be false for production
     show: false,
     webPreferences: {
       nodeIntegration: true,
@@ -75,7 +76,7 @@ ipcMain.on("START_BACKGROUND_VIA_MAIN", (event, args) => {
 
   hiddenWindow.loadURL(
     url.format({
-      pathname: path.join(__dirname, "/../public/hidden.html"),
+      pathname: path.join(__dirname, "/../build/hidden.html"),
       protocol: "file:",
       slashes: true,
     })

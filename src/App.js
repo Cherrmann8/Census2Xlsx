@@ -5,8 +5,6 @@ import AppFooter from "./components/AppFooter";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-const path = require("path");
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -27,14 +25,11 @@ class App extends React.Component {
     this.setInvalidFilePath = this.setInvalidFilePath.bind(this);
     this.incPage = this.incPage.bind(this);
     this.decPage = this.decPage.bind(this);
-
-    console.log(process.env.ELECTRON_START_URL);
-    console.log(process.env.PUBLIC_URL);
   }
 
   componentDidMount() {
     const navPage = document.getElementById("NavPage");
-    navPage.addEventListener("animationend", (e) => {
+    navPage.addEventListener("animationend", () => {
       if (navPage.className === "exitRight") {
         navPage.className = "enterLeft";
         this.decPage();
@@ -49,7 +44,7 @@ class App extends React.Component {
     });
 
     const appSection = document.getElementById("AppSection");
-    appSection.addEventListener("animationend", (e) => {
+    appSection.addEventListener("animationend", () => {
       if (appSection.className === "exitRight") {
         appSection.className = "enterLeft";
       } else if (appSection.className === "exitLeft") {
@@ -63,13 +58,7 @@ class App extends React.Component {
   }
 
   handlePageChange(increment) {
-    const {
-      page,
-      invalidLocations,
-      invalidIndicators,
-      invalidFileName,
-      invalidFilePath
-    } = this.state;
+    const { page } = this.state;
 
     if (page + increment === 3) {
       if (!this.appSection.current.confirmDownload()) {
@@ -106,7 +95,7 @@ class App extends React.Component {
   }
 
   incPage() {
-    console.log("inc")
+    console.log("inc");
     const { page } = this.state;
 
     if (page + 1 === 5) {
@@ -124,7 +113,7 @@ class App extends React.Component {
   }
 
   decPage() {
-    console.log("dec")
+    console.log("dec");
     const { page } = this.state;
 
     if (page - 1 === -1) {
@@ -140,7 +129,7 @@ class App extends React.Component {
       invalidLocations,
       invalidIndicators,
       invalidFileName,
-      invalidFilePath
+      invalidFilePath,
     } = this.state;
 
     return (

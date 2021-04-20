@@ -60,8 +60,8 @@ class Census2Xlsx:
     data_profile_IDs = []
 
     # flags and logger object
-    logFlag = True
-    debugFlag = True
+    logFlag = False
+    debugFlag = False
     verboseFlag = False
     logger = None
 
@@ -92,13 +92,13 @@ class Census2Xlsx:
             self.logger.info("Initializing...")
 
         # load censusTables.json
-        with open(data_dir + "/censusTables.json", "r") as loadfile:
+        with open(data_dir + "censusTables.json", "r") as loadfile:
             self.census_tables_file = json.load(loadfile)
         if self.logFlag:
             self.logger.info("Loaded censusTables.json")
 
         # load customTables.json
-        with open(data_dir + "/customTables.json", "r") as loadfile:
+        with open(data_dir + "customTables.json", "r") as loadfile:
             self.custom_tables_file = json.load(loadfile)
         if self.logFlag:
             self.logger.info("Loaded customTables.json")
