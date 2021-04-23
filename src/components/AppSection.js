@@ -275,7 +275,7 @@ class AppSection extends React.Component {
       section = <GraphPage />;
     }
 
-    const warningMessage = `The file ${filePath}\\${fileName}.xlsx already exists. Click Continue to overwrite the file.`
+    const warningMessage = `The file ${filePath}\\${fileName}.xlsx already exists.`
 
     return (
       <div id="AppSection">
@@ -288,16 +288,15 @@ class AppSection extends React.Component {
           centered
         >
           <Modal.Header>
-            <Modal.Title>Warning!</Modal.Title>
+            <Modal.Title>Warning</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {warningMessage}
+            <div>{warningMessage}</div>
+            <div>Click Continue to overwrite the file.</div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={this.overWriteFile}>Confirm</Button>
+            <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+            <Button variant="primary" onClick={this.overWriteFile}>Continue</Button>
           </Modal.Footer>
         </Modal>
       </div>

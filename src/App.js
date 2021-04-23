@@ -102,6 +102,7 @@ class App extends React.Component {
 
     if (page + 1 === 5) {
       this.appSection.current.reset();
+      this.setState({ page: 0 });
     } else {
       this.setState({ page: page + 1 });
     }

@@ -6,11 +6,13 @@
 	ipcRenderer.on('START_PROCESSING', (event, args) => {
 		const { reportArea, selectedIndicators, options } = args
 
-		console.log(__dirname)
-		console.log(path.join(__dirname, '../../extraResources', 'data/'))
-		options["dataDir"] = path.join(__dirname, '../../extraResources', 'data/')
-
-		let pyshell = new PythonShell(path.join(__dirname, '../../extraResources', 'scripts/pyInterface.py'), {
+		scriptPath = ''
+		if (process.env.IS_DEV === "1") {
+			scriptPath = '../src/scripts/pyInterface.py'
+		} else {
+			scriptPath = '../../extraResources/scripts/pyInterface.py'
+		}
+		let pyshell = new PythonShell(path.join(__dirname, scriptPath), {
 			mode: 'text',
 			pythonPath: 'python3',
 			args: [JSON.stringify(reportArea), JSON.stringify(selectedIndicators), JSON.stringify(options)],

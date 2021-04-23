@@ -16,7 +16,9 @@ function createWindow() {
     },
   });
   // mainWindow.setIcon(path.join(__dirname, '/assets/icon2.ico'));
-  mainWindow.webContents.openDevTools();
+  if (process.env.IS_DEV === "1") {
+    mainWindow.webContents.openDevTools();
+  }
   // mainWindow.webContents.loadFile(path.join(process.env.PUBLIC_URL, "index.html"));
 
   mainWindow.loadURL(
@@ -74,13 +76,24 @@ ipcMain.on("START_BACKGROUND_VIA_MAIN", (event, args) => {
     },
   });
 
-  hiddenWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "/../build/hidden.html"),
-      protocol: "file:",
-      slashes: true,
-    })
-  );
+  if (process.env.IS_DEV === "1") {
+    hiddenWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, "/../public/hidden.html"),
+        protocol: "file:",
+        slashes: true,
+      })
+    );
+  } else {
+    hiddenWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, "/../build/hidden.html"),
+        protocol: "file:",
+        slashes: true,
+      })
+    );
+  }
+
 
   hiddenWindow.webContents.openDevTools();
 
@@ -91,6 +104,11 @@ ipcMain.on("START_BACKGROUND_VIA_MAIN", (event, args) => {
   cache.reportArea = args.reportArea;
   cache.selectedIndicators = args.selectedIndicators;
   cache.options = args.options;
+  if (process.env.IS_DEV === "1") {
+    cache.options["dataDir"] = path.join(__dirname, '../src/assets/data/')
+  } else {
+    cache.options["dataDir"] = path.join(__dirname, '../../extraResources/data/')
+  }
 });
 
 ipcMain.on("BACKGROUND_READY", (event, args) => {
