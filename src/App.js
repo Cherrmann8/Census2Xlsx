@@ -57,12 +57,14 @@ class App extends React.Component {
     });
   }
 
-  handlePageChange(increment) {
+  handlePageChange(increment, confirm) {
     const { page } = this.state;
 
-    if (page + increment === 3) {
-      if (!this.appSection.current.confirmDownload()) {
-        return;
+    if (confirm) {
+      if (page + increment === 3) {
+        if (!this.appSection.current.confirmDownload()) {
+          return;
+        }
       }
     }
 
@@ -100,13 +102,6 @@ class App extends React.Component {
 
     if (page + 1 === 5) {
       this.appSection.current.reset();
-      this.setState({
-        page: 0,
-        invalidLocations: true,
-        invalidIndicators: true,
-        invalidFileName: true,
-        invalidFilePath: true,
-      });
     } else {
       this.setState({ page: page + 1 });
     }

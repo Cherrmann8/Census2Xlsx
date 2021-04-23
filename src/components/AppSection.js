@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import LocationPage from "./pages/LocationPage/LocationPage";
 import IndicatorPage from "./pages/IndicatorPage/IndicatorPage";
 import ConfirmationPage from "./pages/ConfirmationPage/ConfirmationPage";
@@ -7,6 +9,7 @@ import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import GraphPage from "./pages/GraphPage/GraphPage";
 import "./css/AppSection.css";
 
+const fs = window.require("fs");
 const electron = window.require("electron");
 const { ipcRenderer } = electron;
 
@@ -19,9 +22,13 @@ class AppSection extends React.Component {
       fileName: "",
       filePath: ipcRenderer.send("GET_DOWNLOADS_PATH"),
       progress: 0,
-      progressDialog: "Starting your download",
+      progressDialog: "Starting the download...",
+      showFileExistsWarning: false,
     };
 
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.overWriteFile = this.overWriteFile.bind(this);
     this.setFileName = this.setFileName.bind(this);
     this.reset = this.reset.bind(this);
     this.confirmDownload = this.confirmDownload.bind(this);
@@ -40,7 +47,7 @@ class AppSection extends React.Component {
 
       this.setState({ progress: newProgress, progressDialog: newDialog });
       if (newProgress > 100) {
-        onPageChange(1);
+        onPageChange(1, true);
       }
     });
 
@@ -55,10 +62,24 @@ class AppSection extends React.Component {
     });
   }
 
+  handleShow() {
+    this.setState({ showFileExistsWarning: true });
+  }
+
+  handleClose() {
+    this.setState({ showFileExistsWarning: false });
+  }
+
   setFileName(name) {
     const { setInvalidFileName } = this.props;
     this.setState({ fileName: name });
     setInvalidFileName(false);
+  }
+
+  overWriteFile() {
+    const { onPageChange } = this.props;
+    this.handleClose()
+    onPageChange(1, false);
   }
 
   reset() {
@@ -85,19 +106,16 @@ class AppSection extends React.Component {
   }
 
   confirmDownload() {
-    const {
-      setInvalidFileName,
-      setInvalidFilePath,
-    } = this.props;
-
-    const { fileName } = this.state;
+    const { setInvalidFileName } = this.props;
+    const { fileName, filePath } = this.state;
 
     if (fileName.length === 0) {
       setInvalidFileName(true);
       return false;
     }
-    if (fileName.length === 0) {
-      setInvalidFilePath(true);
+
+    if (fs.existsSync(`${filePath}\\${fileName}.xlsx`)) {
+      this.setState({ showFileExistsWarning: true });
       return false;
     }
 
@@ -213,6 +231,7 @@ class AppSection extends React.Component {
       filePath,
       progress,
       progressDialog,
+      showFileExistsWarning,
     } = this.state;
 
     let section;
@@ -255,7 +274,34 @@ class AppSection extends React.Component {
     } else if (page === 4) {
       section = <GraphPage />;
     }
-    return <div id="AppSection">{section}</div>;
+
+    const warningMessage = `The file ${filePath}\\${fileName}.xlsx already exists. Click Continue to overwrite the file.`
+
+    return (
+      <div id="AppSection">
+        {section}
+        <Modal
+          show={showFileExistsWarning}
+          onHide={this.handleClose}
+          backdrop="static"
+          keyboard={false}
+          centered
+        >
+          <Modal.Header>
+            <Modal.Title>Warning!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {warningMessage}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.overWriteFile}>Confirm</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
   }
 }
 

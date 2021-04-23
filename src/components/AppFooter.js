@@ -16,12 +16,12 @@ class AppFooter extends React.Component {
 
   nextPageClick() {
     const { onPageChange } = this.props;
-    onPageChange(1);
+    onPageChange(1, true);
   }
 
   lastPageClick() {
     const { onPageChange } = this.props;
-    onPageChange(-1);
+    onPageChange(-1, true);
   }
 
   render() {
