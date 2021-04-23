@@ -109,6 +109,7 @@ class ConfirmationPage extends React.Component {
                   required
                   id="fileName"
                   placeholder="Enter a file name..."
+                  value={fileName}
                   onChange={this.onNameChange}
                   isInvalid={invalidFileName}
                 />
