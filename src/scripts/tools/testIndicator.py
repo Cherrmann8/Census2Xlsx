@@ -28,7 +28,7 @@ def printIndicator(geoCode, indicatorCode):
 
 
 def usage():
-    print("Usage: searchCensusTables.py -c <Indicator Code>")
+    print("Usage: testIndicator.py -c <Indicator Code>")
     print("Arguments:")
     print("-c: (Required) a census indicator code")
 
