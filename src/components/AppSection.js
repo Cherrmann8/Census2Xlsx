@@ -9,6 +9,7 @@ import LoadingPage from "./pages/LoadingPage/LoadingPage";
 import GraphPage from "./pages/GraphPage/GraphPage";
 import "./css/AppSection.css";
 
+const path = window.require("path");
 const fs = window.require("fs");
 const electron = window.require("electron");
 const { ipcRenderer } = electron;
@@ -239,7 +240,7 @@ class AppSection extends React.Component {
       reportArea: locationList,
       selectedIndicators: indicatorList,
       options: {
-        outputFile: `${filePath}\\${fileName}.xlsx`,
+        outputFile: path.join(filePath, fileName, ".xlsx")
       },
     });
 
