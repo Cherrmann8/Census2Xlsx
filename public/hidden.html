@@ -16,7 +16,7 @@
 		}
 		pyshell = new PythonShell(path.join(__dirname, scriptPath), {
 			mode: 'text',
-			pythonPath: 'python3',
+			pythonPath: '/usr/local/bin/python3.9',
 			args: [JSON.stringify(reportArea), JSON.stringify(selectedIndicators), JSON.stringify(options)],
 		})
 

@@ -240,7 +240,7 @@ class AppSection extends React.Component {
       reportArea: locationList,
       selectedIndicators: indicatorList,
       options: {
-        outputFile: path.join(filePath, fileName, ".xlsx")
+        outputFile: path.join(filePath, `${fileName}.xlsx`)
       },
     });
 

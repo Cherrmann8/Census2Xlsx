@@ -7,6 +7,9 @@ import census2xlsx
 import xlsxwriter
 from xlsxwriter.exceptions import FileCreateError
 
+print(sys.version)
+print(__name__)
+
 log_dir = "./logs"
 
 report_area = json.loads(sys.argv[1])
