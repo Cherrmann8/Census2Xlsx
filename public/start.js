@@ -15,11 +15,10 @@ function createWindow() {
       webSecurity: false
     },
   });
-  // mainWindow.setIcon(path.join(__dirname, '/assets/icon2.ico'));
+
   if (process.env.IS_DEV === "1") {
     mainWindow.webContents.openDevTools();
   }
-  // mainWindow.webContents.loadFile(path.join(process.env.PUBLIC_URL, "index.html"));
 
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||
@@ -70,7 +69,7 @@ let hiddenWindow;
 ipcMain.on("START_BACKGROUND_VIA_MAIN", (event, args) => {
   hiddenWindow = new BrowserWindow({
     // Show needs to be false for production
-    show: false,
+    show: true,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -150,6 +149,10 @@ ipcMain.on("BACKGROUND_FAKED", (event, args) => {
 // from the background renderer process
 ipcMain.on("MESSAGE_FROM_BACKGROUND", (event, args) => {
   mainWindow.webContents.send("MESSAGE_FROM_BACKGROUND_VIA_MAIN", args);
+});
+
+ipcMain.on("RETRY_SAVE", (event, args) => {
+  hiddenWindow.webContents.send("RETRY_SAVE", args);
 });
 
 ipcMain.on("GET_WINDOW_COUNT", (event, args) => {

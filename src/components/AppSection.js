@@ -24,10 +24,15 @@ class AppSection extends React.Component {
       progress: 0,
       progressDialog: "Starting the download...",
       showFileExistsWarning: false,
+      showFileCreateError: false,
     };
 
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleShowFileExistsWarning = this.handleShowFileExistsWarning.bind(this);
+    this.handleCloseFileExistsWarning = this.handleCloseFileExistsWarning.bind(this);
+    this.handleShowFileCreateError = this.handleShowFileCreateError.bind(this);
+    this.handleCloseFileCreateError = this.handleCloseFileCreateError.bind(this);
+    this.retrySave = this.retrySave.bind(this);
+    this.cancelSave = this.cancelSave.bind(this);
     this.overWriteFile = this.overWriteFile.bind(this);
     this.setFileName = this.setFileName.bind(this);
     this.reset = this.reset.bind(this);
@@ -42,6 +47,12 @@ class AppSection extends React.Component {
     ipcRenderer.on("MESSAGE_FROM_BACKGROUND_VIA_MAIN", (event, args) => {
       console.log(args);
       const tmpMessage = args.split(" ");
+
+      if (tmpMessage[0] === "FileCreateError") {
+        console.log("Caught FileCreateError")
+        this.handleShowFileCreateError();
+      }
+
       const newProgress = parseFloat(tmpMessage[tmpMessage.length - 1]) * 100;
       const newDialog = tmpMessage.slice(0, tmpMessage.length - 1).join(" ");
 
@@ -62,12 +73,20 @@ class AppSection extends React.Component {
     });
   }
 
-  handleShow() {
+  handleShowFileExistsWarning() {
     this.setState({ showFileExistsWarning: true });
   }
 
-  handleClose() {
+  handleCloseFileExistsWarning() {
     this.setState({ showFileExistsWarning: false });
+  }
+
+  handleShowFileCreateError() {
+    this.setState({ showFileCreateError: true });
+  }
+
+  handleCloseFileCreateError() {
+    this.setState({ showFileCreateError: false });
   }
 
   setFileName(name) {
@@ -78,8 +97,18 @@ class AppSection extends React.Component {
 
   overWriteFile() {
     const { onPageChange } = this.props;
-    this.handleClose()
+    this.handleCloseFileExistsWarning()
     onPageChange(1, false);
+  }
+
+  retrySave() {
+    this.handleCloseFileCreateError();
+    ipcRenderer.send("RETRY_SAVE", { retry: true });
+  }
+
+  cancelSave() {
+    this.handleCloseFileCreateError();
+    ipcRenderer.send("RETRY_SAVE", { retry: false });
   }
 
   reset() {
@@ -232,6 +261,7 @@ class AppSection extends React.Component {
       progress,
       progressDialog,
       showFileExistsWarning,
+      showFileCreateError,
     } = this.state;
 
     let section;
@@ -276,13 +306,14 @@ class AppSection extends React.Component {
     }
 
     const warningMessage = `The file ${filePath}\\${fileName}.xlsx already exists.`
+    const errorMessage = `The file ${filePath}\\${fileName}.xlsx cannot be overwritten.`
 
     return (
       <div id="AppSection">
         {section}
         <Modal
           show={showFileExistsWarning}
-          onHide={this.handleClose}
+          onHide={this.handleCloseFileExistsWarning}
           backdrop="static"
           keyboard={false}
           centered
@@ -295,8 +326,30 @@ class AppSection extends React.Component {
             <div>Click Continue to overwrite the file.</div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+            <Button variant="secondary" onClick={this.handleCloseFileExistsWarning}>Close</Button>
             <Button variant="primary" onClick={this.overWriteFile}>Continue</Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal
+          show={showFileCreateError}
+          onHide={this.handleCloseFileCreateError}
+          backdrop="static"
+          keyboard={false}
+          centered
+        >
+          <Modal.Header>
+            <Modal.Title>Error</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>{warningMessage}</div>
+            <div>
+              This is typically due to the file being open else where on the system.
+              Please check that the file isnt open before retrying or cancel the save.
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.cancelSave}>Cancel</Button>
+            <Button variant="primary" onClick={this.retrySave}>Retry</Button>
           </Modal.Footer>
         </Modal>
       </div>

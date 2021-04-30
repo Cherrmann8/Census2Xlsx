@@ -3,6 +3,8 @@
 	const { ipcRenderer } = require('electron')
 	const path = require('path')
 
+	let pyshell;
+
 	ipcRenderer.on('START_PROCESSING', (event, args) => {
 		const { reportArea, selectedIndicators, options } = args
 
@@ -12,7 +14,7 @@
 		} else {
 			scriptPath = '../../extraResources/scripts/pyInterface.py'
 		}
-		let pyshell = new PythonShell(path.join(__dirname, scriptPath), {
+		pyshell = new PythonShell(path.join(__dirname, scriptPath), {
 			mode: 'text',
 			pythonPath: 'python3',
 			args: [JSON.stringify(reportArea), JSON.stringify(selectedIndicators), JSON.stringify(options)],
@@ -25,6 +27,15 @@
 		pyshell.on('error', function(results) {
 			ipcRenderer.send('MESSAGE_FROM_BACKGROUND', results)
 		})
+	})
+
+	ipcRenderer.on('RETRY_SAVE', (event, args) => {
+		console.log(`retry is: ${args.retry}`)
+		if (args.retry) {
+			pyshell.send("true");
+		} else {
+			pyshell.send("false");
+		}
 	})
 
 	ipcRenderer.send('BACKGROUND_READY')

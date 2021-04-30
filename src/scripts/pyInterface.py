@@ -5,6 +5,7 @@ import json
 import time
 import census2xlsx
 import xlsxwriter
+from xlsxwriter.exceptions import FileCreateError
 
 log_dir = "./logs"
 
@@ -55,9 +56,22 @@ print("Saving indicators... 1")
 sys.stdout.flush()
 
 # save custom_tables to .xlsx file defined by output_path
-workbook = xlsxwriter.Workbook(options["outputFile"])
-c2x.save_tables(workbook, census_tables, custom_tables)
-workbook.close()
+retry = True
+while retry:
+    try:
+        workbook = xlsxwriter.Workbook(options["outputFile"])
+        c2x.save_tables(workbook, census_tables, custom_tables)
+        workbook.close()
+        retry = False
+    except FileCreateError:
+        print("FileCreateError 1")
+        sys.stdout.flush()
+        tmpRetry = input()
+        if tmpRetry == "false":
+            retry = False
+        elif tmpRetry == "true":
+            retry = True
+
 
 time.sleep(0.5)
 print("1.01")
