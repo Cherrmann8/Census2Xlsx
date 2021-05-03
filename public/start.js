@@ -15,9 +15,10 @@ function createWindow() {
       webSecurity: false
     },
   });
-  //if (process.env.IS_DEV === "1") {
-  mainWindow.webContents.openDevTools();
-  //}
+  
+  if (process.env.IS_DEV === "1") {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||

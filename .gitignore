@@ -6,10 +6,14 @@
 .pnp.js
 
 # testing
+/logs
+/output
 /coverage
 
 # production
 /build
+/dist
+/packages
 
 # misc
 .DS_Store
@@ -17,6 +21,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.eslintcache
 
 npm-debug.log*
 yarn-debug.log*
@@ -24,6 +29,3 @@ yarn-error.log*
 
 /.vs
 /.vscode
-/logs
-/output
-/dist
