@@ -16,7 +16,10 @@
 		}
 		pyshell = new PythonShell(path.join(__dirname, scriptPath), {
 			mode: 'text',
-			pythonPath: '/usr/local/bin/python3.9',
+			// For OSX
+			// pythonPath: '/usr/local/bin/python3.9',
+			// For Windows
+			pythonPath: 'python3',
 			args: [JSON.stringify(reportArea), JSON.stringify(selectedIndicators), JSON.stringify(options)],
 		})
 

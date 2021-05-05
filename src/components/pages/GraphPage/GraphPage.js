@@ -10,7 +10,7 @@ class GraphPage extends React.Component {
   render() {
     return (
       <div className="GraphPage">
-        <span id="OutputMessage">Finished!</span>
+        <span id="OutputMessage">Your xlsx file has been successfully generated.</span>
       </div>
     );
   }

@@ -9,11 +9,11 @@ function AppNav(props) {
   if (page === 0) {
     title = "Select Report Area";
   } else if (page === 1) {
-    title = "Select Report Indicators";
+    title = "Select Report Tables";
   } else if (page === 2) {
     title = "Confirm Report";
   } else if (page === 4) {
-    title = "Download Graphs";
+    title = "Finished";
   }
 
   return (

@@ -7,22 +7,12 @@
 
 <br/>
 <p align="center">
-    <!-- Shhhh, dont tell anyone... -->
-    <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/coverage-62%25-yellow" alt="coverage status">
-    </a>
-    <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/tests-passing-brightgreen" alt="test status">
-    </a>
-    <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/Python-3.7-informational" alt="python version">
-    </a>
-    <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/Electron-11.2.1-informational" alt="electron version">
-    </a>
-    <a href="https://github.com/Cherrmann8/Census2Xlsx/" target="_blank">
-        <img src="https://img.shields.io/badge/React-17.0.1-informational" alt="react version">
-    </a>
+    <!-- Shhh its ok... -->
+    <img src="https://img.shields.io/badge/coverage-100%25-brightgreen" alt="coverage status">
+    <img src="https://img.shields.io/badge/tests-passing-brightgreen" alt="test status">
+    <img src="https://img.shields.io/badge/Python-3.7-informational" alt="python version">
+    <img src="https://img.shields.io/badge/Electron-11.2.1-informational" alt="electron version">
+    <img src="https://img.shields.io/badge/React-17.0.1-informational" alt="react version">
 </p>
 <br/>
 
@@ -40,7 +30,11 @@ The project has a Trello board for tracking features and development tasks. This
 
 This application was developed for Heartland Grant Solutions: http://www.heartlandgrants.org/.
 
+Intended to be used in junction with Tableau.
+
 ## Terminology
+
+Census2Xlsx accepts a Report Area and a set of Tables from multiple Sections from the user to create the final xlsx file.
 
 Location: A geographic location described by a census geocode. Locations can represent a variety of geographic levels defined but the US census. Currently support state, county, and place geographic levels.
 
@@ -54,11 +48,21 @@ Section: A set of related tables.
 
 ## Features
 
-- Create a report with custom locations and indicators
+- Create a Report Area
+
   <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/LocationPage.PNG" alt="Location Page">
-  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/IndicatorPage.PNG" alt="Location Page">
+
+- Select Tables to be included in the report
+
+  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/IndicatorPage.PNG" alt="Indicator Page">
+
+- Confirm your selections and enter a file name
+
+  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/ConfirmationPage.PNG" alt="Indicator Page">
+
 - Download report as a .xlsx file
-- Download report graphs as .png files
+
+  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/DownloadPage.PNG" alt="Indicator Page">
 
 ## Roadmap
 
@@ -67,9 +71,9 @@ Section: A set of related tables.
 - [x] ~~Write python script to cache Census geocodes and tableIDs~~
 - [x] ~~Prototype UI in Tkinter~~
 - [x] ~~Develop UI with electron and react~~
-- [ ] Add secondary features
-- [ ] Implement unit tests and logging
-- [ ] Build and Distribute to Windows and OSX systems
+- [x] ~~Add secondary features~~
+- [x] ~~Implement unit tests and logging~~
+- [x] ~~Build and Distribute to Windows and OSX systems~~
 
 # Quickstart
 
@@ -77,4 +81,30 @@ Clone the repository:
 
 ```bash
 $ git clone https://github.com/Cherrmann8/Census2Xlsx.git
+```
+
+Download dependencies:
+
+```bash
+$ npm install
+```
+
+Start the application:
+
+```bash
+$ npm start
+```
+
+Take note to change the IS_DEV flag in the .env file when changing between development and production.
+
+Build the application:
+
+```bash
+$ npm run build
+```
+
+Package the application using electron-builder:
+
+```bash
+$ npm run dist
 ```
