@@ -80,6 +80,9 @@
   "build": {
     "appId": "com.C2X.Census2Xlsx",
     "extends": null,
+    "win": {
+      "icon": "public/icons/icon2.png"
+    },
     "files": [
       "build/**/*",
       "node_modules/**/*",

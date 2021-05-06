@@ -64,6 +64,10 @@ Section: A set of related tables.
 
   <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/DownloadPage.PNG" alt="Indicator Page">
 
+- Once the .xlsx file has been generated, you can use Tableau to make interactive graphs and maps
+
+  <img src="https://github.com/Cherrmann8/Census2Xlsx/blob/master/src/assets/pages/NC_Poverty_under_5.PNG" alt="Tableau Map">
+
 ## Roadmap
 
 - [x] ~~Write python script with hardcoded values to generate a report~~
