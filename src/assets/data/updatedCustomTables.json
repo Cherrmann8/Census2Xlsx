@@ -1,0 +1,928 @@
+[
+  {
+    "SectionName": "Demographics",
+    "SectionTables": [
+      {
+        "TableName": "Population by Age Group",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Under 5 Years",
+            "IndicatorFormula": [
+              "S0101_C01_002E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "5 to 9 Years",
+            "IndicatorFormula": [
+              "S0101_C01_003E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "10 to 14 Years",
+            "IndicatorFormula": [
+              "S0101_C01_004E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "15 to 19 Years",
+            "IndicatorFormula": [
+              "S0101_C01_005E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "20 to 24 Years",
+            "IndicatorFormula": [
+              "S0101_C01_006E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "25 to 29 Years",
+            "IndicatorFormula": [
+              "S0101_C01_007E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "30 to 34 Years",
+            "IndicatorFormula": [
+              "S0101_C01_008E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "35 to 39 Years",
+            "IndicatorFormula": [
+              "S0101_C01_009E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "40 to 44 Years",
+            "IndicatorFormula": [
+              "S0101_C01_010E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "45 to 49 Years",
+            "IndicatorFormula": [
+              "S0101_C01_011E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "50 to 54 Years",
+            "IndicatorFormula": [
+              "S0101_C01_012E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "55 to 59 Years",
+            "IndicatorFormula": [
+              "S0101_C01_013E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "60 to 64 Years",
+            "IndicatorFormula": [
+              "S0101_C01_014E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "65 to 69 Years",
+            "IndicatorFormula": [
+              "S0101_C01_015E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "70 to 74 Years",
+            "IndicatorFormula": [
+              "S0101_C01_016E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "75 to 79 Years",
+            "IndicatorFormula": [
+              "S0101_C01_017E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "80 to 84 Years",
+            "IndicatorFormula": [
+              "S0101_C01_018E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "85 Years and Over",
+            "IndicatorFormula": [
+              "S0101_C01_019E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Median Age",
+            "IndicatorFormula": [
+              "S0101_C01_032E",
+              "f"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Race/Ethnicity of Population",
+        "TableIndicators": [
+          {
+            "IndicatorName": "White",
+            "IndicatorFormula": [
+              "DP05_0037PE",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Black or African American",
+            "IndicatorFormula": [
+              "DP05_0038PE",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "American Indian and Alaska Native",
+            "IndicatorFormula": [
+              "DP05_0039PE",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Asian",
+            "IndicatorFormula": [
+              "DP05_0044PE",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Native Hawaiian and Other Pacific Islander",
+            "IndicatorFormula": [
+              "DP05_0052PE",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Other Race",
+            "IndicatorFormula": [
+              "DP05_0057PE",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Multi-racial",
+            "IndicatorFormula": [
+              "DP05_0058PE",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Hispanic or Latino (of any race)",
+            "IndicatorFormula": [
+              "DP05_0071PE",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Family Households",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Total Households",
+            "IndicatorFormula": [
+              "S1101_C01_001E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Family Households",
+            "IndicatorFormula": [
+              "S1101_C01_003E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "% Family Households",
+            "IndicatorFormula": [
+              "S1101_C01_003E",
+              "S1101_C01_001E",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% Single Parent Households",
+            "IndicatorFormula": [
+              "S1101_C03_003E",
+              "S1101_C04_003E",
+              "+",
+              "S1101_C01_001E",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Household Composition of Children Under 6",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Total Households",
+            "IndicatorFormula": [
+              "S1101_C01_001E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "% With Children < 6",
+            "IndicatorFormula": [
+              "S1101_C01_006E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% Married Couple with Children < 6",
+            "IndicatorFormula": [
+              "S1101_C02_006E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% Single Male with Children < 6",
+            "IndicatorFormula": [
+              "S1101_C03_006E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% Single Female with Children < 6",
+            "IndicatorFormula": [
+              "S1101_C04_006E",
+              "%"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "SectionName": "Economic Activity",
+    "SectionTables": [
+      {
+        "TableName": "Median Income Level by Family Type",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Households",
+            "IndicatorFormula": [
+              "S1903_C03_001E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Families",
+            "IndicatorFormula": [
+              "S1903_C03_015E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Married Couple Families",
+            "IndicatorFormula": [
+              "S1903_C03_018E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Single Female Householder",
+            "IndicatorFormula": [
+              "S1903_C03_020E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Single Male Householder",
+            "IndicatorFormula": [
+              "S1903_C03_022E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Nonfamily Households",
+            "IndicatorFormula": [
+              "S1903_C03_034E",
+              "f",
+              "$"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Median Income by Race/Ethnicity",
+        "TableIndicators": [
+          {
+            "IndicatorName": "White",
+            "IndicatorFormula": [
+              "S1903_C03_002E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Black or African American",
+            "IndicatorFormula": [
+              "S1903_C03_003E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "American Indian and Alaska Native",
+            "IndicatorFormula": [
+              "S1903_C03_004E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Asian",
+            "IndicatorFormula": [
+              "S1903_C03_005E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Native Hawaiian and Other Pacific Islander",
+            "IndicatorFormula": [
+              "S1903_C03_006E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Other Race",
+            "IndicatorFormula": [
+              "S1903_C03_007E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Multi-racial",
+            "IndicatorFormula": [
+              "S1903_C03_008E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Hispanic or Latino (of any race)",
+            "IndicatorFormula": [
+              "S1903_C03_009E",
+              "f",
+              "$"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "SectionName": "Poverty",
+    "SectionTables": [
+      {
+        "TableName": "Poverty Rates",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Total Population",
+            "IndicatorFormula": [
+              "S1701_C01_001E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Poverty Rate",
+            "IndicatorFormula": [
+              "S1701_C03_001E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Poverty Rate 0-5",
+            "IndicatorFormula": [
+              "S1701_C03_003E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Poverty Rate 0-17",
+            "IndicatorFormula": [
+              "S1701_C03_002E",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Poverty Rates by Family Type",
+        "TableIndicators": [
+          {
+            "IndicatorName": "All Types",
+            "IndicatorFormula": [
+              "B17010_002E",
+              "B17010_001E",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Married Couple Families",
+            "IndicatorFormula": [
+              "B17010_003E",
+              "B17010_003E",
+              "B17010_023E",
+              "+",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Single-Female Householder",
+            "IndicatorFormula": [
+              "B17010_016E",
+              "B17010_016E",
+              "B17010_036E",
+              "+",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Single-Male Householder",
+            "IndicatorFormula": [
+              "B17010_010E",
+              "B17010_010E",
+              "B17010_030E",
+              "+",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Poverty Rates by Race and Ethnicity",
+        "TableIndicators": [
+          {
+            "IndicatorName": "White",
+            "IndicatorFormula": [
+              "S1701_C03_013E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Black or African American",
+            "IndicatorFormula": [
+              "S1701_C03_014E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "American Indian and Alaska Native",
+            "IndicatorFormula": [
+              "S1701_C03_015E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Asian",
+            "IndicatorFormula": [
+              "S1701_C03_016E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Native Hawaiian and Other Pacific Islander",
+            "IndicatorFormula": [
+              "S1701_C03_017E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Other Race",
+            "IndicatorFormula": [
+              "S1701_C03_018E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Multi-racial",
+            "IndicatorFormula": [
+              "S1701_C03_019E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Hispanic or Latino (of any race)",
+            "IndicatorFormula": [
+              "S1701_C03_020E",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Families in Poverty by Percent of Poverty Level",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Under 50% FPL",
+            "IndicatorFormula": [
+              "S1702_C01_043E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Under 125% FPL",
+            "IndicatorFormula": [
+              "S1702_C01_044E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Under 150% FPL",
+            "IndicatorFormula": [
+              "S1702_C01_045E",
+              "f"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "SectionName": "Head Start Eligibles",
+    "SectionTables": [
+      {
+        "TableName": "Head Start and Early Head Start Eligibles",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Children Under 3",
+            "IndicatorFormula": [
+              "B09001_003E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Children Aged 3 & 4",
+            "IndicatorFormula": [
+              "B09001_004E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Poverty Rate for Children Under 5",
+            "IndicatorFormula": [
+              "S1701_C03_003E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "EHS Eligibles",
+            "IndicatorFormula": [
+              "B09001_003E",
+              "S1701_C03_003E",
+              "*",
+              "! 100",
+              "/",
+              "! 0",
+              "r",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "HS Eligibles",
+            "IndicatorFormula": [
+              "B09001_004E",
+              "S1701_C03_003E",
+              "*",
+              "! 100",
+              "/",
+              "! 0",
+              "r",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Annual Births to Women in Poverty",
+            "IndicatorFormula": [
+              "S1301_C02_023E",
+              "f"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "SectionName": "Family Poverty Characteristics",
+    "SectionTables": [
+      {
+        "TableName": "Characteristics of Families in Poverty",
+        "TableIndicators": [
+          {
+            "IndicatorName": "% of families in poverty",
+            "IndicatorFormula": [
+              "S1702_C02_001E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% of families in poverty no children",
+            "IndicatorFormula": [
+              "S1702_C02_024E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% of families in poverty with children",
+            "IndicatorFormula": [
+              "S1702_C02_002E",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Families Headed by Single Females in Poverty",
+        "TableIndicators": [
+          {
+            "IndicatorName": "% of families headed by a single female",
+            "IndicatorFormula": [
+              "S1702_C05_001E",
+              "S1702_C01_001E",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% of families headed by a single female in poverty",
+            "IndicatorFormula": [
+              "S1702_C06_001E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% of families headed by a single female in poverty with children",
+            "IndicatorFormula": [
+              "S1702_C06_002E",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Families Headed by Married Couples in Poverty",
+        "TableIndicators": [
+          {
+            "IndicatorName": "% of families headed by a married couple",
+            "IndicatorFormula": [
+              "S1702_C03_001E",
+              "S1702_C01_001E",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% of families headed by a married couple in poverty",
+            "IndicatorFormula": [
+              "S1702_C04_001E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "% of families headed by a married couple in poverty with children",
+            "IndicatorFormula": [
+              "S1702_C04_002E",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Percent of Families in Poverty by Number of Workers",
+        "TableIndicators": [
+          {
+            "IndicatorName": "No workers",
+            "IndicatorFormula": [
+              "S1702_C02_036E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "1 Worker",
+            "IndicatorFormula": [
+              "S1702_C02_037E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "2 Workers",
+            "IndicatorFormula": [
+              "S1702_C02_038E",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Characteristics of Families Receiving Public Assistance Income",
+        "TableIndicators": [
+          {
+            "IndicatorName": "% Households with Public Assistance",
+            "IndicatorFormula": [
+              "B09010_002E",
+              "B09010_001E",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Children living in Households",
+            "IndicatorFormula": [
+              "B09002_001E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Children in Married Couple Households",
+            "IndicatorFormula": [
+              "B09002_002E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "% of Children in Single Parent Households",
+            "IndicatorFormula": [
+              "B09002_001E",
+              "B09002_002E",
+              "-",
+              "B09002_001E",
+              "/",
+              "! 100",
+              "*",
+              "%"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Median Income of Families Receiving Public Assistance",
+        "TableIndicators": [
+          {
+            "IndicatorName": "Median Income – Household Received PA",
+            "IndicatorFormula": [
+              "B22008_002E",
+              "f",
+              "$"
+            ]
+          },
+          {
+            "IndicatorName": "Median Income – Household Did not Receive PA",
+            "IndicatorFormula": [
+              "B22008_003E",
+              "f",
+              "$"
+            ]
+          }
+        ]
+      },
+      {
+        "TableName": "Educational Attainment of Families in Poverty",
+        "TableIndicators": [
+          {
+            "IndicatorName": "No HS Diploma",
+            "IndicatorFormula": [
+              "S1702_C02_020E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "High School",
+            "IndicatorFormula": [
+              "S1702_C02_021E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "Some College",
+            "IndicatorFormula": [
+              "S1702_C02_022E",
+              "%"
+            ]
+          },
+          {
+            "IndicatorName": "BA or Higher",
+            "IndicatorFormula": [
+              "S1702_C02_023E",
+              "%"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "SectionName": "Education Needs of Eligibles",
+    "SectionTables": [
+      {
+        "TableName": "Educational Attainment",
+        "TableIndicators": [
+          {
+            "IndicatorName": "No High School Diploma",
+            "IndicatorFormula": [
+              "S1501_C01_007E",
+              "S1501_C01_008E",
+              "+",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "High School Diploma",
+            "IndicatorFormula": [
+              "S1501_C01_009E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Some College",
+            "IndicatorFormula": [
+              "S1501_C01_010E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Associate degree",
+            "IndicatorFormula": [
+              "S1501_C01_011E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Bachelor's Degree",
+            "IndicatorFormula": [
+              "S1501_C01_012E",
+              "f"
+            ]
+          },
+          {
+            "IndicatorName": "Graduate or Professional Degree",
+            "IndicatorFormula": [
+              "S1501_C01_013E",
+              "f"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

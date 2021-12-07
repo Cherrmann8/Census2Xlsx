@@ -98,7 +98,7 @@ class Census2Xlsx:
             self.logger.info("Loaded censusTables.json")
 
         # load customTables.json
-        with open(data_dir + "customTables.json", "r") as loadfile:
+        with open(data_dir + "updatedCustomTables.json", "r") as loadfile:
             self.custom_tables_file = json.load(loadfile)
         if self.logFlag:
             self.logger.info("Loaded customTables.json")
@@ -196,6 +196,13 @@ class Census2Xlsx:
                     ("place", location["secondaryID"]),
                 ]
             )
+        elif location["geographicLevel"] == "3":
+            geo_code = censusdata.censusgeo(
+                [
+                    ("state", location["primaryID"]),
+                    ("zip code tabulation area", location["secondaryID"]),
+                ]
+            )
 
         if geo_code:
             location_name = location["locationName"]
@@ -218,19 +225,38 @@ class Census2Xlsx:
 
             # download Subject Tables for the geo_code and add to census_tables
             if len(self.subject_table_IDs) > 0:
-                downloaded_data = censusdata.download(
-                    self.census_type,
-                    self.census_year,
-                    geo_code,
-                    self.subject_table_IDs,
-                    tabletype="subject",
-                )
-                downloaded_data = downloaded_data.to_dict()
-                dl_keys = list(downloaded_data.keys())
-                for dl_key in dl_keys:
-                    census_tables[location_name][dl_key] = downloaded_data[dl_key][
-                        geo_code
-                    ]
+                # if working with zip codes, need to get the geo_code differently
+                if location["geographicLevel"] == "3":
+                    tmp_geo_code = censusdata.censusgeo(
+                        [("zip code tabulation area", location["secondaryID"])]
+                    )
+                    downloaded_data = censusdata.download(
+                        self.census_type,
+                        self.census_year,
+                        tmp_geo_code,
+                        self.subject_table_IDs,
+                        tabletype="subject",
+                    )
+                    downloaded_data = downloaded_data.to_dict()
+                    dl_keys = list(downloaded_data.keys())
+                    for dl_key in dl_keys:
+                        census_tables[location_name][dl_key] = downloaded_data[dl_key][
+                            tmp_geo_code
+                        ]
+                else:
+                    downloaded_data = censusdata.download(
+                        self.census_type,
+                        self.census_year,
+                        geo_code,
+                        self.subject_table_IDs,
+                        tabletype="subject",
+                    )
+                    downloaded_data = downloaded_data.to_dict()
+                    dl_keys = list(downloaded_data.keys())
+                    for dl_key in dl_keys:
+                        census_tables[location_name][dl_key] = downloaded_data[dl_key][
+                            geo_code
+                        ]
 
             # download Data Profile Tables for the geo_code and add to census_tables
             if len(self.data_profile_IDs) > 0:
@@ -247,6 +273,7 @@ class Census2Xlsx:
                     census_tables[location_name][dl_key] = downloaded_data[dl_key][
                         geo_code
                     ]
+
         else:
             if self.logFlag:
                 self.logger.warning(
@@ -261,7 +288,7 @@ class Census2Xlsx:
         calculate_formula calculates a specific indicator for a specific location and stores it in
             custom_tables. Uses a Reverse Polish notation (RPN) calculator.
         :param formula: a string showing how to calculate this specific indicator
-        :param location_name: the location being calcculated
+        :param location_name: the location being calculated
         :param census_tables: the dictionary containing Indicators to use in the calculation
         :param custom_tables: the dictionary storing the calculated Indicators
         """
@@ -294,12 +321,21 @@ class Census2Xlsx:
                     custom_tables["tmp"] = ""
                 # if the item is "r", round the variable at the top of the stack
                 if item == "r":
+                    b = calculator.pop()
                     a = calculator.pop()
-                    calculator.append(round(a, 2))
+                    calculator.append(round(a, b))
+                # if the item is "f", format the variable at the top of the stack to human readable format
+                if item == "f":
+                    a = calculator.pop()
+                    calculator.append("{0:,.0f}".format(a, ","))
                 # if the item is "%", pop 1 variable from the stack, then push the variable back with a % appended to the end
                 if item == "%":
                     a = calculator.pop()
                     calculator.append(str(round(a, 2)) + "%")
+                # if the item is "$", pop 1 variable from the stack, then push the variable back with a $ appended to the start
+                if item == "$":
+                    a = calculator.pop()
+                    calculator.append("$" + str(a))
                 # if the item is "+", pop and add 2 variables from the stack, then push the result to the stack
                 if item == "+":
                     b = calculator.pop()
@@ -344,7 +380,13 @@ class Census2Xlsx:
                 if custom_tables["tmp"] != "":
                     self.logger.debug("tmp: %s" % str(custom_tables["tmp"]))
 
-        return calculator.pop()
+            # print the top of the stack for debugging
+            # print(calculator[-1])
+
+        if len(calculator) > 0:
+            return calculator.pop()
+        else:
+            return "No Indicator Formula"
 
     def calculate_tables(self, selected_tables, census_tables, custom_tables):
         """
@@ -517,10 +559,10 @@ def main(data_dir, log_dir=""):
     # create a test report_area
     report_area = [
         {
-            "locationName": "Alabama",
-            "geographicLevel": "0",
-            "primaryID": "01",
-            "secondaryID": "-1",
+            "locationName": "Benton County, Arkansas",
+            "geographicLevel": "1",
+            "primaryID": "05",
+            "secondaryID": "007",
         },
         # {
         #     "locationName": "Autauga County, Alabama",
@@ -539,34 +581,36 @@ def main(data_dir, log_dir=""):
     # create a test selected_indicators
     selected_indicators = [
         {"sectionIdx": 0, "tableIdx": 0},
-        # {"sectionIdx": 0, "tableIdx": 1},
-        # {"sectionIdx": 0, "tableIdx": 2},
-        # {"sectionIdx": 0, "tableIdx": 3},
-        # {"sectionIdx": 0, "tableIdx": 4},
-        # {"sectionIdx": 0, "tableIdx": 5},
-        # {"sectionIdx": 0, "tableIdx": 6},
-        # {"sectionIdx": 0, "tableIdx": 7},
-        # {"sectionIdx": 0, "tableIdx": 8},
-        # {"sectionIdx": 0, "tableIdx": 9},
-        # {"sectionIdx": 0, "tableIdx": 10},
-        # {"sectionIdx": 1, "tableIdx": 0},
-        # {"sectionIdx": 1, "tableIdx": 1},
-        # {"sectionIdx": 1, "tableIdx": 2},
-        # {"sectionIdx": 1, "tableIdx": 3},
-        # {"sectionIdx": 1, "tableIdx": 4},
-        # {"sectionIdx": 1, "tableIdx": 5},
-        # {"sectionIdx": 1, "tableIdx": 6},
-        # {"sectionIdx": 1, "tableIdx": 7},
+        {"sectionIdx": 0, "tableIdx": 1},
+        {"sectionIdx": 0, "tableIdx": 2},
+        {"sectionIdx": 0, "tableIdx": 3},
+        {"sectionIdx": 1, "tableIdx": 0},
+        {"sectionIdx": 1, "tableIdx": 1},
+        {"sectionIdx": 2, "tableIdx": 0},
+        {"sectionIdx": 2, "tableIdx": 1},
+        {"sectionIdx": 2, "tableIdx": 2},
+        {"sectionIdx": 2, "tableIdx": 3},
+        {"sectionIdx": 3, "tableIdx": 0},
+        {"sectionIdx": 4, "tableIdx": 0},
+        {"sectionIdx": 4, "tableIdx": 1},
+        {"sectionIdx": 4, "tableIdx": 2},
+        {"sectionIdx": 4, "tableIdx": 3},
+        {"sectionIdx": 4, "tableIdx": 4},
+        {"sectionIdx": 4, "tableIdx": 5},
+        {"sectionIdx": 4, "tableIdx": 6},
+        {"sectionIdx": 5, "tableIdx": 0},
+        # {"sectionIdx": 1, "tableIdx": 8},
         # {"sectionIdx": 2, "tableIdx": 0},
         # {"sectionIdx": 2, "tableIdx": 1},
         # {"sectionIdx": 2, "tableIdx": 2},
         # {"sectionIdx": 2, "tableIdx": 3},
         # {"sectionIdx": 2, "tableIdx": 4},
-        {"sectionIdx": 2, "tableIdx": 5},
+        # {"sectionIdx": 2, "tableIdx": 5},
+        # {"sectionIdx": 2, "tableIdx": 6},
     ]
 
     # create test options
-    options = {"outputPath": "./output/test.xlsx"}
+    options = {"outputFile": "./output/test.xlsx"}
 
     # run the Census2Xlsx generate_tables method
     c2x.generate_tables(report_area, selected_indicators, options)
@@ -578,7 +622,7 @@ def usage():
 
 if __name__ == "__main__":
     # default directories
-    DATA_DIR = "./src/assets/data"
+    DATA_DIR = "./src/assets/data/"
     LOG_DIR = "./logs"
 
     # process command line arguments

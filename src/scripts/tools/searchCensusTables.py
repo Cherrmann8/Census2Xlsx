@@ -56,8 +56,19 @@ def main(argv):
     printTableSearch(searchPhrase, tableType)
 
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        main(sys.argv[1:])
-    else:
-        usage()
+# if __name__ == "__main__":
+#     if len(sys.argv) > 1:
+#         main(sys.argv[1:])
+#     else:
+#         usage()
+
+
+tmp = censusdata.search(
+    censusType,
+    censusYear,
+    "concept",
+    "EDUCATIONAL ATTAINMENT",
+    tabletype="subject",
+)
+for item in tmp:
+    print(item)

@@ -1191,5 +1191,44 @@
         ]
       }
     ]
+  },
+  {
+    "SectionName": "Other cool section!",
+    "SectionTables": [
+      {
+        "TableName": "cool table 1",
+        "TableIndicators": [
+          {
+            "IndicatorName": "cool indicator 1",
+            "IndicatorFormula": []
+          },
+          {
+            "IndicatorName": "cool indicator 2",
+            "IndicatorFormula": []
+          },
+          {
+            "IndicatorName": "cool indicator 3",
+            "IndicatorFormula": []
+          }
+        ]
+      },
+      {
+        "TableName": "cool table 2",
+        "TableIndicators": [
+          {
+            "IndicatorName": "cool indicator 4",
+            "IndicatorFormula": []
+          },
+          {
+            "IndicatorName": "cool indicator 5",
+            "IndicatorFormula": []
+          },
+          {
+            "IndicatorName": "cool indicator 6",
+            "IndicatorFormula": []
+          }
+        ]
+      }
+    ]
   }
 ]
